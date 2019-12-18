@@ -1,0 +1,36 @@
+/vendor
+
+# Ignore configuration files that may contain sensitive information
+/web/sites/*/*settings*.php
+/web/sites/*/*services*.yml
+
+# Ignore paths that may contain user-generated content
+/web/sites/*/files
+
+# Ignore composer directories
+/web/modules/contrib
+/web/themes/contrib
+/web/profiles/contrib
+
+# Ignore drupal core (if not versioning drupal sources)
+/web/autoload.php
+/web/core
+/web/.csslintrc
+/web/.eslintignore
+/web/.eslintrc.json
+/web/example.gitignore
+/web/.htaccess
+/web/.ht.router.php
+/web/index.php
+/web/INSTALL.txt
+/web/modules/README.txt
+/web/profiles/README.txt
+/web/README.txt
+/web/robots.txt
+/web/sites/README.txt
+/web/sites/example.sites.php
+/web/sites/example.settings.local.php
+/web/sites/development.services.yml
+/web/themes/README.txt
+/web/update.php
+/web/web.config
