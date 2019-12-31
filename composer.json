@@ -33,6 +33,7 @@
         "drupal/paragraphs": "^1.10",
         "drupal/pathauto": "^1.6",
         "drupal/token": "^1.5",
+        "drupal/webform": "^5.6",
         "drush/drush": "^10.1",
         "oomphinc/composer-installers-extender": "^1.1"
     },
