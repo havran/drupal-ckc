@@ -1,0 +1,10 @@
+uuid: f428b241-e3a6-425d-b15e-45fa687a76a4
+langcode: cs
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: sapEi2YDGoI9yQIT_WgIV2vUdQ6DScH0V3fAyTadAL0
+id: admin
+label: Administrace
+description: 'Odkazy pro administrativní úkoly'
+locked: true

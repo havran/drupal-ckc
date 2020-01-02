@@ -1,0 +1,31 @@
+uuid: aef1eb65-57dc-4701-82ac-fbb65d2890f9
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.stranka.body
+    - node.type.stranka
+  module:
+    - text
+    - user
+id: node.stranka.teaser
+targetEntityType: node
+bundle: stranka
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true

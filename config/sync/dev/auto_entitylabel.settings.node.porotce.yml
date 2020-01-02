@@ -1,0 +1,6 @@
+status: 1
+pattern: '[node:field_surname], [node:field_name] - [node:field_nick]'
+escape: false
+dependencies:
+  config:
+    - node.type.porotce

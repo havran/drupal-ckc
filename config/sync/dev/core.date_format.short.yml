@@ -1,0 +1,10 @@
+uuid: 9f580726-e22c-4558-bae1-4affd3aa8a7b
+langcode: cs
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: AlzeyytA8InBgxIG9H2UDJYs3CG98Zj6yRsDKmlbZwA
+id: short
+label: 'Výchozí krátký formát data'
+locked: false
+pattern: 'm/d/Y - H:i'

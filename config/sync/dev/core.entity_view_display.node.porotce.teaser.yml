@@ -1,0 +1,31 @@
+uuid: 2037f487-dac6-4569-8785-be1ed56b0a2e
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.porotce.field_address
+    - field.field.node.porotce.field_email
+    - field.field.node.porotce.field_name
+    - field.field.node.porotce.field_nick
+    - field.field.node.porotce.field_surname
+    - node.type.porotce
+  module:
+    - user
+id: node.porotce.teaser
+targetEntityType: node
+bundle: porotce
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_address: true
+  field_email: true
+  field_name: true
+  field_nick: true
+  field_surname: true
+  langcode: true

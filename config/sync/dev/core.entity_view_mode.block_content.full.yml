@@ -1,0 +1,12 @@
+uuid: 8ac325ef-88e9-49f6-9e2d-9a8f00dccc3f
+langcode: cs
+status: false
+dependencies:
+  module:
+    - block_content
+_core:
+  default_config_hash: 4tedlMuvQjDOdvHdw86_e-2Rt78aR7TGFMfOK8Ejppg
+id: block_content.full
+label: Celé
+targetEntityType: block_content
+cache: true

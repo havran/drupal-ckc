@@ -1,0 +1,11 @@
+uuid: 8c8c6299-cec5-4a94-bb67-e4a688dab2b5
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.hodnoceni
+id: node.hodnoceni
+target_entity_type_id: node
+target_bundle: hodnoceni
+default_langcode: site_default
+language_alterable: false

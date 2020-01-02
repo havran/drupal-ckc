@@ -1,0 +1,33 @@
+uuid: 0b5b6fa6-d9d1-41f9-853e-bb94685c0815
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.ckc_browse_autori
+  module:
+    - views
+name: autori
+label: Autori
+display: modal
+display_configuration:
+  width: '650'
+  height: '500'
+  link_text: 'Select entities'
+  auto_open: false
+selection_display: view
+selection_display_configuration:
+  view: ckc_browse_autori
+  view_display: default
+widget_selector: single
+widget_selector_configuration: {  }
+widgets:
+  4c149223-1a5c-4500-afe9-d99f38535f05:
+    settings:
+      view: ckc_browse_autori
+      view_display: entity_browser_1
+      submit_text: 'Select entities'
+      auto_select: false
+    uuid: 4c149223-1a5c-4500-afe9-d99f38535f05
+    weight: 1
+    label: view
+    id: view

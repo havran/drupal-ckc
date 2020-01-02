@@ -1,0 +1,17 @@
+uuid: 544169e7-31e7-41ae-a541-f6f7562636ba
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Porotce
+type: porotce
+description: 'Porotce CKČ.'
+help: ''
+new_revision: true
+preview_mode: 0
+display_submitted: false

@@ -1,0 +1,8 @@
+uuid: 7e7dec5e-309a-4596-a68b-8b8c5842a933
+langcode: cs
+status: true
+dependencies: {  }
+name: Ročník
+vid: rocnik
+description: 'Ročník CKČ.'
+weight: 0

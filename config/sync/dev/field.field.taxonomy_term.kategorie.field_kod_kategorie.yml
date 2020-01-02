@@ -1,0 +1,23 @@
+uuid: 9c3799f1-997d-45ca-b66d-f0870a56c2d3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_kod_kategorie
+    - taxonomy.vocabulary.kategorie
+id: taxonomy_term.kategorie.field_kod_kategorie
+field_name: field_kod_kategorie
+entity_type: taxonomy_term
+bundle: kategorie
+label: 'Kód kategorie'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: 9
+  prefix: ''
+  suffix: ''
+field_type: integer

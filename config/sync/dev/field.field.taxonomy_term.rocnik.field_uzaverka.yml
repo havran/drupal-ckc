@@ -1,0 +1,21 @@
+uuid: 59937285-c33d-48ab-81f7-9bc3019d5151
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_uzaverka
+    - taxonomy.vocabulary.rocnik
+  module:
+    - datetime
+id: taxonomy_term.rocnik.field_uzaverka
+field_name: field_uzaverka
+entity_type: taxonomy_term
+bundle: rocnik
+label: Uzávěrka
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

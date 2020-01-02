@@ -1,0 +1,11 @@
+uuid: 8756cdaa-fd72-448b-877c-30cd722d4c04
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.rocnik
+id: taxonomy_term.rocnik
+target_entity_type_id: taxonomy_term
+target_bundle: rocnik
+default_langcode: site_default
+language_alterable: false

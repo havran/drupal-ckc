@@ -1,0 +1,29 @@
+uuid: 8e4a0777-9b76-48c1-8bd1-98ab40234ecc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_autor_ref
+    - node.type.autor
+    - node.type.povidka
+id: node.povidka.field_autor_ref
+field_name: field_autor_ref
+entity_type: node
+bundle: povidka
+label: Autor
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      autor: autor
+    sort:
+      field: field_autor_ref
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,29 @@
+uuid: fda0d686-d29d-4e57-a23b-154967b3bc68
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.povidka.field_autor_ref
+    - field.field.node.povidka.field_kategorie_ref
+    - field.field.node.povidka.field_poradi_povidky
+    - field.field.node.povidka.field_rocnik_ref
+    - node.type.povidka
+  module:
+    - user
+id: node.povidka.teaser
+targetEntityType: node
+bundle: povidka
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_autor_ref: true
+  field_kategorie_ref: true
+  field_poradi_povidky: true
+  field_rocnik_ref: true
+  langcode: true

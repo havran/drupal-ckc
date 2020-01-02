@@ -1,0 +1,11 @@
+uuid: 7bcf5481-e2a8-4620-b21b-d106c812672b
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.povidka
+id: node.povidka
+target_entity_type_id: node
+target_bundle: povidka
+default_langcode: site_default
+language_alterable: false

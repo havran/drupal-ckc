@@ -1,0 +1,28 @@
+uuid: 23d2f5b6-0011-4b0d-a641-8b80b655424a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_povidka_ref
+    - node.type.hodnoceni
+    - node.type.povidka
+id: node.hodnoceni.field_povidka_ref
+field_name: field_povidka_ref
+entity_type: node
+bundle: hodnoceni
+label: Povídka
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      povidka: povidka
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

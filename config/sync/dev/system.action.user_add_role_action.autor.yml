@@ -1,0 +1,14 @@
+uuid: 887d5375-c22b-441f-9370-4c6267ece4a5
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.autor
+  module:
+    - user
+id: user_add_role_action.autor
+label: 'Add the Autor role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: autor

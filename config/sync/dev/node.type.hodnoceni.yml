@@ -1,0 +1,17 @@
+uuid: 18e26f9b-1114-46b0-a216-b0c3236f73f9
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Hodnocení
+type: hodnoceni
+description: 'Hodnocení povídky CKČ.'
+help: ''
+new_revision: true
+preview_mode: 0
+display_submitted: false

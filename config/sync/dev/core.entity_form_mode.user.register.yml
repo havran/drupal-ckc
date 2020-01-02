@@ -1,0 +1,12 @@
+uuid: 2d38d13b-3436-4ed4-9798-adcf8bbc227a
+langcode: cs
+status: true
+dependencies:
+  module:
+    - user
+_core:
+  default_config_hash: flXhTcp55yLcyy7ZLOhPGKGZobZQJdkAFVWV3LseiuI
+id: user.register
+label: Registrovat
+targetEntityType: user
+cache: true

@@ -1,0 +1,14 @@
+uuid: 458ee058-4bbf-446f-8448-909ce50eb41c
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.porotce
+  module:
+    - user
+id: user_add_role_action.porotce
+label: 'Add the Porotce role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: porotce

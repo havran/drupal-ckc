@@ -1,0 +1,19 @@
+uuid: e1067245-54c1-4419-bc67-c8975d8d976f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_name
+    - node.type.autor
+id: node.autor.field_name
+field_name: field_name
+entity_type: node
+bundle: autor
+label: Jméno
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,13 @@
+uuid: 12f0f4a5-1218-431b-bb91-2d01be582570
+langcode: cs
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: LhdsoZPL_pFas2fjaAWue4zvrQ_tEVofLYtcNec-JGM
+id: node_save_action
+label: 'Uložit obsah'
+type: node
+plugin: 'entity:save_action:node'
+configuration: {  }

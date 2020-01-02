@@ -1,0 +1,8 @@
+uuid: 45e2c9dc-ee6c-412a-99a6-7e37fd309b27
+langcode: cs
+status: true
+dependencies: {  }
+name: Kategorie
+vid: kategorie
+description: 'Kategorie povídek CKČ.'
+weight: 0

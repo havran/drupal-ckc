@@ -1,0 +1,25 @@
+uuid: ffa71471-a767-4b32-a6fa-a234d4354fb8
+langcode: en
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - node
+third_party_settings:
+  field_permissions:
+    permission_type: public
+id: node.field_poradi_povidky
+field_name: field_poradi_povidky
+entity_type: node
+type: string
+settings:
+  max_length: 2
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

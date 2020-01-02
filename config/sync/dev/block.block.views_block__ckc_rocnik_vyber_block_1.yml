@@ -1,0 +1,24 @@
+uuid: 73df6211-c86d-44a9-a564-e500f367092c
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.ckc_rocnik_vyber
+  module:
+    - views
+  theme:
+    - bartik
+id: views_block__ckc_rocnik_vyber_block_1
+theme: bartik
+region: sidebar_first
+weight: -6
+provider: null
+plugin: 'views_block:ckc_rocnik_vyber-block_1'
+settings:
+  id: 'views_block:ckc_rocnik_vyber-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility: {  }

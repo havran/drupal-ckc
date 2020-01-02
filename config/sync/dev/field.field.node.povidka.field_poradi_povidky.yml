@@ -1,0 +1,19 @@
+uuid: 9487f641-b19c-4368-af22-abc285b0b78d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_poradi_povidky
+    - node.type.povidka
+id: node.povidka.field_poradi_povidky
+field_name: field_poradi_povidky
+entity_type: node
+bundle: povidka
+label: 'Pořadí povídky'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

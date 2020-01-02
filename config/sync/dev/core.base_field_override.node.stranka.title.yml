@@ -1,0 +1,18 @@
+uuid: 6e7c63ff-5263-4ad6-87ee-25c4aa704621
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.stranka
+id: node.stranka.title
+field_name: title
+entity_type: node
+bundle: stranka
+label: Název
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

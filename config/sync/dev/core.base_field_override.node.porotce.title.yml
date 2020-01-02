@@ -1,0 +1,18 @@
+uuid: 377d1059-2125-4d8f-93ef-5ea1a94a6c38
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.porotce
+id: node.porotce.title
+field_name: title
+entity_type: node
+bundle: porotce
+label: 'Jméno a příjmění'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

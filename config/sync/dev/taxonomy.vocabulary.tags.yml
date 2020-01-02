@@ -1,0 +1,10 @@
+uuid: 9caad1a9-5053-41d0-af56-d1e6ea54b9ac
+langcode: cs
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: yoNVreoTdTZTY7GuE8fI9Jmxqdz8vlo4ZJKixMNSosw
+name: Štítky
+vid: tags
+description: 'Použijte tagy pro seskupení článků podle podobných témat v katergoriích'
+weight: 0

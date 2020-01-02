@@ -1,0 +1,22 @@
+uuid: d4f35d40-fd22-4a32-9fb4-a795bf70fb65
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.povidka
+id: node.povidka.promote
+field_name: promote
+entity_type: node
+bundle: povidka
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

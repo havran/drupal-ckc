@@ -1,0 +1,64 @@
+uuid: 1e1321ed-2a61-4cb6-a30d-b0b46c7dc66c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.porotce.field_address
+    - field.field.node.porotce.field_email
+    - field.field.node.porotce.field_name
+    - field.field.node.porotce.field_nick
+    - field.field.node.porotce.field_surname
+    - node.type.porotce
+  module:
+    - text
+    - user
+id: node.porotce.default
+targetEntityType: node
+bundle: porotce
+mode: default
+content:
+  field_address:
+    weight: 104
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_email:
+    weight: 105
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_name:
+    weight: 101
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_nick:
+    weight: 103
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_surname:
+    weight: 102
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true

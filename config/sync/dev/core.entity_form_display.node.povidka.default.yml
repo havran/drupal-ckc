@@ -1,0 +1,57 @@
+uuid: 91048617-c778-4d9a-bf3d-7792e9e2c97b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.povidka.field_autor_ref
+    - field.field.node.povidka.field_kategorie_ref
+    - field.field.node.povidka.field_poradi_povidky
+    - field.field.node.povidka.field_rocnik_ref
+    - node.type.povidka
+id: node.povidka.default
+targetEntityType: node
+bundle: povidka
+mode: default
+content:
+  field_autor_ref:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_kategorie_ref:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_poradi_povidky:
+    weight: 2
+    settings:
+      size: 2
+      placeholder: '00'
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_rocnik_ref:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  title:
+    type: string_textfield
+    weight: 4
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  langcode: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true

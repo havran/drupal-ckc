@@ -1,0 +1,85 @@
+uuid: 92f0c34a-756c-47e5-b894-656992855895
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.hodnoceni.field_kategorie_ref
+    - field.field.node.hodnoceni.field_mlok
+    - field.field.node.hodnoceni.field_porotce_ref
+    - field.field.node.hodnoceni.field_povidka_ref
+    - field.field.node.hodnoceni.field_rocnik_ref
+    - node.type.hodnoceni
+id: node.hodnoceni.default
+targetEntityType: node
+bundle: hodnoceni
+mode: default
+content:
+  field_kategorie_ref:
+    weight: 2
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_mlok:
+    weight: 5
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_porotce_ref:
+    weight: 3
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_povidka_ref:
+    weight: 4
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_rocnik_ref:
+    weight: 1
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 6
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  langcode: true
+  path: true
+  promote: true
+  sticky: true
+  uid: true

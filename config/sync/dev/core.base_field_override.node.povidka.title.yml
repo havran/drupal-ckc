@@ -1,0 +1,18 @@
+uuid: 1eda37ff-11e3-4e37-984a-561bdc2c415c
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.povidka
+id: node.povidka.title
+field_name: title
+entity_type: node
+bundle: povidka
+label: Název
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

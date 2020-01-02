@@ -1,0 +1,11 @@
+uuid: 05bf1dae-a86a-42d1-857b-05ce9d3448d7
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.stranka
+id: node.stranka
+target_entity_type_id: node
+target_bundle: stranka
+default_langcode: site_default
+language_alterable: false

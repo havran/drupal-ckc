@@ -1,0 +1,29 @@
+uuid: 175ed549-3f51-4301-b911-f3dacb39465f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.stranka.body
+    - node.type.stranka
+  module:
+    - text
+    - user
+id: node.stranka.default
+targetEntityType: node
+bundle: stranka
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true

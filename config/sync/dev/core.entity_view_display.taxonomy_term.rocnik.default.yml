@@ -1,0 +1,33 @@
+uuid: 8ebea798-321b-4fdd-9c8d-55c2b8bc597a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.rocnik.field_uzaverka
+    - taxonomy.vocabulary.rocnik
+  module:
+    - datetime
+    - text
+id: taxonomy_term.rocnik.default
+targetEntityType: taxonomy_term
+bundle: rocnik
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_uzaverka:
+    weight: 1
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+hidden:
+  langcode: true

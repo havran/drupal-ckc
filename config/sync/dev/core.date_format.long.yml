@@ -1,0 +1,10 @@
+uuid: 075da652-6d42-4fe4-aea6-259785b4c7bb
+langcode: cs
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: og8sWXhBuHbLMw3CoiBEZjgqSyhFBFmcbUW_wLcfNbo
+id: long
+label: 'Výchozí dlouhý formát data'
+locked: false
+pattern: 'l, F j, Y - H:i'

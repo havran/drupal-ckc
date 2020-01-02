@@ -1,0 +1,21 @@
+uuid: 522967c9-47e6-4337-ba75-1b3326797c04
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_address
+    - node.type.porotce
+  module:
+    - text
+id: node.porotce.field_address
+field_name: field_address
+entity_type: node
+bundle: porotce
+label: Adresa
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

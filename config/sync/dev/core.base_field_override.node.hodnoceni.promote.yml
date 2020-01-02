@@ -1,0 +1,22 @@
+uuid: 17b0c0cc-85cb-4940-996c-42766e31b191
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.hodnoceni
+id: node.hodnoceni.promote
+field_name: promote
+entity_type: node
+bundle: hodnoceni
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

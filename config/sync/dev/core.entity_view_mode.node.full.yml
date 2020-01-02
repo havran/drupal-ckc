@@ -1,0 +1,12 @@
+uuid: a773f643-9285-432d-9941-2ab9294f4164
+langcode: cs
+status: false
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: ElrtInxGjZd7GaapJ5O9n-ugi2hG2IxFivtgn0tHOsk
+id: node.full
+label: 'Plný obsah'
+targetEntityType: node
+cache: true

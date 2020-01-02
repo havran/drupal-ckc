@@ -1,0 +1,31 @@
+uuid: a2a08757-d89b-436f-b4f5-27ca53001db8
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.hodnoceni.field_kategorie_ref
+    - field.field.node.hodnoceni.field_mlok
+    - field.field.node.hodnoceni.field_porotce_ref
+    - field.field.node.hodnoceni.field_povidka_ref
+    - field.field.node.hodnoceni.field_rocnik_ref
+    - node.type.hodnoceni
+  module:
+    - user
+id: node.hodnoceni.teaser
+targetEntityType: node
+bundle: hodnoceni
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_kategorie_ref: true
+  field_mlok: true
+  field_porotce_ref: true
+  field_povidka_ref: true
+  field_rocnik_ref: true
+  langcode: true

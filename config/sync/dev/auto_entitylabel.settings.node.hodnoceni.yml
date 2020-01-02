@@ -1,0 +1,6 @@
+status: 1
+pattern: 'Hodnocení [node:nid]: [node:field_rocnik_ref] - [node:field_porotce_ref:entity:title] - [node:field_povidka_ref:entity:field_name]'
+escape: false
+dependencies:
+  config:
+    - node.type.hodnoceni

@@ -1,0 +1,6 @@
+status: 1
+pattern: '[node:field_surname], [node:field_name]'
+escape: false
+dependencies:
+  config:
+    - node.type.autor

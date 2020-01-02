@@ -1,0 +1,14 @@
+uuid: ac423d44-42ab-49f3-b44e-55ab8956d8dc
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.porotce
+  module:
+    - user
+id: user_remove_role_action.porotce
+label: 'Remove the Porotce role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: porotce

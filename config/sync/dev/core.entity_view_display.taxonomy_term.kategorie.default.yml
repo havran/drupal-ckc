@@ -1,0 +1,32 @@
+uuid: 66cab47a-c397-41b5-a670-b993aa24907f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.kategorie.field_kod_kategorie
+    - taxonomy.vocabulary.kategorie
+  module:
+    - text
+id: taxonomy_term.kategorie.default
+targetEntityType: taxonomy_term
+bundle: kategorie
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_kod_kategorie:
+    weight: 1
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+hidden:
+  langcode: true

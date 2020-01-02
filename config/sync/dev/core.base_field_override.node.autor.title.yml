@@ -1,0 +1,18 @@
+uuid: c4b5ca8d-395a-4543-af56-caeec3dc77ab
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.autor
+id: node.autor.title
+field_name: title
+entity_type: node
+bundle: autor
+label: 'Jméno a příjmění'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

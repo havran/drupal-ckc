@@ -1,0 +1,80 @@
+uuid: 1f79b0ad-2a19-4d1d-8330-133aad25f0ce
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.porotce.field_address
+    - field.field.node.porotce.field_email
+    - field.field.node.porotce.field_name
+    - field.field.node.porotce.field_nick
+    - field.field.node.porotce.field_surname
+    - node.type.porotce
+  module:
+    - text
+id: node.porotce.default
+targetEntityType: node
+bundle: porotce
+mode: default
+content:
+  field_address:
+    weight: 4
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_email:
+    weight: 5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: email_default
+    region: content
+  field_name:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_nick:
+    weight: 3
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_surname:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 6
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  langcode: true
+  path: true
+  promote: true
+  sticky: true
+  uid: true

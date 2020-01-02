@@ -1,0 +1,17 @@
+uuid: 8632db3c-515f-4dd7-96d6-90356799adac
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Povídka
+type: povidka
+description: 'Povídka pro CKČ.'
+help: ''
+new_revision: true
+preview_mode: 0
+display_submitted: false

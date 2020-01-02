@@ -1,0 +1,17 @@
+uuid: 6adc53d2-4f0b-4ec8-af60-577464ae392f
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Stránka
+type: stranka
+description: ''
+help: ''
+new_revision: true
+preview_mode: 0
+display_submitted: true

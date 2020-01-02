@@ -1,0 +1,19 @@
+uuid: 0dc22e49-059a-4959-8461-28e5e23db0cc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_surname
+    - node.type.porotce
+id: node.porotce.field_surname
+field_name: field_surname
+entity_type: node
+bundle: porotce
+label: Příjmení
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

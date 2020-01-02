@@ -1,0 +1,22 @@
+uuid: 53a0147d-ea54-4db8-b1bb-77e9f819175f
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.stranka
+id: node.stranka.promote
+field_name: promote
+entity_type: node
+bundle: stranka
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

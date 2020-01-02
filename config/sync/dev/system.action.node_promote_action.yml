@@ -1,0 +1,13 @@
+uuid: c661e9b5-d7ca-4e96-b960-d2b983a72623
+langcode: cs
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: N0RDBTqiK4dKoN4p4oW2j0SGWycdHyALUe9M-Ofp89U
+id: node_promote_action
+label: 'Zobrazit na titulní stránce'
+type: node
+plugin: node_promote_action
+configuration: {  }
