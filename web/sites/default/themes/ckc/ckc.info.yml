@@ -1,0 +1,7 @@
+name: CKČ
+type: theme
+base theme: bartik
+description: 'CKČ theme templates customization.'
+package: CKC
+version: VERSION
+core: 8.x
