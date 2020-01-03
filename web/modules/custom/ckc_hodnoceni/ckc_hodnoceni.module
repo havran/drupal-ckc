@@ -1,0 +1,112 @@
+<?php
+
+/**
+ * @file
+ * Rate of CKČ short novels.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\views\Views;
+
+/**
+ * Implements hook_entity_insert().
+ */
+function ckc_hodnoceni_entity_insert(EntityInterface $entity)
+{
+  ckc_hodnoceni_entity__crud($entity);
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function ckc_hodnoceni_entity_update(EntityInterface $entity)
+{
+  ckc_hodnoceni_entity__crud($entity);
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function ckc_hodnoceni_entity_delete(EntityInterface $entity)
+{
+  ckc_hodnoceni_entity__crud($entity);
+}
+
+function ckc_hodnoceni_entity__crud(EntityInterface $entity) {
+  if ($entity->bundle() !== 'povidka') {
+    return;
+  }
+
+  $cid = "ckc_prace:{$entity->field_kategorie_ref->entity->field_kod_kategorie->value}";
+  \Drupal::cache()->invalidate($cid);
+}
+
+/**
+ * Implements hook_webform_options_WEBFORM_OPTIONS_ID_alter().
+ */
+function ckc_hodnoceni_webform_options_ckc_kategorie_alter(array &$options, array &$element)
+{
+  $options = ckc_hodnoceni__kategorie();
+}
+
+/**
+ * Implements hook_webform_options_WEBFORM_OPTIONS_ID_alter().
+ */
+function ckc_hodnoceni_webform_options_ckc_prace_alter(array &$options, array &$element)
+{
+  $kategorie = ckc_hodnoceni__get_category();
+  $cid = "ckc_prace:{$kategorie}";
+
+  // Load cached options.
+  if ($cache = \Drupal::cache()->get($cid, FALSE)) {
+    $options = $cache->data;
+    return;
+  }
+
+  $view = Views::getView('ckc_erd_povidky');
+  $view->setDisplay('entity_reference_1');
+  $view->setArguments([$kategorie]);
+  $view->execute();
+
+  foreach ($view->result as $row) {
+    $prace_kategorie = $row->_entity->field_kategorie_ref->entity->field_kod_kategorie->value;
+    $prace_poradi = $row->_entity->field_poradi_povidky->value;
+    $prace_kod = "{$prace_kategorie}{$prace_poradi}";
+    $options[$prace_kod] = "{$prace_kod} {$row->_entity->label()}";
+  }
+
+  \Drupal::cache()->set($cid, $options);
+}
+
+/**
+ * Implements hook_webform_element_alter().
+ */
+function ckc_hodnoceni_webform_element_select_alter(array &$element, \Drupal\Core\Form\FormStateInterface $form_state, array $context)
+{
+  if ($element['#webform'] === 'hodnotici_formular_ckc' && $element['#webform_key'] === 'ckc_kategorie_show') {
+    $element['#default_value'] = ckc_hodnoceni__get_category();
+  }
+}
+
+/**
+ * Implements hook_webform_element_alter().
+ */
+function ckc_hodnoceni_webform_element_hidden_alter(array &$element, \Drupal\Core\Form\FormStateInterface $form_state, array $context)
+{
+  if ($element['#webform'] === 'hodnotici_formular_ckc' && $element['#webform_key'] === 'ckc_kategorie') {
+    $element['#default_value'] = ckc_hodnoceni__get_category();
+  }
+}
+
+function ckc_hodnoceni__kategorie() {
+  $options = [];
+  $options[0] = 'mikropovídka';
+  $options[1] = 'krátká povídka';
+  $options[2] = 'povídka';
+  $options[3] = 'novela';
+  return $options;
+}
+
+function ckc_hodnoceni__get_category() {
+  return in_array($_GET['ckc_kategorie'], array_keys(ckc_hodnoceni__kategorie()), TRUE) ? $_GET['ckc_kategorie'] : '0';
+}

@@ -1,0 +1,9 @@
+name: CKČ Hodnocení
+description: Hodnocení CKČ prací.
+package: CKČ
+type: module
+version: 1.0
+core: 8.x
+dependencies:
+  - views
+  - webform
