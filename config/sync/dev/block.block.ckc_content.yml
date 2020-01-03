@@ -1,0 +1,22 @@
+uuid: d0c60dfa-84d2-4238-b733-a713877f1be2
+langcode: cs
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - ckc
+_core:
+  default_config_hash: 9EoWV2Lot6FVSr50t4hoKgiz1LIXYWNG-IIPYsWxBqo
+id: ckc_content
+theme: ckc
+region: content
+weight: -2
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  provider: system
+  label_display: '0'
+visibility: {  }

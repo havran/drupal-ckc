@@ -1,0 +1,22 @@
+uuid: 5ba60b38-68b2-4c89-b9e7-84758f16a65b
+langcode: cs
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - ckc
+_core:
+  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
+id: ckc_help
+theme: ckc
+region: content
+weight: -5
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

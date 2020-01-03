@@ -1,0 +1,22 @@
+uuid: 247dd00f-2024-44c4-a890-3fbcbb5f5b03
+langcode: cs
+status: true
+dependencies:
+  theme:
+    - ckc
+_core:
+  default_config_hash: X9I1OB0W3WlWtrK-CNcg6hNWwa8wficanpH8pYnDZDE
+id: ckc_local_tasks
+theme: ckc
+region: content
+weight: -6
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Tabs
+  provider: core
+  label_display: '0'
+  primary: true
+  secondary: true
+visibility: {  }

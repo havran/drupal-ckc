@@ -1,0 +1,390 @@
+uuid: 2a3848fc-889c-4778-8199-ff2ab68f2c7a
+langcode: cs
+status: open
+dependencies: {  }
+open: null
+close: null
+weight: 0
+uid: 1
+template: false
+archive: false
+id: hodnotici_formular_ckc
+title: 'CKČ - hodnotící formulář'
+description: 'CKČ - hodnotící formulář.'
+category: CKČ
+elements: |
+  ckc_kategorie:
+    '#type': select
+    '#title': Kategorie
+    '#title_display': inline
+    '#prepopulate': true
+    '#options': ckc_kategorie
+    '#empty_option': '- vyberte -'
+    '#empty_value': '-'
+    '#required': true
+  container_01:
+    '#type': container
+    '#attributes':
+      class:
+        - 'form--inline clearfix'
+    1_poradi_1:
+      '#type': select
+      '#title': '1. pořadí'
+      '#title_display': inline
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+      '#states':
+        disabled:
+          ':input[name="1_poradi_nevyhlasovat"]':
+            checked: true
+    1_poradi_nevyhlasovat:
+      '#type': checkbox
+      '#title': nevyhlašovat
+  container_02:
+    '#type': container
+    '#attributes':
+      class:
+        - 'form--inline clearfix'
+    2_poradi_1:
+      '#type': select
+      '#title': '2. pořadí'
+      '#title_display': inline
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+    2_poradi_2:
+      '#type': select
+      '#title': '2. pořadí 2'
+      '#title_display': none
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+  container_03:
+    '#type': container
+    '#attributes':
+      class:
+        - 'form--inline clearfix'
+    3_poradi_1:
+      '#type': select
+      '#title': '3. pořadí'
+      '#title_display': inline
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+    3_poradi_2:
+      '#type': select
+      '#title': '3. pořadí 2'
+      '#title_display': none
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+    3_poradi_3:
+      '#type': select
+      '#title': '3. pořadí 3'
+      '#title_display': none
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+  container_04:
+    '#type': container
+    '#attributes':
+      class:
+        - 'form--inline clearfix'
+    4_poradi_1:
+      '#type': select
+      '#title': '4. pořadí'
+      '#title_display': inline
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+    4_poradi_2:
+      '#type': select
+      '#title': '4. pořadí 2'
+      '#title_display': none
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+    4_poradi_3:
+      '#type': select
+      '#title': '4. pořadí 3'
+      '#title_display': none
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+    4_poradi_4:
+      '#type': select
+      '#title': '4. pořadí 4'
+      '#title_display': none
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+  container_05:
+    '#type': container
+    '#attributes':
+      class:
+        - 'form--inline clearfix'
+    5_poradi_1:
+      '#type': select
+      '#title': '5. pořadí'
+      '#title_display': inline
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+    5_poradi_2:
+      '#type': select
+      '#title': '5. pořadí 2'
+      '#title_display': none
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+    5_poradi_3:
+      '#type': select
+      '#title': '5. pořadí 3'
+      '#title_display': none
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+    5_poradi_4:
+      '#type': select
+      '#title': '5. pořadí 4'
+      '#title_display': none
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+    5_poradi_5:
+      '#type': select
+      '#title': '5. pořadí 5'
+      '#title_display': none
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+  container_06:
+    '#type': container
+    '#attributes':
+      class:
+        - 'form--inline clearfix'
+    6_poradi_1:
+      '#type': select
+      '#title': '6. pořadí'
+      '#title_display': inline
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+    6_poradi_2:
+      '#type': select
+      '#title': '6. pořadí 2'
+      '#title_display': none
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+    6_poradi_3:
+      '#type': select
+      '#title': '6. pořadí 3'
+      '#title_display': none
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+    6_poradi_4:
+      '#type': select
+      '#title': '6. pořadí 4'
+      '#title_display': none
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+    6_poradi_5:
+      '#type': select
+      '#title': '6. pořadí 5'
+      '#title_display': none
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+    6_poradi_6:
+      '#type': select
+      '#title': '6. pořadí 6'
+      '#title_display': none
+      '#options': ckc_prace
+      '#empty_option': '- práce -'
+      '#empty_value': '000'
+  actions:
+    '#type': webform_actions
+    '#title': 'Submit button(s)'
+    '#submit__label': 'Uložit hodnocení'
+css: |
+  select[name*="_poradi_"] {
+    max-width: 90px;
+  }
+
+javascript: ''
+settings:
+  ajax: false
+  ajax_scroll_top: ''
+  ajax_progress_type: ''
+  ajax_effect: ''
+  ajax_speed: null
+  page: true
+  page_submit_path: ''
+  page_confirm_path: ''
+  page_admin_theme: false
+  form_title: source_entity_webform
+  form_submit_once: true
+  form_exception_message: ''
+  form_open_message: ''
+  form_close_message: ''
+  form_previous_submissions: true
+  form_confidential: false
+  form_confidential_message: ''
+  form_remote_addr: true
+  form_convert_anonymous: false
+  form_prepopulate: false
+  form_prepopulate_source_entity: false
+  form_prepopulate_source_entity_required: false
+  form_prepopulate_source_entity_type: ''
+  form_reset: false
+  form_disable_autocomplete: false
+  form_novalidate: false
+  form_disable_inline_errors: false
+  form_required: false
+  form_unsaved: true
+  form_disable_back: false
+  form_submit_back: false
+  form_autofocus: false
+  form_details_toggle: false
+  form_access_denied: default
+  form_access_denied_title: ''
+  form_access_denied_message: ''
+  form_access_denied_attributes: {  }
+  form_file_limit: ''
+  submission_label: ''
+  submission_log: false
+  submission_views: {  }
+  submission_views_replace:
+    webform_routes: {  }
+    node_routes: {  }
+  submission_user_columns: {  }
+  submission_user_duplicate: false
+  submission_access_denied: default
+  submission_access_denied_title: ''
+  submission_access_denied_message: ''
+  submission_access_denied_attributes: {  }
+  submission_exception_message: ''
+  submission_locked_message: ''
+  submission_excluded_elements: {  }
+  submission_exclude_empty: false
+  submission_exclude_empty_checkbox: false
+  previous_submission_message: ''
+  previous_submissions_message: ''
+  autofill: false
+  autofill_message: ''
+  autofill_excluded_elements: {  }
+  wizard_progress_bar: true
+  wizard_progress_pages: false
+  wizard_progress_percentage: false
+  wizard_progress_link: false
+  wizard_progress_states: false
+  wizard_start_label: ''
+  wizard_preview_link: false
+  wizard_confirmation: true
+  wizard_confirmation_label: ''
+  wizard_track: ''
+  preview: 2
+  preview_label: ''
+  preview_title: ''
+  preview_message: ''
+  preview_attributes: {  }
+  preview_excluded_elements: {  }
+  preview_exclude_empty: false
+  preview_exclude_empty_checkbox: false
+  draft: authenticated
+  draft_multiple: false
+  draft_auto_save: true
+  draft_saved_message: ''
+  draft_loaded_message: ''
+  draft_pending_single_message: ''
+  draft_pending_multiple_message: ''
+  confirmation_type: page
+  confirmation_title: ''
+  confirmation_message: ''
+  confirmation_url: ''
+  confirmation_attributes: {  }
+  confirmation_back: true
+  confirmation_back_label: ''
+  confirmation_back_attributes: {  }
+  confirmation_exclude_query: false
+  confirmation_exclude_token: false
+  confirmation_update: false
+  limit_total: null
+  limit_total_interval: null
+  limit_total_message: ''
+  limit_total_unique: false
+  limit_user: null
+  limit_user_interval: null
+  limit_user_message: ''
+  limit_user_unique: true
+  entity_limit_total: null
+  entity_limit_total_interval: null
+  entity_limit_user: null
+  entity_limit_user_interval: null
+  purge: none
+  purge_days: null
+  results_disabled: false
+  results_disabled_ignore: false
+  token_view: false
+  token_update: false
+access:
+  create:
+    roles:
+      - porotce
+      - administrator
+    users: {  }
+    permissions: {  }
+  view_any:
+    roles:
+      - administrator
+    users: {  }
+    permissions: {  }
+  update_any:
+    roles:
+      - administrator
+    users: {  }
+    permissions: {  }
+  delete_any:
+    roles:
+      - administrator
+    users: {  }
+    permissions: {  }
+  purge_any:
+    roles:
+      - administrator
+    users: {  }
+    permissions: {  }
+  view_own:
+    roles:
+      - porotce
+    users: {  }
+    permissions: {  }
+  update_own:
+    roles:
+      - porotce
+    users: {  }
+    permissions: {  }
+  delete_own:
+    roles:
+      - porotce
+    users: {  }
+    permissions: {  }
+  administer:
+    roles:
+      - administrator
+    users: {  }
+    permissions: {  }
+  test:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  configuration:
+    roles:
+      - administrator
+    users: {  }
+    permissions: {  }
+handlers: {  }

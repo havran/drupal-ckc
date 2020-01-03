@@ -1,0 +1,24 @@
+uuid: 7ece6cd8-6116-49d0-b4cb-dc4956140373
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.ckc_rocnik_vyber
+  module:
+    - views
+  theme:
+    - ckc
+id: ckc_views_block__ckc_rocnik_vyber_block_1
+theme: ckc
+region: sidebar_first
+weight: -6
+provider: null
+plugin: 'views_block:ckc_rocnik_vyber-block_1'
+settings:
+  id: 'views_block:ckc_rocnik_vyber-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility: {  }

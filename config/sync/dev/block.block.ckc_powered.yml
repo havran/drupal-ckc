@@ -1,0 +1,22 @@
+uuid: d1e4cb97-cf42-4f3e-ba69-0c33063830c1
+langcode: cs
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - ckc
+_core:
+  default_config_hash: jQQUUWN2Uxr5qZtc9zcJKBCxpKY8orN1u2HPqYYRQDI
+id: ckc_powered
+theme: ckc
+region: sidebar_first
+weight: 10
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  provider: system
+  label_display: '0'
+visibility: {  }

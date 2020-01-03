@@ -1,0 +1,20 @@
+uuid: e7e6941d-5fd8-4e17-acb7-582fa1b4d6f8
+langcode: cs
+status: true
+dependencies:
+  theme:
+    - ckc
+_core:
+  default_config_hash: 7rR9chwXvdM2H8OYMAYx9Zj3GGlPMrZp_M3ZA4thYTk
+id: ckc_page_title
+theme: ckc
+region: content
+weight: -3
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility: {  }

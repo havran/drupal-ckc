@@ -1,0 +1,20 @@
+uuid: d9d675f7-7355-4317-a097-ea6b0ff77222
+langcode: cs
+status: true
+dependencies:
+  theme:
+    - ckc
+_core:
+  default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
+id: ckc_local_actions
+theme: ckc
+region: content
+weight: -4
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }
