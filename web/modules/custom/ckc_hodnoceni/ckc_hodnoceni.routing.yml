@@ -1,0 +1,39 @@
+ckc_hodnoceni.hlasovani:
+  path: '/ckc/{ckc_rocnik}/hodnoceni/{ckc_kategorie}'
+  defaults:
+    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcHodnoceniController::hlasovani'
+    _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcHodnoceniController::hlasovani_title'
+  requirements:
+    _permission: 'submit ckc rate'
+
+#fe_schema_org.admin.box.edit:
+#  path: '/admin/config/search/schema-org/box/{box_id}/edit'
+#  defaults:
+#    _controller: '\Drupal\fe_schema_org\Controller\FeSchemaOrgBoxEditController::edit'
+#    _title: 'Schema.ORG edit box'
+#  requirements:
+#    _permission: 'edit schema box'
+
+#fe_schema_org.admin.box.delete:
+#  path: '/admin/config/search/schema-org/box/{box_id}/delete'
+#  defaults:
+#    _controller: '\Drupal\fe_schema_org\Controller\FeSchemaOrgBoxDeleteController::delete'
+#    _title: 'Schema.ORG delete box'
+#  requirements:
+#    _permission: 'access content'
+
+#fe_schema_org.admin.schema.edit:
+#  path: '/admin/config/search/schema-org/schema/{box_id}/edit'
+#  defaults:
+#    _controller: '\Drupal\fe_schema_org\Controller\FeSchemaOrgSchemaEditController::view'
+#    _title: 'Schema.ORG edit'
+#  requirements:
+#    _permission: 'edit schema'
+
+#fe_schema_org.admin.schema.preview:
+#  path: '/admin/config/search/schema-org/schema/{box_id}/preview'
+#  defaults:
+#    _controller: '\Drupal\fe_schema_org\Controller\FeSchemaOrgSchemaPreviewController::view'
+#    _title: 'Schema.ORG preview'
+#  requirements:
+#    _permission: 'preview schema'
