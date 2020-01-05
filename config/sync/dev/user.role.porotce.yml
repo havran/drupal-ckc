@@ -6,4 +6,7 @@ id: porotce
 label: Porotce
 weight: -7
 is_admin: null
-permissions: {  }
+permissions:
+  - 'access devel information'
+  - 'access kint'
+  - 'submit ckc rate'
