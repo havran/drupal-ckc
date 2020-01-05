@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1350713f0475ee9fe3a005b131484d91",
+    "content-hash": "95f41935f11fe1462294dffb14c1ec5d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3015,17 +3015,17 @@
         },
         {
             "name": "drupal/userswitch",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/userswitch.git",
-                "reference": "8.x-1.5"
+                "reference": "8.x-1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/userswitch-8.x-1.5.zip",
-                "reference": "8.x-1.5",
-                "shasum": "7cdedee08c893972a042110c40b987c51785f3e5"
+                "url": "https://ftp.drupal.org/files/projects/userswitch-8.x-1.6.zip",
+                "reference": "8.x-1.6",
+                "shasum": "98b9ccd1fb5053825cf61a31a7d2dc286725742a"
             },
             "require": {
                 "drupal/core": "*"
@@ -3036,8 +3036,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.5",
-                    "datestamp": "1569472085",
+                    "version": "8.x-1.6",
+                    "datestamp": "1578217083",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3176,6 +3176,49 @@
                 "docs": "https://www.drupal.org/docs/8/modules/webform",
                 "forum": "https://drupal.stackexchange.com/questions/tagged/webform"
             }
+        },
+        {
+            "name": "drupal/webform_query",
+            "version": "dev-1.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/webform_query.git",
+                "reference": "73c7de2d1063fb4c943e215726968ed6ab9de0fc"
+            },
+            "require": {
+                "drupal/core": "~8.0",
+                "drupal/webform": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.x-dev",
+                    "datestamp": "1569300063",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "imclean",
+                    "homepage": "https://www.drupal.org/user/112588"
+                }
+            ],
+            "description": "Query webform submission data.",
+            "homepage": "https://www.drupal.org/project/webform_query",
+            "support": {
+                "source": "https://git.drupalcode.org/project/webform_query"
+            },
+            "time": "2019-09-25T01:23:07+00:00"
         },
         {
             "name": "drush/drush",
@@ -6649,7 +6692,8 @@
     "stability-flags": {
         "drupal/auto_entitylabel": 10,
         "drupal/field_permissions": 5,
-        "drupal/inline_entity_form": 5
+        "drupal/inline_entity_form": 5,
+        "drupal/webform_query": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
