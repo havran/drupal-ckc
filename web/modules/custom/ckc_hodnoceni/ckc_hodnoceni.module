@@ -8,28 +8,26 @@
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Views;
+use Drupal\ckc_hodnoceni\CkcHodnoceniService;
 
 /**
  * Implements hook_entity_insert().
  */
-function ckc_hodnoceni_entity_insert(EntityInterface $entity)
-{
+function ckc_hodnoceni_entity_insert(EntityInterface $entity) {
   ckc_hodnoceni_entity__clear_cache($entity);
 }
 
 /**
  * Implements hook_entity_update().
  */
-function ckc_hodnoceni_entity_update(EntityInterface $entity)
-{
+function ckc_hodnoceni_entity_update(EntityInterface $entity) {
   ckc_hodnoceni_entity__clear_cache($entity);
 }
 
 /**
  * Implements hook_entity_delete().
  */
-function ckc_hodnoceni_entity_delete(EntityInterface $entity)
-{
+function ckc_hodnoceni_entity_delete(EntityInterface $entity) {
   ckc_hodnoceni_entity__clear_cache($entity);
 }
 
@@ -37,38 +35,15 @@ function ckc_hodnoceni_entity_delete(EntityInterface $entity)
 /**
  * Implements hook_webform_options_WEBFORM_OPTIONS_ID_alter().
  */
-function ckc_hodnoceni_webform_options_ckc_kategorie_alter(array &$options, array &$element)
-{
+function ckc_hodnoceni_webform_options_ckc_kategorie_alter(array &$options, array &$element) {
   $options = ckc_hodnoceni__kategorie();
 }
 
 /**
  * Implements hook_webform_options_WEBFORM_OPTIONS_ID_alter().
  */
-function ckc_hodnoceni_webform_options_ckc_prace_alter(array &$options, array &$element)
-{
+function ckc_hodnoceni_webform_options_ckc_prace_alter(array &$options, array &$element) {
   $options = ckc_hodnoceni__prace();
-}
-
-
-/**
- * Implements hook_webform_element_alter().
- */
-function ckc_hodnoceni_webform_element_select_alter(array &$element, FormStateInterface $form_state, array $context)
-{
-//  if ($element['#webform'] === 'hodnotici_formular_ckc' && $element['#webform_key'] === 'ckc_kategorie_show') {
-//    $element['#default_value'] = ckc_hodnoceni__get_category();
-//  }
-}
-
-/**
- * Implements hook_webform_element_alter().
- */
-function ckc_hodnoceni_webform_element_hidden_alter(array &$element, FormStateInterface $form_state, array $context)
-{
-//  if ($element['#webform'] === 'hodnotici_formular_ckc' && $element['#webform_key'] === 'ckc_kategorie') {
-//    $element['#default_value'] = ckc_hodnoceni__get_category();
-//  }
 }
 
 
@@ -131,11 +106,17 @@ function ckc_hodnoceni__prace() {
 }
 
 function ckc_hodnoceni_entity__clear_cache(EntityInterface $entity) {
-  if ($entity->bundle() !== 'povidka') {
-    return;
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === 'povidka') {
+    $cid = "ckc_hodnoceni:works:{$entity->field_rocnik_ref->entity->name->value}:{$entity->field_kategorie_ref->entity->field_kod_kategorie->value}";
+    \Drupal::cache()->invalidate($cid);
   }
-  $cid = "ckc_prace:{$entity->field_kategorie_ref->entity->field_kod_kategorie->value}";
-  \Drupal::cache()->invalidate($cid);
+  if (
+    $entity->getEntityTypeId() === 'taxonomy_term'
+    && in_array($entity->bundle(), [CkcHodnoceniService::CKC_ROCNIK, CkcHodnoceniService::CKC_KATEGORIE])
+  ) {
+    $cid = "ckc_hodnoceni:taxonomy:{$entity->bundle()}";
+    \Drupal::cache()->invalidate($cid);
+  }
 }
 
 function ckc_hodnoceni__get_category() {

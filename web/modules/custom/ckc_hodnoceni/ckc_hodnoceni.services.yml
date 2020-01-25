@@ -1,0 +1,6 @@
+services:
+  ckc_hodnoceni.twig_extension:
+    class: Drupal\ckc_hodnoceni\TwigExtension\CleanAsPath
+    arguments: ['@renderer']
+    tags:
+      - { name: twig.extension }

@@ -9,4 +9,7 @@ is_admin: null
 permissions:
   - 'access devel information'
   - 'access kint'
+  - 'ckc can rate'
+  - 'ckc can see rate'
+  - 'ckc submit rate'
   - 'submit ckc rate'
