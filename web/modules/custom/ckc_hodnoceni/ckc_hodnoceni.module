@@ -7,7 +7,6 @@
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\views\Views;
 use Drupal\ckc_hodnoceni\CkcHodnoceniService;
 
 /**
@@ -31,80 +30,6 @@ function ckc_hodnoceni_entity_delete(EntityInterface $entity) {
   ckc_hodnoceni_entity__clear_cache($entity);
 }
 
-
-/**
- * Implements hook_webform_options_WEBFORM_OPTIONS_ID_alter().
- */
-function ckc_hodnoceni_webform_options_ckc_kategorie_alter(array &$options, array &$element) {
-  $options = ckc_hodnoceni__kategorie();
-}
-
-/**
- * Implements hook_webform_options_WEBFORM_OPTIONS_ID_alter().
- */
-function ckc_hodnoceni_webform_options_ckc_prace_alter(array &$options, array &$element) {
-  $options = ckc_hodnoceni__prace();
-}
-
-
-/**
- * Implements hook_webform_submission_form_alter().
- */
-function ckc_hodnoceni_webform_submission_form_alter(array &$form, FormStateInterface $form_state, $form_id)
-{
-  if ($form_id === "webform_submission_hodnotici_formular_ckc_edit_form") {
-    $form['actions']['submit']['#validate'][] = 'ckc_hodnoceni_hodnotici_formular_ckc_form_submit';
-  }
-}
-
-function ckc_hodnoceni_hodnotici_formular_ckc_form_submit($form, FormStateInterface $form_state) {
-  if ($form_state->getValue('1_poradi_nevyhlasovat') === 1) {
-    $form_state->setValue('1_poradi_1', '');
-  }
-}
-
-/** Helpers **/
-
-function ckc_hodnoceni__rocnik() {
-  $options = [];
-  return $options;
-}
-
-function ckc_hodnoceni__kategorie() {
-  $options = [];
-  $options[0] = 'mikropovídka';
-  $options[1] = 'krátká povídka';
-  $options[2] = 'povídka';
-  $options[3] = 'novela';
-  return $options;
-}
-
-function ckc_hodnoceni__prace() {
-  $kategorie = ckc_hodnoceni__get_category();
-  $cid = "ckc_prace:{$kategorie}";
-
-  // Load cached options.
-  if ($cache = \Drupal::cache()->get($cid, FALSE)) {
-    return $cache->data;
-  }
-
-  // Get options from view and store them in cache.
-  $options = [];
-  $view = Views::getView('ckc_erd_povidky');
-  $view->setDisplay('entity_reference_1');
-  $view->setArguments([$kategorie]);
-  $view->execute();
-  foreach ($view->result as $row) {
-    $prace_kategorie = $row->_entity->field_kategorie_ref->entity->field_kod_kategorie->value;
-    $prace_poradi = $row->_entity->field_poradi_povidky->value;
-    $prace_kod = "{$prace_kategorie}{$prace_poradi}";
-    $options[$prace_kod] = "{$prace_kod} {$row->_entity->label()}";
-  }
-  \Drupal::cache()->set($cid, $options);
-
-  return $options;
-}
-
 function ckc_hodnoceni_entity__clear_cache(EntityInterface $entity) {
   if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === 'povidka') {
     $cid = "ckc_hodnoceni:works:{$entity->field_rocnik_ref->entity->name->value}:{$entity->field_kategorie_ref->entity->field_kod_kategorie->value}";
@@ -119,8 +44,36 @@ function ckc_hodnoceni_entity__clear_cache(EntityInterface $entity) {
   }
 }
 
-function ckc_hodnoceni__get_category() {
-//  $kategorie = $_GET['ckc_kategorie'] === 0 || $_GET['ckc_kategorie'] === '0' || empty($_GET['ckc_kategorie']) ? 0 : (int)$_GET['ckc_kategorie'];
-//  return in_array($kategorie, array_keys(ckc_hodnoceni__kategorie()), TRUE) ? $kategorie : '0';
-  return '0';
+/**
+ * Implements hook_webform_options_WEBFORM_OPTIONS_ID_alter().
+ */
+function ckc_hodnoceni_webform_options_ckc_kategorie_alter(array &$options, array &$element) {
+  $options = CkcHodnoceniService::kategorie();
 }
+
+/**
+ * Implements hook_webform_options_WEBFORM_OPTIONS_ID_alter().
+ */
+function ckc_hodnoceni_webform_options_ckc_prace_alter(array &$options, array &$element) {
+  $year = \Drupal::routeMatch()->getParameter('ckc_rocnik');
+  $category = \Drupal::routeMatch()->getParameter('ckc_kategorie');
+  if (isset($year) && isset($category)) {
+    $options = CkcHodnoceniService::prace($year, $category);
+  }
+}
+
+/**
+ * Implements hook_webform_submission_form_alter().
+ */
+function ckc_hodnoceni_webform_submission_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id === "webform_submission_hodnotici_formular_ckc_edit_form") {
+    $form['actions']['submit']['#validate'][] = 'ckc_hodnoceni_hodnotici_formular_ckc_form_submit';
+  }
+}
+
+function ckc_hodnoceni_hodnotici_formular_ckc_form_submit($form, FormStateInterface $form_state) {
+  if ($form_state->getValue('1_poradi_nevyhlasovat') === 1) {
+    $form_state->setValue('1_poradi_1', '');
+  }
+}
+

@@ -1,4 +1,3 @@
-uuid: 2a3848fc-889c-4778-8199-ff2ab68f2c7a
 langcode: cs
 status: open
 dependencies: {  }
@@ -188,3 +187,5 @@ access:
     users: {  }
     permissions: {  }
 handlers: {  }
+variants: {  }
+uuid: 2a3848fc-889c-4778-8199-ff2ab68f2c7a

@@ -1,3 +1,10 @@
+#ckc_hodnoceni.years:
+#  path: '/ckc'
+#  defaults:
+#    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcYearsController::years'
+#    _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcYearsController::years_title'
+#  requirements:
+#    _permission: 'access content'
 ckc_hodnoceni.rating:
   path: '/ckc/{ckc_rocnik}/{ckc_kategorie}/hodnotit'
   defaults:
