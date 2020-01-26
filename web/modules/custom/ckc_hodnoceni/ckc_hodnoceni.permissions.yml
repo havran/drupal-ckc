@@ -1,3 +1,6 @@
 ckc can rate:
   title: 'CKČ - user can rate'
   description: 'User can rate CKČ entries.'
+ckc admin:
+  title: 'CKČ - administrator'
+  description: 'User is administrator for CKČ.'

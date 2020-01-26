@@ -52,6 +52,9 @@ module:
   update: 0
   user: 0
   userswitch: 0
+  views_bulk_edit: 0
+  views_bulk_operations: 0
+  views_bulk_operations_example: 0
   views_ui: 0
   webform: 0
   webform_devel: 0

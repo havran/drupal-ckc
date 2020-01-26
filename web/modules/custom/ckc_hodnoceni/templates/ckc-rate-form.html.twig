@@ -1,0 +1,41 @@
+<style>
+  select[name^="poradi_"] {
+    width: 90px;
+    margin: 0 0.5em;
+  }
+  div[class^="form-item-poradi-"] {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+  }
+  .row-inline {
+    display: flex;
+  }
+  label.form-item {
+    min-width: 65px;
+  }
+</style>
+{{ form.ckc_rocnik }}
+{{ form.ckc_kategorie }}
+<div class="row row-inline">
+  <label class="form-item">1. místo:</label>{{ form.poradi_1_1 }}
+</div>
+
+<div class="row row-inline">
+  <label class="form-item">2. místo:</label>{{ form.poradi_2_1 }}{{ form.poradi_2_2 }}
+</div>
+
+<div class="row row-inline">
+  <label class="form-item">3. místo:</label>{{ form.poradi_3_1 }}{{ form.poradi_3_2 }}{{ form.poradi_3_3 }}
+</div>
+
+<div class="row row-inline">
+  <label class="form-item">4. místo:</label>{{ form.poradi_4_1 }}{{ form.poradi_4_2 }}{{ form.poradi_4_3 }}{{ form.poradi_4_4 }}
+</div>
+
+<div class="row row-inline">
+  <label class="form-item">5. místo:</label>{{ form.poradi_5_1 }}{{ form.poradi_5_2 }}{{ form.poradi_5_3 }}{{ form.poradi_5_4 }}{{ form.poradi_5_5 }}
+</div>
+
+<div class="row row-inline">
+  <label class="form-item">6. místo:</label>{{ form.poradi_6_1 }}{{ form.poradi_6_2 }}{{ form.poradi_6_3 }}{{ form.poradi_6_4 }}{{ form.poradi_6_5 }}{{ form.poradi_6_6 }}
+</div>

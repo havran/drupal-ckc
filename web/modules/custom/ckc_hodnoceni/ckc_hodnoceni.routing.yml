@@ -1,22 +1,30 @@
-#ckc_hodnoceni.years:
-#  path: '/ckc'
-#  defaults:
-#    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcYearsController::years'
-#    _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcYearsController::years_title'
-#  requirements:
-#    _permission: 'access content'
-ckc_hodnoceni.rating:
-  path: '/ckc/{ckc_rocnik}/{ckc_kategorie}/hodnotit'
+ckc_hodnoceni.rating.list:
+  path: '/ckc/{ckc_rocnik}/hodnoceni'
   defaults:
-    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcRatingController::rate'
-    _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcRatingController::rate_title'
+    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcRatingController::list'
+    _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcRatingController::list_title'
   requirements:
     _permission: 'ckc can rate'
 
-ckc_hodnoceni.rating.edit:
-  path: '/ckc/{ckc_rocnik}/{ckc_kategorie}/upravit-hodnoceni'
+ckc_hodnoceni.rating.category:
+  path: '/ckc/{ckc_rocnik}/hodnoceni/{ckc_kategorie}'
   defaults:
-    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcRatingController::rate_edit'
-    _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcRatingController::rate_edit_title'
+    #_controller: '\Drupal\ckc_hodnoceni\Controller\CkcRatingController::rate'
+    _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcRatingController::rate_title'
+    _form: '\Drupal\ckc_hodnoceni\Form\CkcRateForm'
   requirements:
     _permission: 'ckc can rate'
+
+ckc_hodnoceni.works.list:
+  path: '/ckc/{ckc_rocnik}/prace/{ckc_kategorie}/list'
+  defaults:
+    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcWorksController::list'
+  requirements:
+    _permission: 'ckc admin'
+
+ckc_hodnoceni.works.edit:
+  path: '/ckc/prace/{ckc_rocnik}/{ckc_kategorie}/edit'
+  defaults:
+    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcWorksController::edit'
+  requirements:
+    _permission: 'ckc admin'

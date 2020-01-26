@@ -1,0 +1,9 @@
+uuid: b0ef7a2a-8373-4f05-ac6a-b614902fcb08
+langcode: en
+status: true
+dependencies: {  }
+id: povidka
+label: Povídka
+icon_uuid: null
+description: ''
+behavior_plugins: {  }

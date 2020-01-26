@@ -59,6 +59,8 @@ function ckc_hodnoceni_webform_options_ckc_prace_alter(array &$options, array &$
   $category = \Drupal::routeMatch()->getParameter('ckc_kategorie');
   if (isset($year) && isset($category)) {
     $options = CkcHodnoceniService::prace($year, $category);
+  } else {
+    $options = ['' => ''];
   }
 }
 
@@ -77,3 +79,10 @@ function ckc_hodnoceni_hodnotici_formular_ckc_form_submit($form, FormStateInterf
   }
 }
 
+/**
+ * Implements hook_theme().
+ */
+function ckc_hodnoceni_theme($existing, $type, $theme, $path) {
+  $themes['ckc_rate_form'] = ['render element' => 'form'];
+  return $themes;
+}

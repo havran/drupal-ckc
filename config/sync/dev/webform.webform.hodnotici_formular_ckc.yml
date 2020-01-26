@@ -1,3 +1,4 @@
+uuid: 2a3848fc-889c-4778-8199-ff2ab68f2c7a
 langcode: cs
 status: open
 dependencies: {  }
@@ -29,7 +30,7 @@ settings:
   form_exception_message: ''
   form_open_message: ''
   form_close_message: ''
-  form_previous_submissions: true
+  form_previous_submissions: false
   form_confidential: false
   form_confidential_message: ''
   form_remote_addr: true
@@ -53,7 +54,7 @@ settings:
   form_access_denied_message: ''
   form_access_denied_attributes: {  }
   form_file_limit: ''
-  submission_label: ''
+  submission_label: Hodnocení
   submission_log: false
   submission_views: {  }
   submission_views_replace:
@@ -67,8 +68,7 @@ settings:
   submission_access_denied_attributes: {  }
   submission_exception_message: ''
   submission_locked_message: ''
-  submission_excluded_elements:
-    ckc_kategorie_show: ckc_kategorie_show
+  submission_excluded_elements: {  }
   submission_exclude_empty: true
   submission_exclude_empty_checkbox: false
   previous_submission_message: ''
@@ -101,9 +101,9 @@ settings:
   draft_loaded_message: ''
   draft_pending_single_message: ''
   draft_pending_multiple_message: ''
-  confirmation_type: page
-  confirmation_title: ''
-  confirmation_message: ''
+  confirmation_type: modal
+  confirmation_title: 'Hodnocení bylo uloženo'
+  confirmation_message: 'Va&scaron;e hodnocen&iacute; bylo uloženo.'
   confirmation_url: ''
   confirmation_attributes: {  }
   confirmation_back: true
@@ -134,27 +134,22 @@ access:
   create:
     roles:
       - porotce
-      - administrator
     users: {  }
     permissions: {  }
   view_any:
-    roles:
-      - administrator
+    roles: {  }
     users: {  }
     permissions: {  }
   update_any:
-    roles:
-      - administrator
+    roles: {  }
     users: {  }
     permissions: {  }
   delete_any:
-    roles:
-      - administrator
+    roles: {  }
     users: {  }
     permissions: {  }
   purge_any:
-    roles:
-      - administrator
+    roles: {  }
     users: {  }
     permissions: {  }
   view_own:
@@ -173,8 +168,7 @@ access:
     users: {  }
     permissions: {  }
   administer:
-    roles:
-      - administrator
+    roles: {  }
     users: {  }
     permissions: {  }
   test:
@@ -182,10 +176,16 @@ access:
     users: {  }
     permissions: {  }
   configuration:
-    roles:
-      - administrator
+    roles: {  }
     users: {  }
     permissions: {  }
-handlers: {  }
+handlers:
+  debug:
+    id: debug
+    label: Debug
+    handler_id: debug
+    status: true
+    conditions: {  }
+    weight: 0
+    settings: {  }
 variants: {  }
-uuid: 2a3848fc-889c-4778-8199-ff2ab68f2c7a

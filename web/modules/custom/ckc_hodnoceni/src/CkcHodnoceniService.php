@@ -162,6 +162,9 @@ class CkcHodnoceniService {
       $acc[$item['kod']] = "{$item['kod']} {$item['title']}";
       return $acc;
     }, []);
+    if (empty($prace)) {
+      return ['' => ''];
+    }
     return $prace;
   }
 }
