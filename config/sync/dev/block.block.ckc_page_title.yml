@@ -9,7 +9,7 @@ _core:
 id: ckc_page_title
 theme: ckc
 region: content
-weight: -3
+weight: -1
 provider: null
 plugin: page_title_block
 settings:

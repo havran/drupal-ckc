@@ -9,7 +9,7 @@ _core:
 id: ckc_local_tasks
 theme: ckc
 region: content
-weight: -6
+weight: -4
 provider: null
 plugin: local_tasks_block
 settings:
