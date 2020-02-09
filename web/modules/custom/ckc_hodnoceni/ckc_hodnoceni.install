@@ -1,0 +1,103 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for File module.
+ */
+
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
+
+/**
+ * Implements hook_uninstall().
+ */
+function ckc_hodnoceni_uninstall() {
+
+}
+
+/**
+ * Implements hook_schema().
+ */
+function ckc_hodnoceni_schema() {
+  $work_item_type = [
+    'type' => 'varchar_ascii',
+    'length' => 3,
+    'not null' => FALSE,
+  ];
+
+  $schema['ckc_hodnoceni'] = [
+    'description' => 'CKČ - rating for works.',
+    'fields' => [
+      'rid' => [
+        'description' => 'Work ID.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      // Unique record.
+      'ckc_year' => [
+        'description' => 'Year - rating for annual competion.',
+        'type' => 'varchar_ascii',
+        'length' => 4,
+        'not null' => TRUE,
+      ],
+      'ckc_category' => [
+        'description' => 'Category - rating for category.',
+        'type' => 'varchar_ascii',
+        'length' => 1,
+        'not null' => TRUE,
+      ],
+      'uid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'The {users}.uid of the user who rate works.',
+      ],
+      // Data.
+      'order_1_1' => $work_item_type,
+      'order_1_1_exclude' => [
+        'description' => 'Exclude first place.',
+        'type' => 'varchar_ascii',
+        'length' => 1,
+        'not null' => TRUE,
+        'default' => 'n'
+      ],
+
+      'order_2_1' => $work_item_type,
+      'order_2_2' => $work_item_type,
+
+      'order_3_1' => $work_item_type,
+      'order_3_2' => $work_item_type,
+      'order_3_3' => $work_item_type,
+
+      'order_4_1' => $work_item_type,
+      'order_4_2' => $work_item_type,
+      'order_4_3' => $work_item_type,
+      'order_4_4' => $work_item_type,
+
+      'order_5_1' => $work_item_type,
+      'order_5_2' => $work_item_type,
+      'order_5_3' => $work_item_type,
+      'order_5_4' => $work_item_type,
+      'order_5_5' => $work_item_type,
+
+      'order_6_1' => $work_item_type,
+      'order_6_2' => $work_item_type,
+      'order_6_3' => $work_item_type,
+      'order_6_4' => $work_item_type,
+      'order_6_5' => $work_item_type,
+      'order_6_6' => $work_item_type,
+
+      'note' => [
+        'description' => 'Note from evaluator.',
+        'type' => 'text',
+        'not null' => FALSE,
+      ],
+    ],
+    'primary key' => ['rid'],
+    'unique keys' => [
+      'rating' => ['ckc_year', 'ckc_category', 'uid'],
+    ],
+  ];
+  return $schema;
+}

@@ -1,0 +1,10 @@
+hodnoceni:
+  version: 1.x
+  css:
+    theme:
+      css/form.css: {}
+  js:
+    js/form.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupalSettings

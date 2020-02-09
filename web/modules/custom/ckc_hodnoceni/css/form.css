@@ -1,0 +1,28 @@
+input[name^="order_"].form-text {
+  width: 40px;
+  margin: 0 0.25em;
+}
+input[name^="order_"]::placeholder {
+  color: lightgrey;
+}
+select[name^="order_"] option.selected {
+  background-color: lightgrey;
+}
+div[class^="form-item-order-"] {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+.row-inline {
+  display: flex;
+  align-items: center;
+}
+.row-inline .form-item {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+label.form-item {
+  min-width: 65px;
+}
+.form-item-order-1-1-exclude {
+  padding-left: 1em;
+}

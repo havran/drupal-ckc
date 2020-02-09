@@ -54,7 +54,8 @@
         "drupal/webform_query": "1.x-dev",
         "drush/drush": "^10.1",
         "oomphinc/composer-installers-extender": "^1.1",
-        "scarlac/drag-check-js": "^2.0"
+        "scarlac/drag-check-js": "^2.0",
+        "symfony/property-access": "^3.4"
     },
     "require-dev": {
     },

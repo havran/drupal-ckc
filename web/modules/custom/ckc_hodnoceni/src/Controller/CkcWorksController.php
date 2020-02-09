@@ -11,9 +11,15 @@ use Drupal\Core\Controller\ControllerBase;
 
 class CkcWorksController extends ControllerBase {
 
-  public function list(string $ckc_rocnik, string $ckc_kategorie) {
+  public function list(string $ckc_rocnik) {
     return [
       '#markup' => '<p>LIST</p>',
+    ];
+  }
+
+  public function import_title(string $ckc_rocnik) {
+    return [
+      '#markup' => '<p>Import povídek</p>',
     ];
   }
 

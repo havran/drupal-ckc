@@ -6,8 +6,8 @@ use Drupal\views\Views;
 
 class CkcHodnoceniService {
 
-  const CKC_ROCNIK = 'rocnik';
-  const CKC_KATEGORIE = 'kategorie';
+  const CKC_YEAR = 'rocnik';
+  const CKC_CATEGORY = 'kategorie';
 
   /**
    * Get years from taxonomy 'rocnik', ordered by 'name' (year).
@@ -18,7 +18,7 @@ class CkcHodnoceniService {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public static function get_years() {
-    $cid = "ckc_hodnoceni:taxonomy:" . self::CKC_ROCNIK;
+    $cid = "ckc_hodnoceni:taxonomy:" . self::CKC_YEAR;
     // Load cached years.
     if ($cache = \Drupal::cache()->get($cid, FALSE)) {
       //echo '-> Cache hit - get_years'.PHP_EOL;
@@ -28,7 +28,7 @@ class CkcHodnoceniService {
     $term_etm = \Drupal::entityTypeManager()
       ->getStorage('taxonomy_term');
     $terms_tids = $term_etm->getQuery()
-      ->condition('vid', self::CKC_ROCNIK)
+      ->condition('vid', self::CKC_YEAR)
       ->condition('status', 1)
       ->execute();
     $terms = $term_etm->loadMultiple($terms_tids);
@@ -47,6 +47,24 @@ class CkcHodnoceniService {
   }
 
   /**
+   * Return map from year name to taxonomy_term id.
+   *
+   * @return mixed
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  public static function year_map() {
+    return array_reduce(
+      self::get_years(),
+      function ($acc, $i) {
+        $acc[$i['name']] = $i['id'];
+        return $acc;
+      },
+      []
+    );
+  }
+
+  /**
    * Get categories from taxonomy 'lategorie', order by 'field_kod_kategorie'.
    * Also return clean names for using in URL.
    * Cached for fast access.
@@ -56,7 +74,7 @@ class CkcHodnoceniService {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public static function get_categories() {
-    $cid = "ckc_hodnoceni:taxonomy:" . self::CKC_KATEGORIE;
+    $cid = "ckc_hodnoceni:taxonomy:" . self::CKC_CATEGORY;
     // Load cached categories.
     if ($cache = \Drupal::cache()->get($cid, FALSE)) {
       //echo '-> Cache hit - get_categories'.PHP_EOL;
@@ -66,7 +84,7 @@ class CkcHodnoceniService {
     $term_etm = \Drupal::entityTypeManager()
       ->getStorage('taxonomy_term');
     $terms_tids = $term_etm->getQuery()
-      ->condition('vid', self::CKC_KATEGORIE)
+      ->condition('vid', self::CKC_CATEGORY)
       ->condition('status', 1)
       ->execute();
     $terms = $term_etm->loadMultiple($terms_tids);
@@ -74,28 +92,51 @@ class CkcHodnoceniService {
     foreach ($terms as $term) {
       $term_data[] = array(
         'id' => $term->tid->value,
-        'kod' => $term->field_kod_kategorie->value,
+        'code' => $term->field_kod_kategorie->value,
         'name' => $term->name->value,
         'name_clean' => \Drupal::service('pathauto.alias_cleaner')->cleanString($term->name->value),
       );
     }
-    usort($term_data, function($a, $b) { return strcmp($a["kod"], $b["kod"]); });
+    usort($term_data, function($a, $b) { return strcmp($a["code"], $b["code"]); });
     \Drupal::cache()->set($cid, $term_data);
 
     //echo '-> Cache miss - get_categories'.PHP_EOL;
     return $term_data;
   }
 
-  public static function get_category_kod_by_name(string $category_name_clean) {
+  /**
+   *  Return map from category code to taxonomy_term id.
+   * @return mixed
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  public static function category_map() {
+    return  array_reduce(
+      self::get_categories(),
+      function ($acc, $i) {
+        $acc[$i['code']] = $i['id'];
+        return $acc;
+      },
+      []
+    );
+  }
+
+  /**
+   * @param string $category_name_clean
+   * @return mixed|string
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  public static function get_category_code_by_name(string $category_name_clean) {
     $categories = self::get_categories();
-    $kod = $categories[0]['kod'];
+    $code = '';
     foreach ($categories as $category) {
       if ($category['name_clean'] === $category_name_clean) {
-        $kod = $category['kod'];
+        $code = $category['code'];
         break;
       }
     }
-    return $kod;
+    return $code;
   }
 
   /**
@@ -106,7 +147,12 @@ class CkcHodnoceniService {
    * @param string $category
    * @return array
    */
-  public static function get_works_by_year_and_category(string $year, string $category_code) {
+  public static function get_works_by_year_and_category(string $year, string $category) {
+    $categories = self::categories(true);
+    $category_code = in_array($category, $categories, TRUE)
+      ? array_flip($categories)[$category]
+      : $category;
+
     $cid = "ckc_hodnoceni:works:{$year}:{$category_code}";
     // Load cached works.
     if ($cache = \Drupal::cache()->get($cid, FALSE)) {
@@ -119,15 +165,15 @@ class CkcHodnoceniService {
     $view->setArguments([$year, $category_code]);
     $view->execute();
     foreach ($view->result as $id => $row) {
-      $rocnik = trim(strip_tags($view->style_plugin->getField($id, 'field_rocnik_ref')));
-      $kategorie_kod = trim(strip_tags($view->style_plugin->getField($id, 'field_kod_kategorie')));
-      $poradi = trim(strip_tags($view->style_plugin->getField($id, 'field_poradi_povidky')));
+      $year = trim(strip_tags($view->style_plugin->getField($id, 'field_rocnik_ref')));
+      $category_code = trim(strip_tags($view->style_plugin->getField($id, 'field_kod_kategorie')));
+      $order = trim(strip_tags($view->style_plugin->getField($id, 'field_poradi_povidky')));
       $title = trim(strip_tags($view->style_plugin->getField($id, 'title')));
 
       $works[] = [
-        'kod' => $kategorie_kod . $poradi,
-        'rocnik' => $rocnik,
-        'kategorie' => $kategorie_kod,
+        'code' => $category_code . $order,
+        'year' => $year,
+        'category' => $category_code,
         'title' => $title,
       ];
     }
@@ -136,35 +182,68 @@ class CkcHodnoceniService {
     return $works;
   }
 
-  public static function kategorie($use_name_clean = false) {
-    $kategorie = &drupal_static(__FUNCTION__, []);
-    if (!empty($kategorie)) {
-      return $kategorie;
+  /**
+   * Get array of categories. If $use_name_clean === TRUE, then return categories without punctuation.
+   *
+   * @param bool $use_name_clean
+   * @return mixed
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  public static function categories($use_name_clean = false) {
+    $categories = &drupal_static(__FUNCTION__, []);
+    $key = $use_name_clean ? 'clean' : 'normal';
+    if (!empty($categories) && isset($categories[$key])) {
+      return $categories[$key];
     }
     $categories = self::get_categories();
-    $kategorie = array_reduce($categories, function($acc, $item) use ($use_name_clean) {
-      $acc[$item['kod']] = $use_name_clean ? $item['name_clean'] : $item['name'];
+    $categories = array_reduce($categories, function($acc, $item) use ($use_name_clean) {
+      $acc['clean'][$item['code']] = $item['name_clean'];
+      $acc['normal'][$item['code']] = $item['name'];
       return $acc;
     }, []);
-    return $kategorie;
+    return $categories[$key];
   }
 
-  public static function prace($year, $category) {
-    $prace = &drupal_static(__FUNCTION__, []);
-    if (!empty($prace)) {
-      return $prace;
+  /**
+   * Get array of works by $year and $category. Category can be namr (from router) or number (as string).
+   *
+   * @param $year
+   * @param $category
+   * @return mixed
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  public static function works($year, $category) {
+    $categories = self::categories(true);
+    $category_code = in_array($category, $categories, TRUE)
+      ? array_flip($categories)[$category]
+      : $category;
+    $works = &drupal_static(__FUNCTION__, []);
+    if (!empty($works) && isset($works["{$year}:{$category_code}"])) {
+      return $works["{$year}:{$category_code}"];
     }
-    // Get category code by 'name_clean' category name.
-    $kategorie = self::kategorie(true);
-    $category_code = array_flip($kategorie)[$category];
-    $works = \Drupal::service('ckc_hodnoceni.service')->get_works_by_year_and_category($year, $category_code);
-    $prace = array_reduce($works, function($acc, $item) {
-      $acc[$item['kod']] = "{$item['kod']} {$item['title']}";
-      return $acc;
-    }, []);
-    if (empty($prace)) {
-      return ['' => ''];
-    }
-    return $prace;
+    $works["{$year}:{$category_code}"] = array_reduce(
+      self::get_works_by_year_and_category($year, $category_code),
+      function($acc, $item) {
+        $acc[$item['code']] = "{$item['code']} {$item['title']}";
+        return $acc;
+      },
+      []
+    );
+    return $works["{$year}:{$category_code}"];
   }
+
+  public static function validate_year(string $year) {
+
+  }
+
+  public static function validate_category_number(string $number) {
+    return in_array($number, array_keys(self::categories()), TRUE);
+  }
+
+  public static function validate_category_string(string $category) {
+    return in_array($category, self::categories(true), TRUE);
+  }
+
 }

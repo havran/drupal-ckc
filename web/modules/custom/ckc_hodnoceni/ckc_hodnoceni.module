@@ -37,7 +37,7 @@ function ckc_hodnoceni_entity__clear_cache(EntityInterface $entity) {
   }
   if (
     $entity->getEntityTypeId() === 'taxonomy_term'
-    && in_array($entity->bundle(), [CkcHodnoceniService::CKC_ROCNIK, CkcHodnoceniService::CKC_KATEGORIE])
+    && in_array($entity->bundle(), [CkcHodnoceniService::CKC_YEAR, CkcHodnoceniService::CKC_CATEGORY])
   ) {
     $cid = "ckc_hodnoceni:taxonomy:{$entity->bundle()}";
     \Drupal::cache()->invalidate($cid);
@@ -48,7 +48,7 @@ function ckc_hodnoceni_entity__clear_cache(EntityInterface $entity) {
  * Implements hook_webform_options_WEBFORM_OPTIONS_ID_alter().
  */
 function ckc_hodnoceni_webform_options_ckc_kategorie_alter(array &$options, array &$element) {
-  $options = CkcHodnoceniService::kategorie();
+  $options = CkcHodnoceniService::categories();
 }
 
 /**
@@ -58,7 +58,7 @@ function ckc_hodnoceni_webform_options_ckc_prace_alter(array &$options, array &$
   $year = \Drupal::routeMatch()->getParameter('ckc_rocnik');
   $category = \Drupal::routeMatch()->getParameter('ckc_kategorie');
   if (isset($year) && isset($category)) {
-    $options = CkcHodnoceniService::prace($year, $category);
+    $options = CkcHodnoceniService::works($year, $category);
   } else {
     $options = ['' => ''];
   }
@@ -84,5 +84,6 @@ function ckc_hodnoceni_hodnotici_formular_ckc_form_submit($form, FormStateInterf
  */
 function ckc_hodnoceni_theme($existing, $type, $theme, $path) {
   $themes['ckc_rate_form'] = ['render element' => 'form'];
+  $themes['ckc_works_import_form'] = ['render element' => 'form'];
   return $themes;
 }

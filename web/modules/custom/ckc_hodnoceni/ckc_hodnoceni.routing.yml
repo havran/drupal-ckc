@@ -15,16 +15,24 @@ ckc_hodnoceni.rating.category:
   requirements:
     _permission: 'ckc can rate'
 
-ckc_hodnoceni.works.list:
-  path: '/ckc/{ckc_rocnik}/prace/{ckc_kategorie}/list'
+
+ckc_hodnoceni.works:
+  path: '/ckc/{ckc_rocnik}/prace'
   defaults:
     _controller: '\Drupal\ckc_hodnoceni\Controller\CkcWorksController::list'
   requirements:
     _permission: 'ckc admin'
-
-ckc_hodnoceni.works.edit:
-  path: '/ckc/prace/{ckc_rocnik}/{ckc_kategorie}/edit'
+ckc_hodnoceni.works.import:
+  path: '/ckc/{ckc_rocnik}/prace/import'
   defaults:
-    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcWorksController::edit'
+    _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcWorksController::import_title'
+    _form: '\Drupal\ckc_hodnoceni\Form\CkcWorksImportForm'
   requirements:
     _permission: 'ckc admin'
+
+#ckc_hodnoceni.works.edit:
+#  path: '/ckc/prace/{ckc_rocnik}/{ckc_kategorie}/edit'
+#  defaults:
+#    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcWorksController::edit'
+#  requirements:
+#    _permission: 'ckc admin'
