@@ -44,40 +44,40 @@ function ckc_hodnoceni_entity__clear_cache(EntityInterface $entity) {
   }
 }
 
-/**
- * Implements hook_webform_options_WEBFORM_OPTIONS_ID_alter().
- */
-function ckc_hodnoceni_webform_options_ckc_kategorie_alter(array &$options, array &$element) {
-  $options = CkcHodnoceniService::categories();
-}
+// /**
+//  * Implements hook_webform_options_WEBFORM_OPTIONS_ID_alter().
+//  */
+// function ckc_hodnoceni_webform_options_ckc_kategorie_alter(array &$options, array &$element) {
+//   $options = CkcHodnoceniService::categories();
+// }
 
-/**
- * Implements hook_webform_options_WEBFORM_OPTIONS_ID_alter().
- */
-function ckc_hodnoceni_webform_options_ckc_prace_alter(array &$options, array &$element) {
-  $year = \Drupal::routeMatch()->getParameter('ckc_rocnik');
-  $category = \Drupal::routeMatch()->getParameter('ckc_kategorie');
-  if (isset($year) && isset($category)) {
-    $options = CkcHodnoceniService::works($year, $category);
-  } else {
-    $options = ['' => ''];
-  }
-}
+// /**
+//  * Implements hook_webform_options_WEBFORM_OPTIONS_ID_alter().
+//  */
+// function ckc_hodnoceni_webform_options_ckc_prace_alter(array &$options, array &$element) {
+//   $year = \Drupal::routeMatch()->getParameter('ckc_rocnik');
+//   $category = \Drupal::routeMatch()->getParameter('ckc_kategorie');
+//   if (isset($year) && isset($category)) {
+//     $options = CkcHodnoceniService::works($year, $category);
+//   } else {
+//     $options = ['' => ''];
+//   }
+// }
 
-/**
- * Implements hook_webform_submission_form_alter().
- */
-function ckc_hodnoceni_webform_submission_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
-  if ($form_id === "webform_submission_hodnotici_formular_ckc_edit_form") {
-    $form['actions']['submit']['#validate'][] = 'ckc_hodnoceni_hodnotici_formular_ckc_form_submit';
-  }
-}
+// /**
+//  * Implements hook_webform_submission_form_alter().
+//  */
+// function ckc_hodnoceni_webform_submission_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+//   if ($form_id === "webform_submission_hodnotici_formular_ckc_edit_form") {
+//     $form['actions']['submit']['#validate'][] = 'ckc_hodnoceni_hodnotici_formular_ckc_form_submit';
+//   }
+// }
 
-function ckc_hodnoceni_hodnotici_formular_ckc_form_submit($form, FormStateInterface $form_state) {
-  if ($form_state->getValue('1_poradi_nevyhlasovat') === 1) {
-    $form_state->setValue('1_poradi_1', '');
-  }
-}
+// function ckc_hodnoceni_hodnotici_formular_ckc_form_submit($form, FormStateInterface $form_state) {
+//   if ($form_state->getValue('1_poradi_nevyhlasovat') === 1) {
+//     $form_state->setValue('1_poradi_1', '');
+//   }
+// }
 
 /**
  * Implements hook_theme().

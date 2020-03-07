@@ -8,3 +8,4 @@ hodnoceni:
   dependencies:
     - core/jquery
     - core/drupalSettings
+    - tipsy/tipsy

@@ -26,3 +26,99 @@ label.form-item {
 .form-item-order-1-1-exclude {
   padding-left: 1em;
 }
+
+#ckc-rate-form input[class^="form-item-order-"] {
+  /*outline: 4px solid green;*/
+}
+
+#ckc-rate-form  input[name^="order_"].form-text {
+  font-size: 1.1em;
+}
+
+#ckc-rate-form .selected-input {
+  outline: 3px solid #cccccc;
+  border: 1px solid #cccccc;
+}
+#ckc-rate-form .valid-input {
+  outline: 3px solid lightgreen;
+  border: 1px solid lightgreen;
+}
+#ckc-rate-form .error {
+  outline: 3px solid red;
+  border: 1px solid red;
+}
+#ckc-rate-form .input-with-value {
+  background-color: lightgreen;
+  border: 1px solid lightgreen;
+}
+
+/* rate */
+#ckc-rate-form .cck-rate-form-inputs {
+  display: flex; flex-direction: row; flex-wrap: nowrap;
+}
+#ckc-rate-form .cck-rate-form-inputs .inputs-wrapper {
+  flex-grow: 0; flex-basis: 0; padding-right: 1em;
+}
+#ckc-rate-form .cck-rate-form-inputs .works-wrapper {
+  flex-grow: 1; flex-basis: 0;
+}
+
+/* works */
+#ckc-rate-form .cck-rate-form-inputs .works-wrapper {
+  max-height: 500px;
+  overflow-y: scroll;
+  border: 1px solid #cccccc;
+}
+#ckc-rate-form .cck-rate-form-inputs .works-wrapper .work-row.header {
+  font-weight: bold;
+}
+#ckc-rate-form .cck-rate-form-inputs .works-wrapper .work-row {
+  display: flex; flex-direction: row; flex-wrap: nowrap;
+  border-bottom: 1px solid #cccccc;
+}
+#ckc-rate-form .cck-rate-form-inputs .works-wrapper .work-row:last-child {
+  display: flex; flex-direction: row; flex-wrap: nowrap;
+  border-bottom: none;
+}
+#ckc-rate-form .cck-rate-form-inputs .works-wrapper .work-row .work-item-rank {
+  flex-grow: 0; flex-basis: 0;  min-width: 68px;
+  padding: 0.5em 0 0.5em 0.5em;
+  font-weight: bold;
+}
+#ckc-rate-form .cck-rate-form-inputs .works-wrapper .work-row .work-item-mlok {
+  flex-grow: 0; flex-basis: 0; min-width: 14px;
+  padding: 0.5em;
+  user-select: none;
+  text-align: center;
+}
+#ckc-rate-form .cck-rate-form-inputs .works-wrapper .work-row .work-item-mlok .form-type-checkbox {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  position: relative;
+  top: 3px;
+}
+#ckc-rate-form .cck-rate-form-inputs .works-wrapper .work-row .work-item {
+  flex-grow: 1; flex-basis: 0; padding-right: 1em; white-space: nowrap;
+  padding: 0.5em;
+  cursor: pointer;
+  user-select: none;
+}
+#ckc-rate-form .cck-rate-form-inputs .works-wrapper .work-row.yellow {
+  background-color: lightyellow;
+}
+#ckc-rate-form .cck-rate-form-inputs .works-wrapper .work-row .work-item.selected {
+  background-color: lightgreen;
+}
+#ckc-rate-form .cck-rate-form-inputs .works-wrapper .work-row.header {
+  background-color: #f0f0f0;
+}
+
+
+/* textarea */
+#ckc-rate-form .form-textarea-wrapper {
+  padding-top: 0.5em;
+}
+#ckc-rate-form .form-textarea-wrapper textarea {
+  font-size: 0.9em;
+}

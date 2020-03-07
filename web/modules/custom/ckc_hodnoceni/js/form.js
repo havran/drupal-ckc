@@ -2,47 +2,183 @@
   let selectedMap = {};
   Drupal.behaviors.ckcHodnoceniBehavior = {
     attach: function (context, settings) {
-      // Initialize status of  selected values for ckc_hodnoceni.
-      $('select[name^="order_"]').once('ckcHodnoceniBehavior').each(function(i, el) {
-        selectedMap[this.name] = this.value;
-      });
-      // Fire after new value is selected.
-      $(document).once('ckcHodnoceniBehavior').on('change', 'select', function(ev) {
-        let oldValue = selectedMap[this.name];
-        let selectedValue = this.value;
-        selectedMap[this.name] = selectedValue;
-        // Disable selected value on every other select option.
-        $('select[name^="order_"]').each(function(i, el) {
-          if (ev.target === el) {
-            return;
-          }
-          $('option[value="' + oldValue + '"]', el)
-            .removeAttr('disabled')
-            .removeClass('selected');
-          if (selectedValue === '---') {
-            return;
-          }
-          $('option[value="' + selectedValue + '"]', el)
-            .attr('disabled', 'disabled')
-            .addClass('selected');
+      let selectedInputElementName = '';
+      let selectedValues = drupalSettings.ckcHodnoceni.selectedValues;
 
-          // if (selectedValue === '---'){
-          //   return;
-          // }
-          // if (ev.target === el) {
-          //   return;
-          // }
-          // $('option[value="' + selected_value + '"]')
-          //   .attr('disabled', 'disabled')
-          //   .addClass('selected');
+      function inputValueValid(inputValue, inDrupalSettings = true) {
+        return inputValue.length === 3 && drupalSettings.ckcHodnoceni.worksKeys.includes(inputValue);
+      }
+
+      function getInputName(name) {
+        return `input[name="${name}"].form-text`;
+      }
+
+      function selectWork(inputTarget, inputName, inputValue) {
+        let workItem = $(`.work-item-${inputValue}`, '#ckc-rate-form .works-wrapper');
+        workItem
+          .addClass('selected')
+          .data('toInput', inputName)
+          .attr('data-to-input', inputName)
+          .parent()
+          .find('.work-item-rank')
+          .text(inputTarget.parent().parent().find('label.form-item').text());
+      }
+
+      function unselectWork(inputValue) {
+        selectedValues.map.byInputValue[inputValue].inputName = '';
+        let oldWorkItem = $(`.work-item-${inputValue}`, '#ckc-rate-form .works-wrapper');
+        oldWorkItem
+          .removeClass('selected')
+          .removeData('toInput')
+          .removeAttr('data-to-input')
+          .parent()
+          .find('.work-item-rank')
+          .text('');
+      }
+
+      function setInputValid(target, inputName, inputValue) {
+        target
+          .removeClass('error')
+          .addClass('valid-input');
+        selectWork(target, inputName, inputValue)
+      }
+
+      function setInputInvalid(target, inputName, newInputValue, oldInputValue) {
+        if (selectedValues.map.byInputValue[oldInputValue] && selectedValues.map.byInputValue[oldInputValue].inputName !== '') {
+          unselectWork(oldInputValue);
+          recheckInputsValidity(oldInputValue);
+        }
+        if (newInputValue.length === 0) {
+          setInputEmpty(target);
+          return;
+        }
+        target
+          .removeClass('valid-input')
+          .addClass('error');
+      }
+
+      function setInputEmpty(target) {
+        target
+          .removeClass('valid-input')
+          .removeClass('error');
+      }
+
+      function recheckInputsValidity(oldValue) {
+        for (inputName in selectedValues.map.byInputName) {
+          if (selectedValues.map.byInputName[inputName].value === '') {
+            continue;
+          }
+          if (selectedValues.map.byInputName[inputName].value !== oldValue) {
+            continue;
+          }
+          if (selectedValues.map.byInputValue[oldValue]['inputName'] === inputName) {
+            break;
+          }
+          processInput($(getInputName(inputName), '#ckc-rate-form'));
+          break;
+        }
+      }
+
+      function processInput(target) {
+        let inputName = target.attr('name');
+        let newInputValue = target.val();
+        let oldInputValue = selectedValues.map.byInputName[inputName].value;
+        // Nothing to do (no change here).
+        if (newInputValue === oldInputValue && selectedValues.map.byInputName[inputName].valid) {
+          selectedValues.map.byInputName[inputName].valid = true;
+          selectedValues.map.byInputValue[newInputValue].inputName = inputName;
+          setInputValid(target, inputName, newInputValue);
+          return;
+        }
+        selectedValues.map.byInputName[inputName].value = newInputValue;
+        if (inputValueValid(newInputValue)) {
+          // Nothing to do (input in inputValue map is already valid).
+          if (selectedValues.map.byInputValue[newInputValue].inputName === inputName)  return;
+          // Input in inputValue is now valid.
+          if (selectedValues.map.byInputValue[newInputValue].inputName === '') {
+            selectedValues.map.byInputName[inputName].valid = true;
+            selectedValues.map.byInputValue[newInputValue].inputName = inputName;
+            setInputValid(target, inputName, newInputValue);
+            return;
+          }
+        }
+        selectedValues.map.byInputName[inputName].valid = false;
+        setInputInvalid(target, inputName, newInputValue, oldInputValue);
+      }
+
+      $('input[name^="order_"].form-text', '#ckc-rate-form').once('ckcHodnoceniBehavior')
+        .focusin(
+          (ev) => {
+            let target = $(ev.target);
+            if (selectedInputElementName) {
+              $(selectedInputElementName, '#ckc-rate-form').removeClass('selected-input');
+            }
+            selectedInputElementName = getInputName(target.attr('name'));
+            $(selectedInputElementName, '#ckc-rate-form').addClass('selected-input');
+          }
+        )
+        .keypress(
+          (ev) => {
+            let target = $(ev.target);
+            let keyCode = ev.which;
+            // Space delete whole input.
+            if (keyCode === 32) {
+              target.val('');
+            }
+            // Only backspace and 0-9 are allowed.
+            if (keyCode !== 8 && (keyCode < 48 || keyCode > 57)) return false;
+          }
+        )
+        .keyup((ev) => {
+          processInput($(ev.target));
         });
-      });
-      // console.log('~~~>', context);
-      // $('select[name^="order_"]', context).once('ckcHodnoceniBehavior').each(function(i, el) {
-      //   // console.log('~~~>', i, settings.ckcHodnoceni.works);
-      //   // console.log('--->', i, el.style = 'border: 1px solid red;');
-      //   // Apply the myCustomBehaviour effect to the elements only once.
-      // });
+
+      $('.work-item', $('.works-wrapper')).once('ckcHodnoceniBehavior')
+        .hover(
+          (ev) => {
+            let target = $(ev.target);
+            target.parent().addClass('yellow');
+            if (target.data('toInput')) {
+              $(getInputName(target.data('toInput')), '#ckc-rate-form').addClass('input-with-value');
+            }
+          },
+          (ev) => {
+            let target = $(ev.target);
+            target.parent().removeClass('yellow');
+            if (target.data('toInput')) {
+              $(getInputName(target.data('toInput')), '#ckc-rate-form').removeClass('input-with-value');
+            }
+          },
+        );
+
+      $('input[name="order_1_1_exclude"].form-checkbox', '#ckc-rate-form').once('ckcHodnoceniBehavior')
+        .click(
+          (ev) => {
+            let inputName = 'order_1_1';
+            let target = $(ev.target);
+            let inputTarget = $('input[name="order_1_1"].form-text', '#ckc-rate-form');
+            if (target.prop('checked')) {
+              selectedValues.order_1_1_exclude = 1;
+              selectedValues.map.byInputName[inputName].value = '';
+              selectedValues.map.byInputName[inputName].valid = false;
+              selectedValues.map.byInputName[inputName].extra = {disabled: true};
+              inputTarget
+                .val('')
+                .prop('disabled', true)
+                .parent()
+                .addClass('form-disabled');
+            } else {
+              selectedValues.order_1_1_exclude = 0;
+              selectedValues.map.byInputName[inputName].extra = {disabled: false};
+              inputTarget
+                .prop('disabled', false)
+                .parent()
+                .removeClass('form-disabled');
+            }
+            setInputInvalid(inputTarget, inputTarget.attr('name'), '', '');
+          }
+        );
     }
+
   };
 })(jQuery, Drupal);
