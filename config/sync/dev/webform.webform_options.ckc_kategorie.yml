@@ -1,9 +1,0 @@
-uuid: 175b1021-e5f2-4dde-861a-69fc118417ad
-langcode: en
-status: true
-dependencies: {  }
-id: ckc_kategorie
-label: 'CKČ Kategorie'
-category: CKČ
-likert: false
-options: ''

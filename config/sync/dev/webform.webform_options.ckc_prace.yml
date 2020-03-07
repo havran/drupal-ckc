@@ -1,9 +1,0 @@
-uuid: 85ea0393-9ee6-46d1-a53c-fc8d74907b7e
-langcode: en
-status: true
-dependencies: {  }
-id: ckc_prace
-label: 'CKČ Práce'
-category: CKČ
-likert: false
-options: ''
