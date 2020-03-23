@@ -151,14 +151,17 @@
           },
         );
 
-      $('input[name="order_1_1_exclude"].form-checkbox', '#ckc-rate-form').once('ckcHodnoceniBehavior')
+      $('input[name="exclude_first_place"].form-checkbox', '#ckc-rate-form').once('ckcHodnoceniBehavior')
         .click(
           (ev) => {
             let inputName = 'order_1_1';
             let target = $(ev.target);
             let inputTarget = $('input[name="order_1_1"].form-text', '#ckc-rate-form');
             if (target.prop('checked')) {
-              selectedValues.order_1_1_exclude = 1;
+              if (selectedValues.map.byInputValue[inputTarget.val()]) {
+                unselectWork(inputTarget.val());
+              }
+              selectedValues.exclude_first_place = 1;
               selectedValues.map.byInputName[inputName].value = '';
               selectedValues.map.byInputName[inputName].valid = false;
               selectedValues.map.byInputName[inputName].extra = {disabled: true};
@@ -168,7 +171,7 @@
                 .parent()
                 .addClass('form-disabled');
             } else {
-              selectedValues.order_1_1_exclude = 0;
+              selectedValues.exclude_first_place = 0;
               selectedValues.map.byInputName[inputName].extra = {disabled: false};
               inputTarget
                 .prop('disabled', false)

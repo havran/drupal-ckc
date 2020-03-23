@@ -18,22 +18,17 @@ function ckc_hodnoceni_uninstall() {
  * Implements hook_schema().
  */
 function ckc_hodnoceni_schema() {
-  $work_item_type = [
-    'type' => 'varchar_ascii',
-    'length' => 3,
-    'not null' => FALSE,
-  ];
-
   $schema['ckc_hodnoceni'] = [
     'description' => 'CKČ - rating for works.',
     'fields' => [
+      // ID
       'rid' => [
-        'description' => 'Work ID.',
+        'description' => 'Rate ID.',
         'type' => 'serial',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ],
-      // Unique record.
+      // Unique record data.
       'ckc_year' => [
         'description' => 'Year - rating for annual competion.',
         'type' => 'varchar_ascii',
@@ -54,50 +49,90 @@ function ckc_hodnoceni_schema() {
         'description' => 'The {users}.uid of the user who rate works.',
       ],
       // Data.
-      'order_1_1' => $work_item_type,
-      'order_1_1_exclude' => [
+      'exclude_first_place' => [
         'description' => 'Exclude first place.',
         'type' => 'varchar_ascii',
         'length' => 1,
         'not null' => TRUE,
         'default' => 'n'
       ],
-
-      'order_2_1' => $work_item_type,
-      'order_2_2' => $work_item_type,
-
-      'order_3_1' => $work_item_type,
-      'order_3_2' => $work_item_type,
-      'order_3_3' => $work_item_type,
-
-      'order_4_1' => $work_item_type,
-      'order_4_2' => $work_item_type,
-      'order_4_3' => $work_item_type,
-      'order_4_4' => $work_item_type,
-
-      'order_5_1' => $work_item_type,
-      'order_5_2' => $work_item_type,
-      'order_5_3' => $work_item_type,
-      'order_5_4' => $work_item_type,
-      'order_5_5' => $work_item_type,
-
-      'order_6_1' => $work_item_type,
-      'order_6_2' => $work_item_type,
-      'order_6_3' => $work_item_type,
-      'order_6_4' => $work_item_type,
-      'order_6_5' => $work_item_type,
-      'order_6_6' => $work_item_type,
-
       'note' => [
         'description' => 'Note from evaluator.',
         'type' => 'text',
         'not null' => FALSE,
       ],
+      'created' => [
+        'description' => 'Timestamp when the record was created.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'updated' => [
+        'description' => 'Timestamp when the record was updated.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
     ],
+    // Indexes
     'primary key' => ['rid'],
     'unique keys' => [
       'rating' => ['ckc_year', 'ckc_category', 'uid'],
     ],
+    'indexes' => [
+      'created_idx' => ['created'],
+      'updated_idx' => ['updated'],
+    ],
   ];
+
+  $schema['ckc_hodnoceni_works'] = [
+    'fields' => [
+      'rid' => [
+        'description' => 'The {ckc_hodnoceni}.rid of the rate.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'work_id' => [
+        'description' => 'Work ID.',
+        'type' => 'varchar_ascii',
+        'not null' => TRUE,
+        'length' => 3,
+      ],
+      'work_place' => [
+        'description' => 'Work place (1 - 6). Null or 0 mean without place.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ],
+      'work_place_order' => [
+        'description' => 'Work order in place. Null or for first place should be 1, second 1 or 2, third 1, 2 or 3 etc.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ],
+      'work_mlok' => [
+        'description' => 'Should work get MLOK.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0
+      ],
+    ],
+    'indexes' => [
+      'rid_idx' => ['rid'],
+      'work_idx' => ['work_id'],
+      'place_idx' => ['work_place'],
+    ],
+    'foreign keys' => [
+      'data_works_rate' => [
+        'table' => 'ckc_hodnoceni',
+        'columns' => [
+          'rid' => 'rid',
+        ],
+      ],
+    ],
+  ];
+
   return $schema;
 }
