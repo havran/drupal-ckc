@@ -61,6 +61,14 @@ function ckc_hodnoceni_schema() {
         'type' => 'text',
         'not null' => FALSE,
       ],
+      'status' => [
+        'description' => 'Rate status - 1 = published, 0 = unpublished',
+        'type' => 'int',
+        'size' => 'tiny',
+        'length' => 1,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
       'created' => [
         'description' => 'Timestamp when the record was created.',
         'type' => 'int',

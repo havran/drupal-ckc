@@ -357,7 +357,7 @@ class CkcRateForm extends FormBase {
   }
 
   private function createOrUpdateRateRecord($data, FormStateInterface $form_state) {
-    ksm($data);
+    // ksm($data);
     $data['mlok'] = $this->processMlokValues($form_state);
     empty($data['rid'])
       ? $this->createRateRecord($form_state)
