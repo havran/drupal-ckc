@@ -13,4 +13,8 @@ hodnoceni:
   dependencies:
     - core/jquery
     - core/drupalSettings
-
+vysledky:
+  version: 1.x
+  css:
+    theme:
+      css/vysledky.css: {}

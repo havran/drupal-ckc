@@ -1,0 +1,21 @@
+/**
+ * @file
+ * Styling for results page.
+ */
+
+th.ckc-work-id {
+  width: 60px;
+}
+
+th.ckc-work-title {
+  max-width: 260px;
+}
+
+th.ckc-work-points {
+  width: 80px;
+  vertical-align: bottom;
+}
+
+th.ckc-work-mlok {
+  width: 80px;
+}

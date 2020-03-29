@@ -52,7 +52,11 @@ class CkcAdminController extends ControllerBase {
 
   private function get_results_table_render_array(string $ckc_rocnik) {
     $render = [
-
+      '#attached' => [
+        'library' => [
+          'ckc_hodnoceni/vysledky',
+        ],
+      ],
     ];
 
     $table_base = [
