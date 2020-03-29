@@ -1,0 +1,8 @@
+ckc_hodnoceni.status:
+  title: Status
+  route_name: ckc_hodnoceni.admin.status
+  parent: ckc_hodnoceni
+ckc_hodnoceni.results:
+  title: Results
+  route_name: ckc_hodnoceni.admin.results
+  parent: ckc_hodnoceni

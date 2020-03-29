@@ -1,3 +1,27 @@
+ckc_hodnoceni.admin:
+  path: '/ckc/administrace'
+  defaults:
+    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::main'
+    _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::main_title'
+  requirements:
+    _permission: 'ckc admin'
+ckc_hodnoceni.admin.status:
+  path: '/ckc/administrace/stav/{ckc_rocnik}'
+  defaults:
+    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::status'
+    _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::status_title'
+    ckc_rocnik: ''
+  requirements:
+    _permission: 'ckc admin'
+ckc_hodnoceni.admin.results:
+  path: '/ckc/administrace/vysledky/{ckc_rocnik}'
+  defaults:
+    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::results'
+    _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::results_title'
+    ckc_rocnik: ''
+  requirements:
+    _permission: 'ckc admin'
+
 ckc_hodnoceni.rating.list:
   path: '/ckc/{ckc_rocnik}/hodnoceni'
   defaults:

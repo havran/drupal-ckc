@@ -6,8 +6,82 @@
  */
 
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\ckc_hodnoceni\CkcHodnoceniBase;
+use Drupal\Core\Url;
 use Drupal\ckc_hodnoceni\CkcHodnoceniService;
+
+/**
+ * Implements hook_toolbar().
+ */
+/**
+ * Implements hook_toolbar().
+ */
+function ckc_hodnoceni_toolbar() {
+  $items = [];
+  $items['ckc_hodnoceni'] = [
+    '#cache' => [
+      'contexts' => [
+        'user.permissions',
+      ],
+    ],
+  ];
+
+  if (!\Drupal::currentUser()->hasPermission('ckc admin')) {
+    return $items;
+  }
+
+  $items['ckc'] = [
+    '#type' => 'toolbar_item',
+    'tab' => [
+      '#type' => 'link',
+      '#title' => 'CKČ Administrace',
+      '#url' => Url::fromRoute('ckc_hodnoceni.admin'),
+      '#options' => [
+        'attributes' => [
+          'title' => 'CKČ Administrace',
+          'class' => [
+            'toolbar-icon',
+            'toolbar-icon-cog',
+            'toolbar-item',
+            'trigger',
+          ],
+        ],
+      ],
+    ],
+    'tray' => [
+      '#heading' => 'CKČ Administrace',
+      'ckc_admin_menu' => [
+        '#theme' => 'links__toolbar_user',
+        '#links' => [
+          'status' => [
+            'title' => 'Stav hlasování',
+            'url' => Url::fromRoute('ckc_hodnoceni.admin.status'),
+            'attributes' => [
+              'title' => 'Stav hlasování',
+            ],
+          ],
+          'results' => [
+            'title' => 'Výsledky',
+            'url' => Url::fromRoute('ckc_hodnoceni.admin.results'),
+            'attributes' => [
+              'title' => 'Výsledky',
+            ],
+          ],
+        ],
+        '#attributes' => [
+          'class' => ['toolbar-menu'],
+        ],
+      ],
+    ],
+    '#attached' => [
+      'library' => [
+        'ckc_hodnoceni/toolbar',
+      ],
+    ],
+    '#weight' => 150,
+  ];
+
+  return $items;
+}
 
 /**
  * Implements hook_entity_insert().
@@ -96,7 +170,14 @@ function ckc_hodnoceni_views_data() {
     'field' => 'rid',
     'weight' => -10,
   ];
-
+  // $data['ckc_hodnoceni']['table']['join']['taxonomy_term_field_data'] = [
+  //   'left_table' => 'taxonomy_term__field_kod_kategorie',
+  //   'left_field' => 'entity_id',
+  //   'field' => 'tid',
+  //   'extra' => [
+  //     ['left_field' => 'bundle', 'field' => 'vid'],
+  //   ],
+  // ];
   $data['ckc_hodnoceni']['rid'] = [
     'title' => 'ID hodnocení',
     'field' => ['id' => 'numeric'],
@@ -143,13 +224,21 @@ function ckc_hodnoceni_views_data() {
     'filter' => ['id' => 'string'],
     'sort' => ['id' => 'standard'],
   ];
-  $data['ckc_hodnoceni']['exclude_first_place'] = [
+  $data['ckc_hodnoceni']['note'] = [
     'title' => 'Poznámka',
     'help' => 'Poznámka k hodnocení.',
     'field' => ['id' => 'standard'],
     'argument' => ['id' => 'string'],
     'filter' => ['id' => 'string'],
     'sort' => ['id' => 'standard'],
+  ];
+  $data['ckc_hodnoceni']['status'] = [
+    'title' => 'Stav',
+    'help' => 'Hodnocení je zapnuto/vypnuto.',
+    'field' => ['id' => 'numeric'],
+    'argument' => ['id' => 'numeric'],
+    'filter' => ['id' => 'numeric'],
+    'sort' => ['id' => 'numeric'],
   ];
   $data['ckc_hodnoceni']['created'] = [
     'title' => t('Created'),
@@ -168,16 +257,65 @@ function ckc_hodnoceni_views_data() {
     'sort' => ['id' => 'date'],
   ];
 
-  // foreach (CkcHodnoceniBase::CKC_HODNOCENI_TABLE_FIELDS_PLACES as $place) {
-  //   $data['ckc_hodnoceni'][$place] = [
-  //     'title' => 'Práce',
-  //     'help' => 'Práce se umístnila na pozici.',
-  //     'field' => ['id' => 'standard'],
-  //     'argument' => ['id' => 'string'],
-  //     'filter' => ['id' => 'string'],
-  //     'sort' => ['id' => 'standard'],
-  //   ];
-  // }
+
+  $data['ckc_hodnoceni_works']['table']['group'] = t('CKČ works ratings');
+  $data['ckc_hodnoceni_works']['table']['provider'] = 'ckc_hodnoceni';
+  $data['ckc_hodnoceni_works']['table']['base'] = [
+    'title' => t('CKČ - works ratings table'),
+    'help' => t('Table of works for reatings, sends to CKČ.'),
+    'field' => 'rid',
+    'weight' => -10,
+  ];
+  $data['ckc_hodnoceni_works']['table']['join']['ckc_hodnoceni'] = [
+    'left_field' => 'rid',
+    'field' => 'rid',
+  ];
+  $data['ckc_hodnoceni_works']['rid'] = [
+    'title' => 'ID hodnocení',
+    'field' => ['id' => 'numeric'],
+    'sort' => ['id' => 'standard'],
+    'filter' => ['id' => 'numeric'],
+    'argument' => ['id' => 'numeric'],
+    'relationship' => [
+      'handler' => 'views_handler_relationship',
+      'base' => 'ckc_hodnoceni',
+      'base field' => 'rid',
+      'label' => 'ID hodnocení',
+      'id' => 'standard',
+    ],
+  ];
+  $data['ckc_hodnoceni_works']['work_id'] = [
+    'title' => 'ID práce',
+    'field' => ['id' => 'standard'],
+    'sort' => ['id' => 'standard'],
+    'filter' => ['id' => 'string'],
+    'argument' => ['id' => 'string'],
+  ];
+  $data['ckc_hodnoceni_works']['work_place'] = [
+    'title' => 'Umístnění práce',
+    'field' => ['id' => 'numeric'],
+    'sort' => ['id' => 'standard'],
+    'filter' => ['id' => 'numeric'],
+    'argument' => ['id' => 'numeric'],
+  ];
+  $data['ckc_hodnoceni_works']['work_place_order'] = [
+    'title' => 'Pořadí práce v řádku umístnění',
+    'field' => ['id' => 'numeric'],
+    'sort' => ['id' => 'standard'],
+    'filter' => ['id' => 'numeric'],
+    'argument' => ['id' => 'numeric'],
+  ];
+  $data['ckc_hodnoceni_works']['work_mlok'] = [
+    'title' => 'MLOK',
+    'field' => ['id' => 'boolean'],
+    'sort' => ['id' => 'standard'],
+    'filter' => [
+      'id' => 'boolean',
+      'label' => t('MLOK'),
+      'type' => 'yes-no',
+      'use_equal' => TRUE,
+    ],
+  ];
 
   return $data;
 }

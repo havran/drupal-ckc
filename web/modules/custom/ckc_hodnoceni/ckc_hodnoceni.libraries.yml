@@ -1,3 +1,8 @@
+toolbar:
+  version: 1.x
+  css:
+    theme:
+      css/toolbar.css: {}
 hodnoceni:
   version: 1.x
   css:

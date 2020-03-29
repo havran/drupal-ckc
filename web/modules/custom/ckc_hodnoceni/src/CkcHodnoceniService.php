@@ -214,7 +214,7 @@ class CkcHodnoceniService {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public static function works($year, $category) {
+  public static function works($year, $category, $no_id = false) {
     $categories = self::categories(true);
     $category_code = in_array($category, $categories, TRUE)
       ? array_flip($categories)[$category]
@@ -225,8 +225,8 @@ class CkcHodnoceniService {
     }
     $works["{$year}:{$category_code}"] = array_reduce(
       self::get_works_by_year_and_category($year, $category_code),
-      function($acc, $item) {
-        $acc[$item['code']] = "{$item['code']} {$item['title']}";
+      function($acc, $item) use ($no_id) {
+        $acc[$item['code']] = $no_id ? $item['title'] : "{$item['code']} {$item['title']}";
         return $acc;
       },
       []
