@@ -25,9 +25,14 @@ class CkcAdminController extends ControllerBase {
   }
 
   public function status(string $ckc_rocnik) {
-    $ckc_rocnik = empty($ckc_rocnik) ? $this->default_year() :$ckc_rocnik;
+    $ckc_rocnik = empty($ckc_rocnik) ? $this->default_year() : $ckc_rocnik;
+    $view = [
+      '#type' => 'view',
+      '#name' => 'ckc_hlasovani',
+      '#display_id' => 'default',
+    ];
     return [
-      '#markup' => '<p>zoznam...</p>',
+      'data' => $view,
     ];
   }
 

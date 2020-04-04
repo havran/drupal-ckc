@@ -200,6 +200,12 @@ function ckc_hodnoceni_views_data() {
     'argument' => ['id' => 'string'],
     'filter' => ['id' => 'string'],
     'sort' => ['id' => 'standard'],
+    // 'relationship' => [
+    //   'label' => 'Kategorie',
+    //   'base' => 'taxonomy_term__field_kod_kategorie',
+    //   'base field' => 'field_kod_kategorie_value',
+    //   'id' => 'standard',
+    // ],
   ];
   $data['ckc_hodnoceni']['uid'] = [
     'title' => 'ID použivatele',
@@ -209,7 +215,6 @@ function ckc_hodnoceni_views_data() {
     'filter' => ['id' => 'numeric'],
     'argument' => ['id' => 'numeric'],
     'relationship' => [
-      'handler' => 'views_handler_relationship_entity_reverse',
       'base' => 'users_field_data',
       'base field' => 'uid',
       'label' => 'Použivatel',
@@ -266,10 +271,10 @@ function ckc_hodnoceni_views_data() {
     'field' => 'rid',
     'weight' => -10,
   ];
-  $data['ckc_hodnoceni_works']['table']['join']['ckc_hodnoceni'] = [
-    'left_field' => 'rid',
-    'field' => 'rid',
-  ];
+  // $data['ckc_hodnoceni_works']['table']['join']['ckc_hodnoceni'] = [
+  //   'left_field' => 'rid',
+  //   'field' => 'rid',
+  // ];
   $data['ckc_hodnoceni_works']['rid'] = [
     'title' => 'ID hodnocení',
     'field' => ['id' => 'numeric'],
@@ -277,7 +282,6 @@ function ckc_hodnoceni_views_data() {
     'filter' => ['id' => 'numeric'],
     'argument' => ['id' => 'numeric'],
     'relationship' => [
-      'handler' => 'views_handler_relationship',
       'base' => 'ckc_hodnoceni',
       'base field' => 'rid',
       'label' => 'ID hodnocení',
@@ -318,6 +322,16 @@ function ckc_hodnoceni_views_data() {
   ];
 
   return $data;
+}
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function ckc_hodnoceni_views_data_alter(array &$data) {
+  // $keys = array_keys($data);
+  // ksm($data['watchdog']);
+  // ksm($data['taxonomy_term__field_kod_kategorie']);
+  // dpm($data['taxonomy_term__field_kod_kategorie']);
 }
 
 function hook_views_data() {

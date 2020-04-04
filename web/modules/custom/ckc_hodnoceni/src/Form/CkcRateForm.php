@@ -405,6 +405,7 @@ class CkcRateForm extends FormBase {
       'uid' => $form_state->getValue('uid'),
       'exclude_first_place' => $form_state->getValue('exclude_first_place', 'n') === 1 ? 'y' : 'n',
       'note' => $form_state->getValue('note'),
+      'status' => 1,
     ];
     if (empty($rid)) {
       $data['created'] = $current_time;

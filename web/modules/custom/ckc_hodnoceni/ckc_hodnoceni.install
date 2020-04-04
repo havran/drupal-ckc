@@ -5,7 +5,7 @@
  * Install, update and uninstall functions for File module.
  */
 
-use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\Core\Database\Database;
 
 /**
  * Implements hook_uninstall().
@@ -143,4 +143,18 @@ function ckc_hodnoceni_schema() {
   ];
 
   return $schema;
+}
+
+function ckc_hodnoceni_update_8001() {
+  $connection = Database::getConnection();
+  $connection->query(
+    <<<'EOD'
+      UPDATE {ckc_hodnoceni} SET exclude_first_place = 'n' WHERE exclude_first_place = '0';
+    EOD
+  );
+  $connection->query(
+    <<<'EOD'
+      UPDATE {ckc_hodnoceni} SET exclude_first_place = 'y' WHERE exclude_first_place = '1';
+    EOD
+  );
 }
