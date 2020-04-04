@@ -21,11 +21,15 @@
           .attr('data-to-input', inputName)
           .parent()
           .find('.work-item-rank')
-          .text(inputTarget.parent().parent().find('label.form-item').text());
+          .text(inputTarget.parent().parent().find('label.form-item').text())
+          .parent()
+          .find('.work-item-mlok input')
+          .removeClass('visually-hidden');
       }
 
       function unselectWork(inputValue) {
         selectedValues.map.byInputValue[inputValue].inputName = '';
+        selectedValues.map.byInputValue[inputValue].mlok = false;
         let oldWorkItem = $(`.work-item-${inputValue}`, '#ckc-rate-form .works-wrapper');
         oldWorkItem
           .removeClass('selected')
@@ -33,7 +37,11 @@
           .removeAttr('data-to-input')
           .parent()
           .find('.work-item-rank')
-          .text('');
+          .text('')
+          .parent()
+          .find('.work-item-mlok input')
+          .addClass('visually-hidden')
+          .prop('checked', false);
       }
 
       function setInputValid(target, inputName, inputValue) {
@@ -181,7 +189,20 @@
             setInputInvalid(inputTarget, inputTarget.attr('name'), '', '');
           }
         );
+
+      $('input[name^="work_"][type="checkbox"].work-mlok', '#ckc-rate-form').once('ckcHodnoceniBehavior')
+      .click(
+        (ev) => {
+          let target = $(ev.target);
+          if (target.prop('checked')) {
+            selectedValues.map.byInputValue[target.val()].mlok = true;
+          } else {
+            selectedValues.map.byInputValue[target.val()].mlok = false;
+          }
+        }
+      );
     }
+
 
   };
 })(jQuery, Drupal);

@@ -37,6 +37,10 @@ class CkcRateForm extends FormBase {
     return (int) \Drupal::currentUser()->id();
   }
 
+  private function get_user_name() {
+    return \Drupal::currentUser()->getDisplayName();
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -232,7 +236,7 @@ class CkcRateForm extends FormBase {
       foreach ($works_raw as $work) {
         $data_works[$work['code']] = [
           'inputName' => $this->get($works_data_from_submit, $work['code'], ''),
-          'mlok' => 0,
+          'mlok' => false,
         ];
       }
       $data =  [
@@ -279,7 +283,7 @@ class CkcRateForm extends FormBase {
         'workCode' => $work['code'],
         'title' => $work['title'],
         'inputName' => $input_name,
-        'mlok' => false,
+        'mlok' => $this->get($data, "data_works.{$work['code']}.mlok", false),
       ];
       if (!empty($input_name)) {
         $selected_values['map']['byInputName'][$input_name]['value'] = $work['code'];
@@ -340,9 +344,17 @@ class CkcRateForm extends FormBase {
       '#attributes' =>  ['class' => ['work-item-rank']],
       '#value' => $rank_text,
     ];
+    $attributes_mlok = ['class' => ['work-mlok']];
+    if ($selected_values['map']['byInputValue'][$work_code]['mlok']) {
+      $attributes_mlok['checked'] = 'checked';
+    }
+    if ($selected_values['map']['byInputValue'][$work_code]['inputName'] === '') {
+      $attributes_mlok['class'][] = 'visually-hidden';
+    }
     $form["work_{$work_code}_mlok"] = [
       '#type' => 'checkbox',
       '#return_value' => $work_code,
+      '#attributes' => $attributes_mlok,
     ];
     $form["work_{$work_code}"] = [
       '#type' => 'html_tag',
@@ -352,13 +364,7 @@ class CkcRateForm extends FormBase {
     ];
   }
 
-  private function processMlokValues(FormStateInterface $form_state) {
-    return '{}';
-  }
-
   private function createOrUpdateRateRecord($data, FormStateInterface $form_state) {
-    // ksm($data);
-    $data['mlok'] = $this->processMlokValues($form_state);
     empty($data['rid'])
       ? $this->createRateRecord($form_state)
       : $this->updateRateRecord($form_state);
@@ -376,6 +382,12 @@ class CkcRateForm extends FormBase {
       }
       $q2->execute();
       $this->messenger()->addStatus('Vaše hodnocení bylo uloženo do databáze!');
+      \Drupal::logger('ckc')->notice('User %user create new rate @rid for CKČ @year, category @category.', [
+        '%user' => $this->get_user_name(),
+        '@rid' => $rid,
+        '@year' =>  $form_state->getValue('ckc_year'),
+        '@category' =>  $form_state->getValue('ckc_category')
+      ]);
       return $rid;
     }
     catch (Exception $e) {
@@ -425,8 +437,10 @@ class CkcRateForm extends FormBase {
       if (empty($work_data[$work_id])) {
         continue;
       }
+      $mlok = $form_state->getValue("work_{$work_id}_mlok");
       $work_data[$work_id]['work_place'] = (int) substr($place_field_name, 6, 1);
       $work_data[$work_id]['work_place_order'] = (int) substr($place_field_name, 8, 1);
+      $work_data[$work_id]['work_mlok'] = empty($mlok) ? 0 : 1;
     }
     return array_values($work_data);
   }
@@ -462,13 +476,13 @@ class CkcRateForm extends FormBase {
       if (empty($result_work['work_place'])) {
         $data_works[$result_work['work_id']] = [
           'inputName' => '',
-          'mlok' => 0,
+          'mlok' => false,
         ];
         continue;
       }
       $data_works[$result_work['work_id']] = [
         'inputName' => "order_{$result_work['work_place']}_{$result_work['work_place_order']}",
-        'mlok' => (int) $result_work['work_mlok'],
+        'mlok' => (bool) $result_work['work_mlok'],
       ];
     }
     return $data_works;
@@ -496,6 +510,12 @@ class CkcRateForm extends FormBase {
       }
       $q2->execute();
       $this->messenger()->addStatus('Vaše uložené hodnocení bylo upraveno!');
+      \Drupal::logger('ckc')->notice('User %user update rate @rid for CKČ @year, category @category.', [
+        '%user' => $this->get_user_name(),
+        '@rid' => $rid,
+        '@year' => $form_state->getValue('ckc_year'),
+        '@category' =>  $form_state->getValue('ckc_category')
+      ]);
     }
     catch (Exception $e) {
       $transaction->rollBack();
@@ -510,43 +530,6 @@ class CkcRateForm extends FormBase {
     //   ->condition('rid', $rid);
     // dpm((string) $query);
   }
-
-  // private function logRateChangeToDb($rid, $data, $operation) {
-  //   $connection = Database::getConnection();
-  //   $txn = $connection->startTransaction();
-  //
-  //   $data_serialized = '';
-  //   switch ($operation) {
-  //     case 'C':
-  //       $data_serialized = serialize([
-  //         'old' => [],
-  //         'new' => $data,
-  //       ]);
-  //       break;
-  //     case 'U':
-  //       $data_old = $this->readRateRecord($data['ckc_year'], $data['ckc_category'], $data['uid']);
-  //       $data_serialized = serialize([
-  //         'old' => $data_old,
-  //         'new' => $data,
-  //       ]);
-  //       break;
-  //   }
-  //
-  //   $query = $connection->insert('ckc_hodnoceni_log')
-  //     ->fields([
-  //       'rid' => $rid,
-  //       'uid' => $data['uid'],
-  //       'operation' => $operation,
-  //       'data' => $data_serialized,
-  //       'created' => $data['updated'],
-  //     ]);
-  //   try {
-  //     $query->execute();
-  //   }
-  //   catch (Exception $e) {
-  //     $txn->rollBack();
-  //   }
-  // }
 
   private function get($var, string $path = '', $default = null) {
     if (empty($var) || is_array($var) === false) {
