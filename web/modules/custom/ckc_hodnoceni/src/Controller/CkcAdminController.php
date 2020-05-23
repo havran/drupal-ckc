@@ -30,6 +30,9 @@ class CkcAdminController extends ControllerBase {
       '#type' => 'view',
       '#name' => 'ckc_hlasovani',
       '#display_id' => 'default',
+      '#arguments' => [
+        $ckc_rocnik,
+      ],
     ];
     return [
       'data' => $view,

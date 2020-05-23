@@ -122,6 +122,11 @@ function ckc_hodnoceni_entity__clear_cache(EntityInterface $entity) {
  * Implements hook_theme().
  */
 function ckc_hodnoceni_theme($existing, $type, $theme, $path) {
+  $themes['ckc_rate_text'] = [
+    'variables' => [
+      'data' => null,
+    ],
+  ];
   $themes['ckc_rate_form'] = ['render element' => 'form'];
   $themes['ckc_works_import_form'] = ['render element' => 'form'];
   return $themes;

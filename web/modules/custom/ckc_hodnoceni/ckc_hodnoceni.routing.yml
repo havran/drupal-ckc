@@ -21,6 +21,12 @@ ckc_hodnoceni.admin.results:
     ckc_rocnik: ''
   requirements:
     _permission: 'ckc admin'
+ckc_hodnoceni.admin.export:
+  path: '/ckc/administrace/vysledky/{ckc_rocnik}/export'
+  defaults:
+    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcAdminExportController::export'
+  requirements:
+    _permission: 'ckc admin'
 
 ckc_hodnoceni.rating.list:
   path: '/ckc/{ckc_rocnik}/hodnoceni'
