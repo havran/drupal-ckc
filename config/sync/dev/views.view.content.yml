@@ -277,8 +277,8 @@ display:
           type: boolean
           settings:
             format: custom
-            format_custom_true: Vydáno
-            format_custom_false: Nevydáno
+            format_custom_true: Zveřejněno
+            format_custom_false: Skryto
           plugin_id: field
           entity_type: node
           entity_field: status
@@ -478,11 +478,11 @@ display:
             default_group_multiple: {  }
             group_items:
               1:
-                title: Vydáno
+                title: Zveřejněno
                 operator: '='
                 value: '1'
               2:
-                title: Nevydáno
+                title: Skryto
                 operator: '='
                 value: '0'
           plugin_id: boolean
