@@ -62,6 +62,16 @@ class CkcHodnoceniDB {
       ORDER BY points DESC;
     EOD;
 
+  const CKC_QUERY_HODNOCENI_UPDATE_STATUS_SWITCH = /** @lang MySQL */
+    <<<EOD
+      UPDATE {ckc_hodnoceni}
+      SET status = CASE
+                     WHEN status = 0 THEN 1
+                     WHEN status = 1 THEN 0
+                   END
+      WHERE rid = :rid;
+    EOD;
+
   public static function get_users_stats(string $ckc_year) {
     $connection = Database::getConnection();
     $query = $connection->query(
@@ -83,6 +93,16 @@ class CkcHodnoceniDB {
       ],
     );
     return $query->fetchAllAssoc('work_id', \PDO::FETCH_ASSOC);
+  }
+
+  public static function rate_status_switch(int $rid) {
+    $connection = Database::getConnection();
+    $connection->query(
+      self::CKC_QUERY_HODNOCENI_UPDATE_STATUS_SWITCH,
+      [
+        ':rid' => $rid,
+      ],
+    );
   }
 
 }

@@ -11,6 +11,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\Markup;
 use Drupal\ckc_hodnoceni\CkcHodnoceniDB;
 use Drupal\ckc_hodnoceni\CkcHodnoceniService;
+use Drupal\views\Views;
 
 class CkcAdminController extends ControllerBase {
 
@@ -39,9 +40,16 @@ class CkcAdminController extends ControllerBase {
     ];
   }
 
-  public function status_title($ckc_rocnik) {
+  public function status_title(string $ckc_rocnik) {
     $ckc_rocnik = empty($ckc_rocnik) ? $this->default_year() :$ckc_rocnik;
     return "CKČ {$ckc_rocnik} - stav hlasování";
+  }
+
+  public function status_switch(string $ckc_rocnik, int $rid) {
+    CkcHodnoceniDB::rate_status_switch($rid);
+    $view = Views::getView('ckc_hlasovani');
+    $view->storage->invalidateCaches();
+    return $this->redirect('ckc_hodnoceni.admin.status', ['ckc_rocnik' => $ckc_rocnik]);
   }
 
   public function results(string $ckc_rocnik) {

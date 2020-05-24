@@ -127,9 +127,24 @@ function ckc_hodnoceni_theme($existing, $type, $theme, $path) {
       'data' => null,
     ],
   ];
+  $themes['views_view_field__ckc_hlasovani__default__ckc_category'] = [
+    'render element' => 'elements',
+    'base hook' => 'views field',
+    'path' => "{$path}/templates/views",
+  ];
   $themes['ckc_rate_form'] = ['render element' => 'form'];
   $themes['ckc_works_import_form'] = ['render element' => 'form'];
   return $themes;
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function ckc_hodnoceni_preprocess_views_view_field(&$variables) {
+  $view = $variables['view'];
+  if ($view->storage->id() == 'ckc_hlasovani' && $variables['field']->realField == 'ckc_category') {
+    $variables['categoryString'] = CkcHodnoceniService::categories()[$variables['field']->getValue($variables['row'])];
+  }
 }
 
 

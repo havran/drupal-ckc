@@ -64,6 +64,7 @@ display:
             ckc_category: ckc_category
             name: name
             exclude_first_place: exclude_first_place
+            note: note
             status: status
             created: created
             updated: updated
@@ -71,14 +72,14 @@ display:
             rid:
               sortable: false
               default_sort_order: asc
-              align: ''
+              align: views-align-right
               separator: ''
               empty_column: false
               responsive: ''
             ckc_year:
               sortable: false
               default_sort_order: asc
-              align: ''
+              align: views-align-center
               separator: ''
               empty_column: false
               responsive: ''
@@ -99,6 +100,13 @@ display:
             exclude_first_place:
               sortable: true
               default_sort_order: asc
+              align: views-align-center
+              separator: ''
+              empty_column: false
+              responsive: ''
+            note:
+              sortable: false
+              default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
@@ -106,21 +114,21 @@ display:
             status:
               sortable: true
               default_sort_order: asc
-              align: ''
+              align: views-align-center
               separator: ''
               empty_column: false
               responsive: ''
             created:
               sortable: true
               default_sort_order: asc
-              align: ''
+              align: views-align-right
               separator: ''
               empty_column: false
               responsive: ''
             updated:
               sortable: true
               default_sort_order: asc
-              align: ''
+              align: views-align-right
               separator: ''
               empty_column: false
               responsive: ''
@@ -465,7 +473,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '{% if status == 0 %}ne{% else %}ano{% endif %}'
+            text: '<a href="/ckc/administrace/stav/{{ckc_year}}/{{rid}}/status-switch">{% if status == 0 %}ne{% else %}ano{% endif %}</a>'
             make_link: false
             path: ''
             absolute: false
@@ -664,7 +672,7 @@ display:
           empty: false
           tokenize: true
           content:
-            value: "<p><a href=\"/ckc/administrace/vysledky/{{ckc_year}}/export\">Exportovat</a></p>\r\n<p>NPM* - nehodnotit první místo</p>\r\n"
+            value: "<p><a href=\"/ckc/administrace/vysledky/{{- ckc_year -}}/export\">Exportovat</a></p>\r\n<p>NPM* - nehodnotit první místo</p>\r\n"
             format: basic_html
           plugin_id: text
       footer: {  }

@@ -13,6 +13,12 @@ ckc_hodnoceni.admin.status:
     ckc_rocnik: ''
   requirements:
     _permission: 'ckc admin'
+ckc_hodnoceni.admin.status.switch:
+  path: '/ckc/administrace/stav/{ckc_rocnik}/{rid}/status-switch'
+  defaults:
+    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::status_switch'
+  requirements:
+    _permission: 'ckc admin'
 ckc_hodnoceni.admin.results:
   path: '/ckc/administrace/vysledky/{ckc_rocnik}'
   defaults:
