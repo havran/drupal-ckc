@@ -47,8 +47,8 @@ trait CkcHodnoceniUtils {
         '_category_id' => $result_record['ckc_category'],
         '_uid' => $result_record['uid'],
         '_name_clean' => \Drupal::service('pathauto.alias_cleaner')->cleanString($username),
-        'category' => 'Kategorie: '. CkcHodnoceniService::categories()[$result_record['ckc_category']] .' ('. $result_record['ckc_category'] .')',
-        'name' => 'Jméno porotce: '. $username .' ('. $result_record['uid'] .')',
+        'category' => 'Kategorie: '. CkcHodnoceniService::categories()[$result_record['ckc_category']],
+        'name' => 'Jméno porotce: '. $username,
         'note' => 'Poznámky: '. trim($result_record['note']),
       ];
       // prepare places
