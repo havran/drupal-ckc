@@ -65,7 +65,7 @@ label.form-item {
 
 /* works */
 #ckc-rate-form .cck-rate-form-inputs .works-wrapper {
-  max-height: 500px;
+  max-height: 542px;
   overflow-y: scroll;
   border: 1px solid #cccccc;
 }

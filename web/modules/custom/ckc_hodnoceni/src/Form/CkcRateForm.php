@@ -7,6 +7,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\ckc_hodnoceni\CkcHodnoceniBase;
 use Drupal\ckc_hodnoceni\CkcHodnoceniService;
+use Drupal\views\Views;
 use Exception;
 
 /**
@@ -134,6 +135,15 @@ class CkcRateForm extends FormBase {
       '#default_value' => $selected_values['exclude_first_place'] === 'y' ? 1 : 0,
     ];
 
+    $form['status'] = [
+      '#type' => 'checkbox',
+      '#title' => 'zahrnout do hodnocení',
+      '#attributes' => [
+        'tabindex' => -1,
+      ],
+      '#default_value' => (int)$selected_values['status'] === 1 ? 1 : 0,
+    ];
+
     foreach(CkcHodnoceniBase::CKC_HODNOCENI_TABLE_FIELDS_PLACES as $place) {
       $this->addPlaceFromElement($place, $selected_values, $form);
     }
@@ -210,6 +220,8 @@ class CkcRateForm extends FormBase {
       ARRAY_FILTER_USE_KEY,
     );
     $this->createOrUpdateRateRecord($data, $form_state);
+    $view = Views::getView('ckc_hlasovani');
+    $view->storage->invalidateCaches();
   }
 
   private function prepareSelectedValues($works_raw, $works_keys, $user_input) {
@@ -247,6 +259,7 @@ class CkcRateForm extends FormBase {
           'uid' => $user_input['uid'],
           'exclude_first_place' => empty($user_input['exclude_first_place']) ? 'n' : 'y',
           'note' => $user_input['note'],
+          'status' => $user_input['status'],
         ],
         'data_works' => $data_works,
       ];
@@ -256,6 +269,7 @@ class CkcRateForm extends FormBase {
       'rid' => $this->get($data, 'data.rid', null),
       'note' => $this->get($data, 'data.note', null),
       'exclude_first_place' => $this->get($data, 'data.exclude_first_place', 'n'),
+      'status' => $this->get($data, 'data.status', 0),
       'map' => [
         'byInputName' => [],
         'byInputValue' => [],
@@ -405,7 +419,7 @@ class CkcRateForm extends FormBase {
       'uid' => $form_state->getValue('uid'),
       'exclude_first_place' => $form_state->getValue('exclude_first_place', 'n') === 1 ? 'y' : 'n',
       'note' => $form_state->getValue('note'),
-      'status' => 1,
+      'status' => $form_state->getValue('status'),
     ];
     if (empty($rid)) {
       $data['created'] = $current_time;

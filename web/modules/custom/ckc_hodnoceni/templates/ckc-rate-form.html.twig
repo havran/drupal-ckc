@@ -6,6 +6,10 @@
   {{ form.ckc_category }}
   {{ form.uid }}
 
+  {% if form.status['#value'] == 0 %}
+    <div class="messages messages--warning" style="margin-bottom: 16px;">Hodnocení není zahrnuto do hlasování! Pro zahrnutí musíte zaškrtnout "<em>zahrnout do hodnocení</em>".</div>
+  {% endif %}
+
   <div class="cck-rate-form-inputs">
 
     <div class="inputs-wrapper">
@@ -34,6 +38,9 @@
       <hr>
       <div class="row row-inline">
         {{ form.note }}
+      </div>
+      <div>
+        {{ form.status }}
       </div>
       {{ form.form_build_id }}
       {{ form.form_token }}
