@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "471c958c7e5f84824bd38dfaf7fff7ed",
+    "content-hash": "70d508e46d8b4f02f538dbbb1fdb809e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2695,6 +2695,53 @@
                 "source": "http://cgit.drupalcode.org/libraries",
                 "issues": "http://drupal.org/project/issues/libraries",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
+            }
+        },
+        {
+            "name": "drupal/login_emailusername",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/login_emailusername.git",
+                "reference": "8.x-1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/login_emailusername-8.x-1.1.zip",
+                "reference": "8.x-1.1",
+                "shasum": "f484b76b538f4dbbae5a75b49577f4ddf576809e"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.1",
+                    "datestamp": "1483456142",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "rjjakes",
+                    "homepage": "https://www.drupal.org/user/3457245"
+                }
+            ],
+            "description": "Allow users to log in with either their username OR email address using the same input box on the login form.",
+            "homepage": "https://www.drupal.org/project/login_emailusername",
+            "support": {
+                "source": "https://git.drupalcode.org/project/login_emailusername"
             }
         },
         {
