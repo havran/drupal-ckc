@@ -29,12 +29,14 @@ function ckc_hodnoceni_toolbar() {
     return $items;
   }
 
+  $year = CkcHodnoceniService::get_years()[0]['name'];
+
   $items['ckc'] = [
     '#type' => 'toolbar_item',
     'tab' => [
       '#type' => 'link',
       '#title' => 'CKČ Administrace',
-      '#url' => Url::fromRoute('ckc_hodnoceni.admin'),
+      '#url' => Url::fromRoute('ckc_hodnoceni.admin', ['ckc_rocnik' => $year]),
       '#options' => [
         'attributes' => [
           'title' => 'CKČ Administrace',
@@ -52,18 +54,39 @@ function ckc_hodnoceni_toolbar() {
       'ckc_admin_menu' => [
         '#theme' => 'links__toolbar_user',
         '#links' => [
+          'import' => [
+            'title' => 'Import povídek',
+            'url' => Url::fromRoute('ckc_hodnoceni.admin.works.import', ['ckc_rocnik' => $year]),
+            'attributes' => [
+              'title' => 'Hromadný import povídek do kategorií',
+            ],
+          ],
+          'import-votes' => [
+            'title' => 'Import hlasů',
+            'url' => Url::fromRoute('ckc_hodnoceni.admin.votes.import', ['ckc_rocnik' => $year]),
+            'attributes' => [
+              'title' => 'Hromadný import hlasů',
+            ],
+          ],
           'status' => [
             'title' => 'Stav hlasování',
-            'url' => Url::fromRoute('ckc_hodnoceni.admin.status'),
+            'url' => Url::fromRoute('ckc_hodnoceni.admin.status', ['ckc_rocnik' => $year]),
             'attributes' => [
               'title' => 'Stav hlasování',
             ],
           ],
           'results' => [
             'title' => 'Výsledky',
-            'url' => Url::fromRoute('ckc_hodnoceni.admin.results'),
+            'url' => Url::fromRoute('ckc_hodnoceni.admin.results', ['ckc_rocnik' => $year]),
             'attributes' => [
               'title' => 'Výsledky',
+            ],
+          ],
+          'results-export' => [
+            'title' => 'Výsledky - export',
+            'url' => Url::fromRoute('ckc_hodnoceni.admin.results.export', ['ckc_rocnik' => $year]),
+            'attributes' => [
+              'title' => 'Hromadný export výsledků',
             ],
           ],
         ],
@@ -134,6 +157,7 @@ function ckc_hodnoceni_theme($existing, $type, $theme, $path) {
   ];
   $themes['ckc_rate_form'] = ['render element' => 'form'];
   $themes['ckc_works_import_form'] = ['render element' => 'form'];
+  $themes['ckc_vote_import_form'] = ['render element' => 'form'];
   return $themes;
 }
 

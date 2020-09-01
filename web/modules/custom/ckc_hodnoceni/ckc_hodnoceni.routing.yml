@@ -5,34 +5,59 @@ ckc_hodnoceni.admin:
     _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::main_title'
   requirements:
     _permission: 'ckc admin'
+ckc_hodnoceni.admin.list:
+  path: '/ckc/administrace/{ckc_rocnik}'
+  defaults:
+    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::main'
+    _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::main_title'
+  requirements:
+    _permission: 'ckc admin'
+# Works - Import
+ckc_hodnoceni.admin.works.import:
+  path: '/ckc/administrace/{ckc_rocnik}/prace/import'
+  defaults:
+    _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcAdminWorksController::import_title'
+    _form: '\Drupal\ckc_hodnoceni\Form\CkcWorksImportForm'
+  requirements:
+    _permission: 'ckc admin'
+# Votes - Import
+ckc_hodnoceni.admin.votes.import:
+  path: '/ckc/administrace/{ckc_rocnik}/hlasovani/import'
+  defaults:
+    _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcAdminVotesController::import_title'
+    _form: '\Drupal\ckc_hodnoceni\Form\CkcVotesImportForm'
+  requirements:
+    _permission: 'ckc admin'
+# Status
 ckc_hodnoceni.admin.status:
-  path: '/ckc/administrace/stav/{ckc_rocnik}'
+  path: '/ckc/administrace/{ckc_rocnik}/stav'
   defaults:
     _controller: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::status'
     _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::status_title'
-    ckc_rocnik: ''
   requirements:
     _permission: 'ckc admin'
 ckc_hodnoceni.admin.status.switch:
-  path: '/ckc/administrace/stav/{ckc_rocnik}/{rid}/status-switch'
+  path: '/ckc/administrace/{ckc_rocnik}/stav/{rid}/status-switch'
   defaults:
     _controller: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::status_switch'
   requirements:
     _permission: 'ckc admin'
+# Results
 ckc_hodnoceni.admin.results:
-  path: '/ckc/administrace/vysledky/{ckc_rocnik}'
+  path: '/ckc/administrace/{ckc_rocnik}/vysledky'
   defaults:
     _controller: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::results'
     _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::results_title'
-    ckc_rocnik: ''
   requirements:
     _permission: 'ckc admin'
-ckc_hodnoceni.admin.export:
-  path: '/ckc/administrace/vysledky/{ckc_rocnik}/export'
+# Results - Export
+ckc_hodnoceni.admin.results.export:
+  path: '/ckc/administrace/{ckc_rocnik}/vysledky/export'
   defaults:
     _controller: '\Drupal\ckc_hodnoceni\Controller\CkcAdminExportController::export'
   requirements:
     _permission: 'ckc admin'
+
 
 ckc_hodnoceni.rating.list:
   path: '/ckc/{ckc_rocnik}/hodnoceni'
@@ -51,24 +76,3 @@ ckc_hodnoceni.rating.category:
   requirements:
     _permission: 'ckc can rate'
 
-
-ckc_hodnoceni.works:
-  path: '/ckc/{ckc_rocnik}/prace'
-  defaults:
-    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcWorksController::list'
-  requirements:
-    _permission: 'ckc admin'
-ckc_hodnoceni.works.import:
-  path: '/ckc/{ckc_rocnik}/prace/import'
-  defaults:
-    _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcWorksController::import_title'
-    _form: '\Drupal\ckc_hodnoceni\Form\CkcWorksImportForm'
-  requirements:
-    _permission: 'ckc admin'
-
-#ckc_hodnoceni.works.edit:
-#  path: '/ckc/prace/{ckc_rocnik}/{ckc_kategorie}/edit'
-#  defaults:
-#    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcWorksController::edit'
-#  requirements:
-#    _permission: 'ckc admin'

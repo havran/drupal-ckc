@@ -26,22 +26,19 @@ class CkcAdminController extends ControllerBase {
   }
 
   public function status(string $ckc_rocnik) {
-    $ckc_rocnik = empty($ckc_rocnik) ? $this->default_year() : $ckc_rocnik;
-    $view = [
-      '#type' => 'view',
-      '#name' => 'ckc_hlasovani',
-      '#display_id' => 'default',
-      '#arguments' => [
-        $ckc_rocnik,
-      ],
-    ];
     return [
-      'data' => $view,
+      'data' => [
+        '#type' => 'view',
+        '#name' => 'ckc_hlasovani',
+        '#display_id' => 'default',
+        '#arguments' => [
+          $ckc_rocnik,
+        ],
+      ],
     ];
   }
 
   public function status_title(string $ckc_rocnik) {
-    $ckc_rocnik = empty($ckc_rocnik) ? $this->default_year() :$ckc_rocnik;
     return "CKČ {$ckc_rocnik} - stav hlasování";
   }
 
@@ -53,17 +50,11 @@ class CkcAdminController extends ControllerBase {
   }
 
   public function results(string $ckc_rocnik) {
-    $ckc_rocnik = empty($ckc_rocnik) ? $this->default_year() :$ckc_rocnik;
     return $this->get_results_table_render_array($ckc_rocnik);
   }
 
   public function results_title($ckc_rocnik) {
-    $ckc_rocnik = empty($ckc_rocnik) ? $this->default_year() :$ckc_rocnik;
     return "CKČ {$ckc_rocnik} - výsledky prací v kategoriích";
-  }
-
-  private function default_year() {
-    return CkcHodnoceniService::get_years()[0]['name'];
   }
 
   private function get_results_table_render_array(string $ckc_rocnik) {
