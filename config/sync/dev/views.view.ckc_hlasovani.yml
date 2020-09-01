@@ -473,7 +473,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '<a href="/ckc/administrace/stav/{{ckc_year}}/{{rid}}/status-switch">{% if status == 0 %}ne{% else %}ano{% endif %}</a>'
+            text: '<a href="/ckc/administrace/{{ckc_year}}/stav/{{rid}}/status-switch">{% if status == 0 %}ne{% else %}ano{% endif %}</a>'
             make_link: false
             path: ''
             absolute: false
