@@ -28,6 +28,13 @@ ckc_hodnoceni.admin.votes.import:
     _form: '\Drupal\ckc_hodnoceni\Form\CkcVotesImportForm'
   requirements:
     _permission: 'ckc admin'
+ckc_hodnoceni.admin.votes.import_with_category:
+  path: '/ckc/administrace/{ckc_rocnik}/hlasovani/import/{ckc_category}'
+  defaults:
+    _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcAdminVotesController::import_title'
+    _form: '\Drupal\ckc_hodnoceni\Form\CkcVotesImportForm'
+  requirements:
+    _permission: 'ckc admin'
 # Status
 ckc_hodnoceni.admin.status:
   path: '/ckc/administrace/{ckc_rocnik}/stav'

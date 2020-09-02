@@ -22,22 +22,6 @@ class CkcRateForm extends FormBase {
     return 'ckc_rate_form';
   }
 
-  private function get_year() {
-    return  (string) \Drupal::routeMatch()->getParameter('ckc_rocnik');
-  }
-
-  private function get_category_string() {
-    return (string) \Drupal::routeMatch()->getParameter('ckc_kategorie');
-  }
-
-  private function get_category_id() {
-    return array_flip(CkcHodnoceniService::categories(true))[$this->get_category_string()];
-  }
-
-  private function get_uid() {
-    return (int) \Drupal::currentUser()->id();
-  }
-
   private function get_user_name() {
     return \Drupal::currentUser()->getDisplayName();
   }
@@ -45,17 +29,23 @@ class CkcRateForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
-    $year = (string) \Drupal::routeMatch()->getParameter('ckc_rocnik');
-    $category = (string) \Drupal::routeMatch()->getParameter('ckc_kategorie');
+  public function buildForm(array $form, FormStateInterface $form_state, $year = NULL, $category = NULL, $uid = NULL) {
+    $year = $year
+      ? $year
+      : (string) \Drupal::routeMatch()->getParameter('ckc_rocnik');
+    $category = $category
+      ? CkcHodnoceniService::categories(true)[$category]
+      : (string) \Drupal::routeMatch()->getParameter('ckc_kategorie');
     $category_id = array_flip(CkcHodnoceniService::categories(true))[$category];
-    $uid = (int) \Drupal::currentUser()->id();
+    $uid = $uid
+      ? $uid
+      : (int) \Drupal::currentUser()->id();
 
     $works_raw = CkcHodnoceniService::get_works_by_year_and_category($year, $category);
     $works = CkcHodnoceniService::works($year, $category);
     $works_keys = array_map('strval', array_keys($works));
 
-    $selected_values = $this->prepareSelectedValues($works_raw, $works_keys, $form_state->getUserInput());
+    $selected_values = $this->prepareSelectedValues($works_raw, $works_keys, $form_state->getUserInput(), $year, $category_id, $uid);
 
     $form['#theme'] = 'ckc_rate_form';
     $form['#cache']['max-age'] = 0;
@@ -105,15 +95,15 @@ class CkcRateForm extends FormBase {
     ];
     $form['ckc_year'] = [
       '#type' => 'hidden',
-      '#value' => $this->get_year(),
+      '#value' => $year,
     ];
     $form['ckc_category'] = [
       '#type' => 'hidden',
-      '#value' => $this->get_category_id(),
+      '#value' => $category_id,
     ];
     $form['uid'] = [
       '#type' => 'hidden',
-      '#value' => $this->get_uid(),
+      '#value' => $uid,
     ];
 
     $form['note'] = [
@@ -224,13 +214,13 @@ class CkcRateForm extends FormBase {
     $view->storage->invalidateCaches();
   }
 
-  private function prepareSelectedValues($works_raw, $works_keys, $user_input) {
+  private function prepareSelectedValues($works_raw, $works_keys, $user_input, $year, $category_id, $uid) {
     if (empty($user_input)) {
       // if not submitted data then select data from DB
       $data = $this->readRateRecord(
-        $this->get_year(),
-        $this->get_category_id(),
-        $this->get_uid()
+        $year,
+        $category_id,
+        $uid,
       );
     } else {
       // if submitted data then recreate DB result
@@ -259,7 +249,7 @@ class CkcRateForm extends FormBase {
           'uid' => $user_input['uid'],
           'exclude_first_place' => empty($user_input['exclude_first_place']) ? 'n' : 'y',
           'note' => $user_input['note'],
-          'status' => $user_input['status'],
+          'status' => isset($user_input['status']) ? $user_input['status'] : 0,
         ],
         'data_works' => $data_works,
       ];
@@ -419,7 +409,7 @@ class CkcRateForm extends FormBase {
       'uid' => $form_state->getValue('uid'),
       'exclude_first_place' => $form_state->getValue('exclude_first_place', 'n') === 1 ? 'y' : 'n',
       'note' => $form_state->getValue('note'),
-      'status' => $form_state->getValue('status'),
+      'status' => (int) $form_state->getValue('status'),
     ];
     if (empty($rid)) {
       $data['created'] = $current_time;

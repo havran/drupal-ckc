@@ -17,7 +17,7 @@ class CkcHodnoceniBase {
   ];
 
   public const CKC_HODNOCENI_TABLE_FIELDS_BASE = [
-    'rid', 'ckc_year', 'ckc_category', 'uid', 'note', 'exclude_first_place', 'note', 'status',
+    'rid', 'ckc_year', 'ckc_category', 'uid', 'exclude_first_place', 'note', 'status',
   ];
 
   public const CKC_HODNOCENI_TABLE_FIELDS_PLACES = [
