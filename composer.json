@@ -32,6 +32,7 @@
     ],
     "require": {
         "composer/installers": "^1.2",
+        "cweagans/composer-patches": "^1.6",
         "drupal/admin_toolbar": "^2.0",
         "drupal/auto_entitylabel": "^3.0@beta",
         "drupal/backup_migrate": "^4.1",
@@ -111,6 +112,11 @@
                 "  * Remove the plugin that prints this message:",
                 "      composer remove drupal/core-project-message"
             ]
+        },
+        "patches": {
+            "drupal/userswitch": {
+                "Add an entity operation instead of a user list": "https://www.drupal.org/files/issues/2020-04-29/29042020-n9.patch"
+            }
         }
     }
 }
