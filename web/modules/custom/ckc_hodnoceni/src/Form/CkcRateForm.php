@@ -33,7 +33,7 @@ class CkcRateForm extends FormBase {
     $year = $year
       ? $year
       : (string) \Drupal::routeMatch()->getParameter('ckc_rocnik');
-    $category = $category
+    $category = $category || $category === '0'
       ? CkcHodnoceniService::categories(true)[$category]
       : (string) \Drupal::routeMatch()->getParameter('ckc_kategorie');
     $category_id = array_flip(CkcHodnoceniService::categories(true))[$category];

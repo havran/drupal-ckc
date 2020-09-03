@@ -232,7 +232,7 @@ EOT,
     $line_vote_str = next($lines);
     do {
       // Check if line contains name
-      if (preg_match('/^[a-zA-Z_0-9]*$/', $line_name) && preg_match('/^-[1-6] /', $line_vote_str)) {
+      if (preg_match('/^[^-]*$/', $line_name) && preg_match('/^-[1-6] /', $line_vote_str)) {
         $name = $line_name;
         $vote_str = $line_vote_str;
         // Prepare data
@@ -291,9 +291,9 @@ EOT,
           $form_values["order_{$place}_1"] = $votes_parsed[2][$key];
       }
     }
-    if (empty($form_values["order_1_1"])) {
-      $form_values['exclude_first_place'] = 1;
-    }
+    // if (empty($form_values["order_1_1"])) {
+    //   $form_values['exclude_first_place'] = 1;
+    // }
 
     return $form_values;
   }
