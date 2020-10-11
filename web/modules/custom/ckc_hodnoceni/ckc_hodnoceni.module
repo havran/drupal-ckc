@@ -82,6 +82,13 @@ function ckc_hodnoceni_toolbar() {
               'title' => 'Výsledky',
             ],
           ],
+          'results-final' => [
+            'title' => 'Výsledky kompletní',
+            'url' => Url::fromRoute('ckc_hodnoceni.admin.results_final', ['ckc_rocnik' => $year]),
+            'attributes' => [
+              'title' => 'Výsledky kompletní',
+            ],
+          ],
           'results-export' => [
             'title' => 'Výsledky - export',
             'url' => Url::fromRoute('ckc_hodnoceni.admin.results.export', ['ckc_rocnik' => $year]),

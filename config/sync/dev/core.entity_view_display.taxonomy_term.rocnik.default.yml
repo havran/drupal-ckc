@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.taxonomy_term.rocnik.field_uzaverka
+    - field.field.taxonomy_term.rocnik.field_year
     - taxonomy.vocabulary.rocnik
   module:
     - datetime
@@ -28,6 +29,15 @@ content:
       timezone_override: ''
     third_party_settings: {  }
     type: datetime_default
+    region: content
+  field_year:
+    weight: 2
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
     region: content
 hidden:
   langcode: true

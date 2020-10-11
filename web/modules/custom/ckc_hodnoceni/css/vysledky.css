@@ -3,8 +3,9 @@
  * Styling for results page.
  */
 
+
 th.ckc-work-id {
-  width: 60px;
+  width: 45px;
 }
 
 th.ckc-work-title {
@@ -12,10 +13,33 @@ th.ckc-work-title {
 }
 
 th.ckc-work-points {
-  width: 80px;
+  width: 45px;
   vertical-align: bottom;
+}
+
+th.ckc-work-votes {
+  width: 20px;
+  vertical-align: bottom;
+}
+table tr th:nth-child(3),
+table tr th:nth-child(4),
+table tr th:nth-child(5),
+table tr th:nth-child(6),
+table tr th:nth-child(7),
+table tr th:nth-child(8),
+table tr td:nth-child(3),
+table tr td:nth-child(4),
+table tr td:nth-child(5),
+table tr td:nth-child(6),
+table tr td:nth-child(7),
+table tr td:nth-child(8) {
+  text-align: center;
 }
 
 th.ckc-work-mlok {
   width: 80px;
+}
+
+table tr td {
+  vertical-align: top;
 }

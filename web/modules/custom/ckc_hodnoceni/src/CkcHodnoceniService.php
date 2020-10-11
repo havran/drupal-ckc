@@ -37,6 +37,7 @@ class CkcHodnoceniService {
       $term_data[] = array(
         'id' => $term->tid->value,
         'name' => $term->name->value,
+        'year' => $term->field_year->value,
       );
     }
     usort($term_data, function($a, $b) { return strcmp($a["name"], $b["name"]); });
@@ -57,7 +58,10 @@ class CkcHodnoceniService {
     return array_reduce(
       self::get_years(),
       function ($acc, $i) {
-        $acc[$i['name']] = $i['id'];
+        $acc[$i['name']] =[
+          'id' => $i['id'],
+          'year' => $i['year'],
+        ];
         return $acc;
       },
       []

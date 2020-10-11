@@ -1,0 +1,23 @@
+uuid: 41f81086-da7b-46de-9763-5cbbd46fbad4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_year
+    - taxonomy.vocabulary.rocnik
+id: taxonomy_term.rocnik.field_year
+field_name: field_year
+entity_type: taxonomy_term
+bundle: rocnik
+label: 'Ročník soutěže'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

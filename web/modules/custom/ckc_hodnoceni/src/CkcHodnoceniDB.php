@@ -28,6 +28,36 @@ class CkcHodnoceniDB {
         h.ckc_year,
         h.ckc_category,
         w.work_id,
+        SUM(CASE
+              WHEN w.work_place = 1 THEN 1
+              ELSE 0
+            END
+        ) AS place_1,
+        SUM(CASE
+              WHEN w.work_place = 2 THEN 1
+              ELSE 0
+            END
+        ) AS place_2,
+        SUM(CASE
+              WHEN w.work_place = 3 THEN 1
+              ELSE 0
+            END
+        ) AS place_3,
+        SUM(CASE
+              WHEN w.work_place = 4 THEN 1
+              ELSE 0
+            END
+        ) AS place_4,
+        SUM(CASE
+              WHEN w.work_place = 5 THEN 1
+              ELSE 0
+            END
+        ) AS place_5,
+        SUM(CASE
+              WHEN w.work_place = 6 THEN 1
+              ELSE 0
+            END
+        ) AS place_6,
         SUM(
             CASE
               WHEN w.work_place = 1 THEN 60

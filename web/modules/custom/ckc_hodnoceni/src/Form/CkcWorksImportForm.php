@@ -208,7 +208,7 @@ class CkcWorksImportForm extends FormBase {
     $data_normalized = array_map(
       function($row) use ($form_state, $year_map, $category_map) {
         $year = $form_state->getValue('ckc_year', null);
-        $year_id = $year_map[$year];
+        $year_id = $year_map[$year]['id'];
         $category = $form_state->getValue('ckc_category', null);
         $category_id = $category_map[$category];
         $code = str_pad($row['code'], 3, '0', STR_PAD_LEFT);

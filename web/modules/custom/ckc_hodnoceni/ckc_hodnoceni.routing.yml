@@ -57,6 +57,14 @@ ckc_hodnoceni.admin.results:
     _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::results_title'
   requirements:
     _permission: 'ckc admin'
+# Results final
+ckc_hodnoceni.admin.results_final:
+  path: '/ckc/administrace/{ckc_rocnik}/vysledky-komplet'
+  defaults:
+    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::results_final'
+    _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::results_final_title'
+  requirements:
+    _permission: 'ckc admin'
 # Results - Export
 ckc_hodnoceni.admin.results.export:
   path: '/ckc/administrace/{ckc_rocnik}/vysledky/export'

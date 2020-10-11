@@ -57,6 +57,15 @@ class CkcAdminController extends ControllerBase {
     return "CKČ {$ckc_rocnik} - výsledky prací v kategoriích";
   }
 
+  public function results_final(string $ckc_rocnik) {
+    return $this->get_results_final_table_render_array($ckc_rocnik);
+  }
+
+  public function results_final_title($ckc_rocnik) {
+    $year = CkcHodnoceniService::year_map()[$ckc_rocnik]['year'];
+    return "Kompletní výsledky {$year}. ročníku CKČ";
+  }
+
   private function get_results_table_render_array(string $ckc_rocnik) {
     $render = [
       '#attached' => [
@@ -95,6 +104,72 @@ class CkcAdminController extends ControllerBase {
       $table['#empty'] = "Žádné výsledky pro kategorii {$category['name']}...";
       $table['#rows'] = $rows;
       $render[$category['name_clean'].' title'] = ['#markup' => Markup::create("<h2>Výsledky v kategorii: <em>{$category['name']}</em></h2>")];
+      $render[$category['name_clean']] = $table;
+    }
+
+    return $render;
+  }
+
+  private function get_results_final_table_render_array(string $ckc_rocnik) {
+    $render = [
+      '#attached' => [
+        'library' => [
+          'ckc_hodnoceni/vysledky',
+        ],
+      ],
+      'description' => [
+        '#markup' => Markup::create(<<<'EOD'
+          <p>Pro výpočty bodového hodnocení je používán tento vzorec: Součty = suma získaných bodů
+          - viz počet získaných n-tých míst, n-té místo je ohodnoceno 60/n body (60, 30, 20, 15, 12,
+          10). Je-li na začátku řádku =, došlo u povídek ke shodě bodů a jsou zařazeny na stejné
+          pořadí.</p>
+        EOD),
+      ],
+    ];
+
+    $table_base = [
+      '#type' => 'table',
+      '#header' => [
+        ['data' => 'Pořadí', 'class' => ['ckc-work-id']],
+        ['data' => 'Součty', 'class' => ['ckc-work-points']],
+        ['data' => '1', 'class' => ['ckc-work-votes']],
+        ['data' => '2', 'class' => ['ckc-work-votes']],
+        ['data' => '3', 'class' => ['ckc-work-votes']],
+        ['data' => '4', 'class' => ['ckc-work-votes']],
+        ['data' => '5', 'class' => ['ckc-work-votes']],
+        ['data' => '6', 'class' => ['ckc-work-votes']],
+        ['data' => 'Název', 'class' => ['ckc-work-title']],
+      ],
+      '#rows' => [],
+      '#empty' => '',
+    ];
+
+    $categories = CkcHodnoceniService::get_categories();
+    $table = $table_base;
+    foreach ($categories as $category) {
+      $previous_points = 0;
+      $place = 1;
+      $works = CkcHodnoceniService::works($ckc_rocnik, $category['code'], true);
+      $results = CkcHodnoceniDB::get_works_order($ckc_rocnik, $category['code']);
+      $rows = [];
+      foreach ($results as $result) {
+        $rows[] = [
+          $previous_points === $result['points'] ? '=' : "{$place}.",
+          $result['points'],
+          $result['place_1'] == 0 ? '-' : $result['place_1'],
+          $result['place_2'] == 0 ? '-' : $result['place_2'],
+          $result['place_3'] == 0 ? '-' : $result['place_3'],
+          $result['place_4'] == 0 ? '-' : $result['place_4'],
+          $result['place_5'] == 0 ? '-' : $result['place_5'],
+          $result['place_6'] == 0 ? '-' : $result['place_6'],
+          $works[$result['work_id']],
+        ];
+        $previous_points = $result['points'];
+        $place++;
+      }
+      $table['#empty'] = "Žádné výsledky pro kategorii {$category['name']}...";
+      $table['#rows'] = $rows;
+      $render[$category['name_clean'].' title'] = ['#markup' => Markup::create("<h2>Kompletní výsledky v kategorii: <em>{$category['name']}</em></h2>")];
       $render[$category['name_clean']] = $table;
     }
 
