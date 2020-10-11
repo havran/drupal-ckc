@@ -35,7 +35,7 @@
         "cweagans/composer-patches": "^1.6",
         "drupal/admin_toolbar": "^2.0",
         "drupal/auto_entitylabel": "^3.0@beta",
-        "drupal/backup_migrate": "^4.1",
+        "drupal/backup_migrate": "^5.0RC",
         "drupal/core-composer-scaffold": "^8.8",
         "drupal/core-project-message": "^8.8",
         "drupal/core-recommended": "^8.8",
