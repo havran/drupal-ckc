@@ -138,6 +138,7 @@ class CkcAdminController extends ControllerBase {
         ['data' => '4', 'class' => ['ckc-work-votes']],
         ['data' => '5', 'class' => ['ckc-work-votes']],
         ['data' => '6', 'class' => ['ckc-work-votes']],
+        ['data' => 'ID', 'class' => ['ckc-work-votes']],
         ['data' => 'Název', 'class' => ['ckc-work-title']],
       ],
       '#rows' => [],
@@ -162,6 +163,7 @@ class CkcAdminController extends ControllerBase {
           $result['place_4'] == 0 ? '-' : $result['place_4'],
           $result['place_5'] == 0 ? '-' : $result['place_5'],
           $result['place_6'] == 0 ? '-' : $result['place_6'],
+          $result['work_id'],
           $works[$result['work_id']],
         ];
         $previous_points = $result['points'];
