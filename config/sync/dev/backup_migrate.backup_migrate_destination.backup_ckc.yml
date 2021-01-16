@@ -1,0 +1,9 @@
+uuid: e91f34b0-c091-4177-8b0f-691375b18276
+langcode: en
+status: true
+dependencies: {  }
+id: backup_ckc
+label: 'Backup CKC'
+type: Directory
+config:
+  directory: /backup/backup-ckc

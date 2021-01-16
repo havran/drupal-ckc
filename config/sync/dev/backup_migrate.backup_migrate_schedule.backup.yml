@@ -1,0 +1,13 @@
+uuid: faffbf6e-6fbf-4a76-90f7-5ac510915bd3
+langcode: en
+status: true
+dependencies: {  }
+id: backup
+label: Backup
+enabled: true
+keep: 7
+period: 86400
+cron: null
+source_id: default_db
+destination_id: backup_ckc
+settings_profile_id: ckc
