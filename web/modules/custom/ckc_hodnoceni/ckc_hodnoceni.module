@@ -51,6 +51,9 @@ function ckc_hodnoceni_toolbar() {
     ],
     'tray' => [
       '#heading' => 'CKČ Administrace',
+      'ckc_year_selector' => [
+        '#theme' => 'ckc_year_selector',
+      ],
       'ckc_admin_menu' => [
         '#theme' => 'links__toolbar_user',
         '#links' => [
@@ -98,7 +101,7 @@ function ckc_hodnoceni_toolbar() {
           ],
         ],
         '#attributes' => [
-          'class' => ['toolbar-menu'],
+          'class' => ['toolbar-menu', 'ckc-admin-menu'],
         ],
       ],
     ],
@@ -152,6 +155,9 @@ function ckc_hodnoceni_entity__clear_cache(EntityInterface $entity) {
  * Implements hook_theme().
  */
 function ckc_hodnoceni_theme($existing, $type, $theme, $path) {
+  $themes['ckc_year_selector'] = [
+    'path' => "{$path}/templates/ckc",
+  ];
   $themes['ckc_rate_text'] = [
     'variables' => [
       'data' => null,
