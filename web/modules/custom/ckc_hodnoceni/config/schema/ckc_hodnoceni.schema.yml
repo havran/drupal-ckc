@@ -1,0 +1,7 @@
+ckc_hodnoceni.settings:
+  type: config_object
+  label: 'CKČ Settings'
+  mapping:
+    year_active:
+      type: integer
+      label: 'CKČ current year'

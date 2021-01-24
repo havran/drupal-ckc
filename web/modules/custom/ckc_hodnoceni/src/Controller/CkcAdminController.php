@@ -16,8 +16,9 @@ use Drupal\views\Views;
 class CkcAdminController extends ControllerBase {
 
   public function main() {
+    $years = CkcHodnoceniService::year_map();
     return [
-      '#markup' => '<p>zoznam...</p>',
+      '#markup' => '<h2>Seznam zapsaných ročníkú</h2>',
     ];
   }
 
@@ -26,6 +27,8 @@ class CkcAdminController extends ControllerBase {
   }
 
   public function status(string $ckc_rocnik) {
+    $years = CkcHodnoceniService::year_map();
+    \Drupal::service('user.private_tempstore')->get('ckc_hodnoceni')->set('year_selected', $years[$ckc_rocnik]['id']);
     return [
       'data' => [
         '#type' => 'view',

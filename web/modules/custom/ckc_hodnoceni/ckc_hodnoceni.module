@@ -12,9 +12,6 @@ use Drupal\ckc_hodnoceni\CkcHodnoceniService;
 /**
  * Implements hook_toolbar().
  */
-/**
- * Implements hook_toolbar().
- */
 function ckc_hodnoceni_toolbar() {
   $items = [];
   $items['ckc_hodnoceni'] = [
@@ -29,14 +26,17 @@ function ckc_hodnoceni_toolbar() {
     return $items;
   }
 
-  $year = CkcHodnoceniService::get_years()[0]['name'];
+  $years = CkcHodnoceniService::year_map('id');
+  $year_active = \Drupal::configFactory()->getEditable('ckc_hodnoceni.settings')->get('year_active');
+  $year_selected = \Drupal::service('user.private_tempstore')->get('ckc_hodnoceni')->get('year_selected') ?: $year_active;
+  $year_selected_string = $years[$year_selected]['name'];
 
   $items['ckc'] = [
     '#type' => 'toolbar_item',
     'tab' => [
       '#type' => 'link',
       '#title' => 'CKČ Administrace',
-      '#url' => Url::fromRoute('ckc_hodnoceni.admin', ['ckc_rocnik' => $year]),
+      '#url' => Url::fromRoute('ckc_hodnoceni.admin', ['ckc_rocnik' => $year_selected_string]),
       '#options' => [
         'attributes' => [
           'title' => 'CKČ Administrace',
@@ -59,42 +59,42 @@ function ckc_hodnoceni_toolbar() {
         '#links' => [
           'import' => [
             'title' => 'Import povídek',
-            'url' => Url::fromRoute('ckc_hodnoceni.admin.works.import', ['ckc_rocnik' => $year]),
+            'url' => Url::fromRoute('ckc_hodnoceni.admin.works.import', ['ckc_rocnik' => $year_selected_string]),
             'attributes' => [
               'title' => 'Hromadný import povídek do kategorií',
             ],
           ],
           'import-votes' => [
             'title' => 'Import hlasů',
-            'url' => Url::fromRoute('ckc_hodnoceni.admin.votes.import', ['ckc_rocnik' => $year]),
+            'url' => Url::fromRoute('ckc_hodnoceni.admin.votes.import', ['ckc_rocnik' => $year_selected_string]),
             'attributes' => [
               'title' => 'Hromadný import hlasů',
             ],
           ],
           'status' => [
             'title' => 'Stav hlasování',
-            'url' => Url::fromRoute('ckc_hodnoceni.admin.status', ['ckc_rocnik' => $year]),
+            'url' => Url::fromRoute('ckc_hodnoceni.admin.status', ['ckc_rocnik' => $year_selected_string]),
             'attributes' => [
               'title' => 'Stav hlasování',
             ],
           ],
           'results' => [
             'title' => 'Výsledky',
-            'url' => Url::fromRoute('ckc_hodnoceni.admin.results', ['ckc_rocnik' => $year]),
+            'url' => Url::fromRoute('ckc_hodnoceni.admin.results', ['ckc_rocnik' => $year_selected_string]),
             'attributes' => [
               'title' => 'Výsledky',
             ],
           ],
           'results-final' => [
             'title' => 'Výsledky kompletní',
-            'url' => Url::fromRoute('ckc_hodnoceni.admin.results_final', ['ckc_rocnik' => $year]),
+            'url' => Url::fromRoute('ckc_hodnoceni.admin.results_final', ['ckc_rocnik' => $year_selected_string]),
             'attributes' => [
               'title' => 'Výsledky kompletní',
             ],
           ],
           'results-export' => [
             'title' => 'Výsledky - export',
-            'url' => Url::fromRoute('ckc_hodnoceni.admin.results.export', ['ckc_rocnik' => $year]),
+            'url' => Url::fromRoute('ckc_hodnoceni.admin.results.export', ['ckc_rocnik' => $year_selected_string]),
             'attributes' => [
               'title' => 'Hromadný export výsledků',
             ],
@@ -102,6 +102,14 @@ function ckc_hodnoceni_toolbar() {
         ],
         '#attributes' => [
           'class' => ['toolbar-menu', 'ckc-admin-menu'],
+        ],
+      ],
+      'configuration' => [
+        '#type' => 'link',
+        '#title' => 'Nastavení',
+        '#url' => Url::fromRoute('ckc_hodnoceni.settings'),
+        '#options' => [
+          'attributes' => ['class' => ['edit-devel-toolbar']],
         ],
       ],
     ],
@@ -157,6 +165,13 @@ function ckc_hodnoceni_entity__clear_cache(EntityInterface $entity) {
 function ckc_hodnoceni_theme($existing, $type, $theme, $path) {
   $themes['ckc_year_selector'] = [
     'path' => "{$path}/templates/ckc",
+    'variables' => [
+      'year_selected' => NULL,
+      'year_selected_string' => '',
+      'year_active' => NULL,
+      'year_active_string' => '',
+      'years' => [],
+    ],
   ];
   $themes['ckc_rate_text'] = [
     'variables' => [
@@ -172,6 +187,22 @@ function ckc_hodnoceni_theme($existing, $type, $theme, $path) {
   $themes['ckc_works_import_form'] = ['render element' => 'form'];
   $themes['ckc_vote_import_form'] = ['render element' => 'form'];
   return $themes;
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+function ckc_hodnoceni_preprocess_ckc_year_selector(&$variables) {
+  $years = CkcHodnoceniService::year_map('id');
+  $year_active = \Drupal::configFactory()->getEditable('ckc_hodnoceni.settings')->get('year_active');
+  $year_selected = \Drupal::service('user.private_tempstore')->get('ckc_hodnoceni')->get('year_selected') ?: $year_active;
+  $variables['#cache']['contexts'][] = 'session';
+  $variables['#cache']['max-age'] = 0;
+  $variables['year_selected'] = $year_selected;
+  $variables['year_selected_string'] = $years[$year_selected]['name'];
+  $variables['year_active'] = $year_active;
+  $variables['year_active_string'] = $years[$year_active]['name'];
+  $variables['years'] = $years;
 }
 
 /**

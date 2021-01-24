@@ -38,9 +38,10 @@
   cursor: pointer;
   text-decoration: none;
   color: #565656;
+  background-color: #8BC34A;
 }
 .cys .cys--year-select select option {
-  padding: 0.7em 1.3333em;
+  padding: 0.686em 1.3333em;
 }
 .toolbar-vertical .cys--year-select {
   flex-grow: 1;
@@ -48,7 +49,6 @@
 .cys .cys--lock {
   position: relative;
   min-width: 40px;
-  padding: 1em 1.3333em;
   text-decoration: none;
   color: #565656;
   cursor: pointer;

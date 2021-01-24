@@ -38,6 +38,8 @@ class CkcHodnoceniService {
         'id' => $term->tid->value,
         'name' => $term->name->value,
         'year' => $term->field_year->value,
+        'locked' => $term->field_locked->value || false,
+        'deadline' => $term->field_uzaverka->value,
       );
     }
     usort($term_data, function($a, $b) { return strcmp($a["name"], $b["name"]); });
@@ -54,14 +56,11 @@ class CkcHodnoceniService {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public static function year_map() {
+  public static function year_map($key = 'name') {
     return array_reduce(
       self::get_years(),
-      function ($acc, $i) {
-        $acc[$i['name']] =[
-          'id' => $i['id'],
-          'year' => $i['year'],
-        ];
+      function ($acc, $i) use ($key) {
+        $acc[$i[$key]] = $i;
         return $acc;
       },
       []

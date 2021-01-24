@@ -56,7 +56,7 @@ class CkcRateForm extends FormBase {
         '#value' => '1',
       ];
       $form['message'] = [
-        '#markup' => 'V tehle kategorii zatim neni zadna prace.'
+        '#markup' => 'V téhle kategorii se zatím nenachádzí žádná práce!'
       ];
 
       return $form;

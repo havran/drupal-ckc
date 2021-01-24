@@ -1,3 +1,11 @@
+ckc_hodnoceni.settings:
+  path: '/ckc/administrace/settings'
+  defaults:
+    _form: '\Drupal\ckc_hodnoceni\Form\CkcHodnoceniSettings'
+    _title_callback: '\Drupal\ckc_hodnoceni\Form\CkcHodnoceniSettings::main_title'
+  requirements:
+    _permission: 'ckc admin'
+
 ckc_hodnoceni.admin:
   path: '/ckc/administrace'
   defaults:

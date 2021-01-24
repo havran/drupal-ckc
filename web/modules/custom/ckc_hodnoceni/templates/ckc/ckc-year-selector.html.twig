@@ -1,9 +1,16 @@
 <div class="cys">
   <div  class="cys--year-select">
-    <select>
-      <option>2000</option>
-      <option>2001</option>
+    <select title="Ročník {{ year_selected_string }}" onchange="window.location = '/ckc/administrace/' + this.options[this.selectedIndex].dataset.year + '/stav'">
+      {% for year, year_settings in years %}
+        <option
+          value="{{ year_settings.id }}"
+          data-year="{{ year_settings.name }}"
+          class=""
+          {{ year == year_selected ? ' selected' : '' }}>{{ year_settings.name }} ({{ year_settings.locked ? 'uzamčen' : 'aktivní' }})</option>
+      {% endfor %}
     </select>
   </div>
-  <div class="cys--lock" title="Ročník 2021 je uzamčen." data-cys-locked="true"></div>
+  <div class="cys--lock" title="Ročník {{ year_selected_string }} je {{ years[year_selected].locked ? 'uzamčen' : 'aktivní' }}." data-cys-locked="{{ years[year_selected].locked ? 'true' : 'false' }}">
+    <a></a>
+  </div>
 </div>
