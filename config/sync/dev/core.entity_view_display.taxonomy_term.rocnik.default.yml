@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.taxonomy_term.rocnik.field_locked
     - field.field.taxonomy_term.rocnik.field_uzaverka
     - field.field.taxonomy_term.rocnik.field_year
     - taxonomy.vocabulary.rocnik
@@ -21,6 +22,16 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_locked:
+    weight: 3
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
   field_uzaverka:
     weight: 1
     label: above

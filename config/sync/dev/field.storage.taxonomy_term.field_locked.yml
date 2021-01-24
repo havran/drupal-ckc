@@ -1,0 +1,22 @@
+uuid: b15cc7c3-3edb-4f7f-8bed-d2fd354c19e3
+langcode: en
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - taxonomy
+third_party_settings:
+  field_permissions:
+    permission_type: public
+id: taxonomy_term.field_locked
+field_name: field_locked
+entity_type: taxonomy_term
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

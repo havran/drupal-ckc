@@ -41,7 +41,7 @@ display:
           items_per_page: 50
           tags:
             previous: '‹ Předchozí'
-            next: 'Další ›'
+            next: 'Následující ›'
             first: '« First'
             last: 'Last »'
       style:
