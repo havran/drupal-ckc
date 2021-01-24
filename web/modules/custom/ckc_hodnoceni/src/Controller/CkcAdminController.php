@@ -46,9 +46,14 @@ class CkcAdminController extends ControllerBase {
   }
 
   public function status_switch(string $ckc_rocnik, int $rid) {
-    CkcHodnoceniDB::rate_status_switch($rid);
-    $view = Views::getView('ckc_hlasovani');
-    $view->storage->invalidateCaches();
+    $active = CkcHodnoceniService::active($ckc_rocnik);
+    if ($active) {
+      CkcHodnoceniDB::rate_status_switch($rid);
+      $view = Views::getView('ckc_hlasovani');
+      $view->storage->invalidateCaches();
+    } else {
+      $this->messenger()->addWarning("Změna pro zahrnutí práce do hodnocení se neuskutečnila, protože ročník {$ckc_rocnik} je uzamčen!");
+    }
     return $this->redirect('ckc_hodnoceni.admin.status', ['ckc_rocnik' => $ckc_rocnik]);
   }
 

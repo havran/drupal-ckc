@@ -27,6 +27,13 @@ class CkcWorksImportForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $year_from_url = \Drupal::routeMatch()->getParameter('ckc_rocnik');
+    $active = CkcHodnoceniService::active($year_from_url);
+
+    if (!$active) {
+      $this->messenger()->addWarning("Import prací bude přeskočen, protože ročník {$year_from_url} je uzamčen!");
+    }
+
     $form['#theme'] = 'ckc_works_import_form';
 
     $form['validated'] = [
@@ -35,7 +42,7 @@ class CkcWorksImportForm extends FormBase {
     ];
     $form['ckc_year'] = [
       '#type' => 'value',
-      '#value' => \Drupal::routeMatch()->getParameter('ckc_rocnik'),
+      '#value' => $year_from_url,
     ];
     $form['parsed_import'] = [
       '#type' => 'value',
@@ -49,6 +56,7 @@ class CkcWorksImportForm extends FormBase {
       '#type' => 'submit',
       '#value' => ($form_state->getValue('validated', FALSE) ? 'Importovat' : 'Zkontrolovat'),
       '#button_type' => 'primary',
+      '#disabled' => $form_state->getValue('validated', FALSE) === TRUE && ($active ? FALSE : TRUE),
     ];
     if ($form_state->getValue('validated', FALSE) === TRUE) {
       $form['actions']['cancel'] = [
@@ -147,34 +155,40 @@ class CkcWorksImportForm extends FormBase {
       $form_state->setValue('validated', TRUE);
       $form_state->setRebuild(TRUE);
     } else {
-      $skipped = 0;
-      $updated = 0;
-      $imported = 0;
-      $data_for_import = $form_state->getValue('parsed_import', []);
-      foreach ($data_for_import as $row) {
-        if (isset($row['__node'])) {
-          if ($row['__node']->title->value === $row['title']) {
-            $skipped++;
-            continue;
-          } else {
-            $row['__node']->set('title', $row['title']);
-            $row['__node']->save();
-            $updated++;
-            continue;
+      $ckc_year = $form_state->getValue('ckc_year');
+      $active = CkcHodnoceniService::active($ckc_year);
+      if ($active) {
+        $skipped = 0;
+        $updated = 0;
+        $imported = 0;
+        $data_for_import = $form_state->getValue('parsed_import', []);
+        foreach ($data_for_import as $row) {
+          if (isset($row['__node'])) {
+            if ($row['__node']->title->value === $row['title']) {
+              $skipped++;
+              continue;
+            } else {
+              $row['__node']->set('title', $row['title']);
+              $row['__node']->save();
+              $updated++;
+              continue;
+            }
           }
+          $node = Node::create([
+            'type' => 'povidka',
+            'title' => $row['title'],
+            'field_rocnik_ref' => (int)$row['year_id'],
+            'field_kategorie_ref' => (int)$row['category_id'],
+            'field_poradi_povidky' => substr($row['code'], 1, 2),
+          ]);
+          $node->save();
+          $imported++;
         }
-        $node = Node::create([
-          'type' => 'povidka',
-          'title' => $row['title'],
-          'field_rocnik_ref' => (int)$row['year_id'],
-          'field_kategorie_ref' => (int)$row['category_id'],
-          'field_poradi_povidky' => substr($row['code'], 1, 2),
-        ]);
-        $node->save();
-        $imported++;
+        // ksm($data_for_import);
+        $this->messenger()->addStatus("{$skipped} prací přeskočeno, {$updated} prací upraveno a {$imported} prací vloženo!");
+      } else {
+        $this->messenger()->addError("Import prací byl přeskočen, protože ročník {$ckc_year} je uzamčen!");
       }
-      // ksm($data_for_import);
-      $this->messenger()->addStatus("{$skipped} prací přeskočeno, {$updated} prací upraveno a {$imported} prací vloženo!");
     }
 
     // ksm($form_state->getValues());

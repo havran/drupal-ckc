@@ -38,7 +38,8 @@ class CkcHodnoceniSettings extends ConfigFormBase {
     $years_options = array_reduce(
       CkcHodnoceniService::get_years(),
       function ($acc, $i) {
-        $acc[$i['id']] = $i['name'];
+        $status_string = $i['locked'] ? 'uzamčen' : 'aktivní';
+        $acc[$i['id']] = "{$i['name']} ({$status_string})";
         return $acc;
       },
       []
@@ -57,9 +58,15 @@ class CkcHodnoceniSettings extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    $years = CkcHodnoceniService::year_map('id');
+    $year_active = $form_state->getValue('year_active');
+    $year_active_string = $years[$year_active]['name'];
     $this->config('ckc_hodnoceni.settings')
       ->set('year_active', $form_state->getValue('year_active'))
       ->save();
+    CkcHodnoceniService::set_active_year($form_state->getValue('year_active'));
+    \Drupal::service('user.private_tempstore')->get('ckc_hodnoceni')->set('year_selected', $form_state->getValue('year_active'));
+    $this->messenger()->addStatus("Ročník {$year_active_string} je teď aktivní! Ostatní ročníky byly uzamčeny, změna uložených dat byla zakázána.");
     parent::submitForm($form, $form_state);
   }
 

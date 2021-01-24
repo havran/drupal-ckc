@@ -41,6 +41,12 @@ class CkcRateForm extends FormBase {
       ? $uid
       : (int) \Drupal::currentUser()->id();
 
+    $active = CkcHodnoceniService::active($year);
+
+    if (!$active) {
+      $this->messenger()->addWarning("Zmeny v hlasování nebudou uloženy, protože ročník {$year} je uzamčen!");
+    }
+
     $works_raw = CkcHodnoceniService::get_works_by_year_and_category($year, $category);
     $works = CkcHodnoceniService::works($year, $category);
     $works_keys = array_map('strval', array_keys($works));
@@ -201,17 +207,23 @@ class CkcRateForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $allowed_fields = array_merge(CkcHodnoceniBase::CKC_HODNOCENI_TABLE_FIELDS_BASE, CkcHodnoceniBase::CKC_HODNOCENI_TABLE_FIELDS_PLACES);
-    $data = array_filter(
-      $form_state->getValues(),
-      function ($key) use ($allowed_fields) {
-        return in_array($key, $allowed_fields);
-      },
-      ARRAY_FILTER_USE_KEY,
-    );
-    $this->createOrUpdateRateRecord($data, $form_state);
-    $view = Views::getView('ckc_hlasovani');
-    $view->storage->invalidateCaches();
+    $ckc_year = $form_state->getValue('ckc_year');
+    $active = CkcHodnoceniService::active($ckc_year);
+    if ($active) {
+      $allowed_fields = array_merge(CkcHodnoceniBase::CKC_HODNOCENI_TABLE_FIELDS_BASE, CkcHodnoceniBase::CKC_HODNOCENI_TABLE_FIELDS_PLACES);
+      $data = array_filter(
+        $form_state->getValues(),
+        function ($key) use ($allowed_fields) {
+          return in_array($key, $allowed_fields);
+        },
+        ARRAY_FILTER_USE_KEY,
+      );
+      $this->createOrUpdateRateRecord($data, $form_state);
+      $view = Views::getView('ckc_hlasovani');
+      $view->storage->invalidateCaches();
+    } else {
+      $this->messenger()->addError("Zmeny v hlasování nebyli uloženy, protože ročník {$ckc_year} je uzamčen!");
+    }
   }
 
   private function prepareSelectedValues($works_raw, $works_keys, $user_input, $year, $category_id, $uid) {

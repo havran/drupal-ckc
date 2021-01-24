@@ -6,6 +6,7 @@ use Drupal\Core\Database\Database;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element\Page;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\user\Entity\User;
 use Drupal\ckc_hodnoceni\CkcHodnoceniBase;
@@ -28,6 +29,13 @@ class CkcVotesImportForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $year_from_url = \Drupal::routeMatch()->getParameter('ckc_rocnik');
+    $active = CkcHodnoceniService::active($year_from_url);
+
+    if (!$active) {
+      $this->messenger()->addWarning("Import hlasú bude přeskočen, protože ročník {$year_from_url} je uzamčen!");
+    }
+
     $form['#theme'] = 'ckc_works_import_form';
 
     $form['validated'] = [
@@ -36,7 +44,7 @@ class CkcVotesImportForm extends FormBase {
     ];
     $form['ckc_year'] = [
       '#type' => 'value',
-      '#value' => \Drupal::routeMatch()->getParameter('ckc_rocnik'),
+      '#value' => $year_from_url,
     ];
     $form['parsed_import'] = [
       '#type' => 'value',
@@ -50,6 +58,7 @@ class CkcVotesImportForm extends FormBase {
       '#type' => 'submit',
       '#value' => ($form_state->getValue('validated', FALSE) ? 'Importovat' : 'Zkontrolovat'),
       '#button_type' => 'primary',
+      '#disabled' => $form_state->getValue('validated', FALSE) === TRUE && ($active ? FALSE : TRUE),
     ];
     if ($form_state->getValue('validated', FALSE) === TRUE) {
       $form['actions']['cancel'] = [
@@ -152,39 +161,45 @@ EOT,
       $form_state->setValue('validated', TRUE);
       $form_state->setRebuild(TRUE);
     } else {
-      $skipped = 0;
-      $updated = 0;
-      $imported = 0;
-      $data_for_import = $form_state->getValue('parsed_import', []);
-      foreach ($data_for_import as $row) {
-        if (empty($row['user_uid'])) {
-          $user = $this->createUser($row['user_name']);
-        } else {
-          $user = user_load_by_name($row['user_name']);
-        }
-        $row['form_values']['uid'] = $user->id();
-        $row['form_values']['rid'] = $row['vote_rid'];
-        $row['form_values']['op'] = $row['vote_rid'] ? 'Upravit hodnocení' : 'Uložit hodnocení';
-        $fs = (new FormState())->setValues($row['form_values']);
-        \Drupal::formBuilder()->submitForm(
-          '\Drupal\ckc_hodnoceni\Form\CkcRateForm',
-          $fs,
-          $row['form_values']['ckc_year'],
-          $row['form_values']['ckc_category'],
-          $user->id()
-        );
-        $errors = $fs->getErrors();
-        if (empty($errors)) {
-          if (!empty($row['vote_rid'])) {
-            $updated++;
+      $ckc_year = $form_state->getValue('ckc_year');
+      $active = CkcHodnoceniService::active($ckc_year);
+      if ($active) {
+        $skipped = 0;
+        $updated = 0;
+        $imported = 0;
+        $data_for_import = $form_state->getValue('parsed_import', []);
+        foreach ($data_for_import as $row) {
+          if (empty($row['user_uid'])) {
+            $user = $this->createUser($row['user_name']);
           } else {
-            $imported++;
+            $user = user_load_by_name($row['user_name']);
+          }
+          $row['form_values']['uid'] = $user->id();
+          $row['form_values']['rid'] = $row['vote_rid'];
+          $row['form_values']['op'] = $row['vote_rid'] ? 'Upravit hodnocení' : 'Uložit hodnocení';
+          $fs = (new FormState())->setValues($row['form_values']);
+          \Drupal::formBuilder()->submitForm(
+            '\Drupal\ckc_hodnoceni\Form\CkcRateForm',
+            $fs,
+            $row['form_values']['ckc_year'],
+            $row['form_values']['ckc_category'],
+            $user->id()
+          );
+          $errors = $fs->getErrors();
+          if (empty($errors)) {
+            if (!empty($row['vote_rid'])) {
+              $updated++;
+            } else {
+              $imported++;
+            }
           }
         }
+        $this->messenger()->addStatus("{$skipped} hodnocení přeskočeno, {$updated} hodnocení upraveno a {$imported} hodnocení vloženo!");
+        $view = Views::getView('ckc_hlasovani');
+        $view->storage->invalidateCaches();
+      } else {
+        $this->messenger()->addError("Import hlasú byl přeskočen, protože ročník {$ckc_year} je uzamčen!");
       }
-      $this->messenger()->addStatus("{$skipped} hodnocení přeskočeno, {$updated} hodnocení upraveno a {$imported} hodnocení vloženo!");
-      $view = Views::getView('ckc_hlasovani');
-      $view->storage->invalidateCaches();
     }
   }
 
