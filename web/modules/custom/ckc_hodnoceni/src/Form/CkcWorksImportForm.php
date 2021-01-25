@@ -92,7 +92,7 @@ class CkcWorksImportForm extends FormBase {
         '#cols' => 60,
         '#rows' => 18,
         '#default_value' => $form_state->getValue('text_import'),
-        '#description' => 'Každý řádek musí obsahovat kód práce, tabulační znak a název práce.',
+        '#description' => 'Každý řádek musí obsahovat kód práce, oddělovací znak (tabulační znak, nebo středník) a název práce.',
       ];
     } else {
       $form['text_import_messages'] = [
@@ -204,13 +204,19 @@ class CkcWorksImportForm extends FormBase {
   }
 
   private function parseImport(FormStateInterface $form_state) {
+    // detect delimiter
+    $delimiter = "\t";
+    $line = strtok($form_state->getValue('text_import', ''), "\n");
+    if (preg_match('/^\d{3}(\t|;|\|).+$/', $line,$matches) === 1) {
+      $delimiter = $matches[1];
+    }
     $serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder()]);
     $data = $serializer->decode(
-      "code\ttitle\n" .  $form_state->getValue('text_import', ''),
+      "code{$delimiter}title\n" .  $form_state->getValue('text_import', ''),
       'csv',
-      [ CsvEncoder::DELIMITER_KEY => "\t" ],
+      [ CsvEncoder::DELIMITER_KEY => $delimiter ],
     );
-    return $data;
+    return empty($data['title']) ? $data : array($data);
   }
 
   private function normalizeImport($data, FormStateInterface $form_state) {
@@ -256,6 +262,9 @@ class CkcWorksImportForm extends FormBase {
       $selected_category_str = str_pad($selected_category, 3, 'X', STR_PAD_RIGHT);
       if ($match !== 1) {
         $errors[] = 'Nevalidní kód <b>'. $row['code'] .'</b> pro vybranou kategorii <b>'. $selected_category_str  .'</b> v řádku: <i>'. $row['code'] ."\t". $row['title'] .'</i>!';
+      }
+      if (empty($row['title'])) {
+        $errors[] = 'Chybí název práce v řádku: <i>'. $row['code'] .'</i>!';
       }
     }
     return $errors;
