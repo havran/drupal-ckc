@@ -1,8 +1,12 @@
-name: CKČ Hodnocení
-description: Hodnocení CKČ prací.
-package: CKČ
+name: 'CKČ Hodnocení'
 type: module
-version: 1.0
+description: 'Hodnocení CKČ prací.'
+package: CKČ
+configure: ckc_hodnoceni.settings
+core_version_requirement: ^8 || ^9
 core: 8.x
+
 dependencies:
   - views
+
+version: 1.0

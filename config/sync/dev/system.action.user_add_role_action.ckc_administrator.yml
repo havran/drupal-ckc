@@ -1,0 +1,14 @@
+uuid: 7a18e960-300b-4ea1-9797-dad6621675ba
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.ckc_administrator
+  module:
+    - user
+id: user_add_role_action.ckc_administrator
+label: 'Add the CKČ Administrator role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: ckc_administrator

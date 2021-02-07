@@ -16,8 +16,9 @@ use Drupal\views\Views;
 class CkcAdminController extends ControllerBase {
 
   public function main() {
+    $years = CkcHodnoceniService::year_map();
     return [
-      '#markup' => '<p>zoznam...</p>',
+      '#markup' => '<h2>Seznam zapsaných ročníkú</h2>',
     ];
   }
 
@@ -26,6 +27,8 @@ class CkcAdminController extends ControllerBase {
   }
 
   public function status(string $ckc_rocnik) {
+    $years = CkcHodnoceniService::year_map();
+    \Drupal::service('user.private_tempstore')->get('ckc_hodnoceni')->set('year_selected', $years[$ckc_rocnik]['id']);
     return [
       'data' => [
         '#type' => 'view',
@@ -43,9 +46,14 @@ class CkcAdminController extends ControllerBase {
   }
 
   public function status_switch(string $ckc_rocnik, int $rid) {
-    CkcHodnoceniDB::rate_status_switch($rid);
-    $view = Views::getView('ckc_hlasovani');
-    $view->storage->invalidateCaches();
+    $active = CkcHodnoceniService::active($ckc_rocnik);
+    if ($active) {
+      CkcHodnoceniDB::rate_status_switch($rid);
+      $view = Views::getView('ckc_hlasovani');
+      $view->storage->invalidateCaches();
+    } else {
+      $this->messenger()->addWarning("Změna pro zahrnutí práce do hodnocení se neuskutečnila, protože ročník {$ckc_rocnik} je uzamčen!");
+    }
     return $this->redirect('ckc_hodnoceni.admin.status', ['ckc_rocnik' => $ckc_rocnik]);
   }
 

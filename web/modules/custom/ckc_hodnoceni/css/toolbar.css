@@ -20,3 +20,77 @@
 .no-svg .toolbar-bar .toolbar-icon-cog.active:before {
   background-image: url("assets/cog.svg");
 }
+
+.cys {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  float: left;
+}
+.toolbar-vertical .cys {
+  float: initial;
+}
+.cys .cys--year-select select {
+  width: 100%;
+  margin: 0;
+  border: none;
+  padding: 0.7em 1.3333em;
+  cursor: pointer;
+  text-decoration: none;
+  color: #565656;
+  background-color: #8BC34A;
+}
+.cys .cys--year-select select option {
+  padding: 0.686em 1.3333em;
+}
+.toolbar-vertical .cys--year-select {
+  flex-grow: 1;
+}
+.cys .cys--lock {
+  position: relative;
+  min-width: 40px;
+  text-decoration: none;
+  color: #565656;
+  cursor: pointer;
+}
+.cys .cys--lock:before {
+  position: absolute;
+  top: -2px;
+  left: 0.6667em;
+  display: block;
+  width: 20px;
+  height: 100%;
+  content: "";
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center center;
+  background-size: 100% auto;
+}
+.cys .cys--lock[data-cys-locked="true"]:before {
+  background-image: url("assets/locked.svg");
+  left: 0.77em;
+}
+.cys .cys--lock[data-cys-locked="true"]:hover:before {
+  background-image: url("assets/locked.active.svg");
+  left: 0.77em;
+}
+.cys .cys--lock[data-cys-locked="false"]:before {
+  background-image: url("assets/unlocked.svg");
+}
+.cys .cys--lock[data-cys-locked="false"]:hover:before {
+  background-image: url("assets/unlocked.active.svg");
+}
+
+.toolbar-horizontal .ckc-admin-menu li a {
+  border-right: 1px solid #ddd;
+}
+.toolbar-horizontal .ckc-admin-menu li:last-child a {
+  border-right: none;
+}
+.toolbar-horizontal .cys .cys--lock {
+  border-right: 1px solid #ddd;
+}
+.toolbar-vertical .cys .cys--years-selector {
+  border-bottom: 1px solid #ddd;
+}

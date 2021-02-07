@@ -38,6 +38,8 @@ class CkcHodnoceniService {
         'id' => $term->tid->value,
         'name' => $term->name->value,
         'year' => $term->field_year->value,
+        'locked' => $term->field_locked->value || false,
+        'deadline' => $term->field_uzaverka->value,
       );
     }
     usort($term_data, function($a, $b) { return strcmp($a["name"], $b["name"]); });
@@ -54,14 +56,11 @@ class CkcHodnoceniService {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public static function year_map() {
+  public static function year_map($key = 'name') {
     return array_reduce(
       self::get_years(),
-      function ($acc, $i) {
-        $acc[$i['name']] =[
-          'id' => $i['id'],
-          'year' => $i['year'],
-        ];
+      function ($acc, $i) use ($key) {
+        $acc[$i[$key]] = $i;
         return $acc;
       },
       []
@@ -248,6 +247,37 @@ class CkcHodnoceniService {
 
   public static function validate_category_string(string $category) {
     return in_array($category, self::categories(true), TRUE);
+  }
+
+  /**
+   * Get years from taxonomy 'rocnik', ordered by 'name' (year).
+   * Cached for fast access.
+   *
+   * @return array
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  public static function set_active_year(int $year_id) {
+    $term_etm = \Drupal::entityTypeManager()
+      ->getStorage('taxonomy_term');
+    $terms_tids = $term_etm->getQuery()
+      ->condition('vid', self::CKC_YEAR)
+      ->execute();
+    $terms = $term_etm->loadMultiple($terms_tids);
+    foreach ($terms as $term) {
+      if ((string) $year_id === (string) $term->tid->value) {
+        $term->field_locked->setValue(FALSE);
+      } else {
+        $term->field_locked->setValue(TRUE);
+      }
+      $term->save();
+    }
+  }
+
+  public static function active(string $year_from_url) {
+    $years = CkcHodnoceniService::year_map();
+    $year_active = (string) \Drupal::configFactory()->getEditable('ckc_hodnoceni.settings')->get('year_active');
+    return $year_active === $years[$year_from_url]['id'];
   }
 
 }

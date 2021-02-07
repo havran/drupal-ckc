@@ -27,6 +27,13 @@ class CkcWorksImportForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $year_from_url = \Drupal::routeMatch()->getParameter('ckc_rocnik');
+    $active = CkcHodnoceniService::active($year_from_url);
+
+    if (!$active) {
+      $this->messenger()->addWarning("Import prací bude přeskočen, protože ročník {$year_from_url} je uzamčen!");
+    }
+
     $form['#theme'] = 'ckc_works_import_form';
 
     $form['validated'] = [
@@ -35,7 +42,7 @@ class CkcWorksImportForm extends FormBase {
     ];
     $form['ckc_year'] = [
       '#type' => 'value',
-      '#value' => \Drupal::routeMatch()->getParameter('ckc_rocnik'),
+      '#value' => $year_from_url,
     ];
     $form['parsed_import'] = [
       '#type' => 'value',
@@ -49,6 +56,7 @@ class CkcWorksImportForm extends FormBase {
       '#type' => 'submit',
       '#value' => ($form_state->getValue('validated', FALSE) ? 'Importovat' : 'Zkontrolovat'),
       '#button_type' => 'primary',
+      '#disabled' => $form_state->getValue('validated', FALSE) === TRUE && ($active ? FALSE : TRUE),
     ];
     if ($form_state->getValue('validated', FALSE) === TRUE) {
       $form['actions']['cancel'] = [
@@ -84,7 +92,7 @@ class CkcWorksImportForm extends FormBase {
         '#cols' => 60,
         '#rows' => 18,
         '#default_value' => $form_state->getValue('text_import'),
-        '#description' => 'Každý řádek musí obsahovat kód práce, tabulační znak a název práce.',
+        '#description' => 'Každý řádek musí obsahovat kód práce, oddělovací znak (tabulační znak, nebo středník) a název práce.',
       ];
     } else {
       $form['text_import_messages'] = [
@@ -147,34 +155,40 @@ class CkcWorksImportForm extends FormBase {
       $form_state->setValue('validated', TRUE);
       $form_state->setRebuild(TRUE);
     } else {
-      $skipped = 0;
-      $updated = 0;
-      $imported = 0;
-      $data_for_import = $form_state->getValue('parsed_import', []);
-      foreach ($data_for_import as $row) {
-        if (isset($row['__node'])) {
-          if ($row['__node']->title->value === $row['title']) {
-            $skipped++;
-            continue;
-          } else {
-            $row['__node']->set('title', $row['title']);
-            $row['__node']->save();
-            $updated++;
-            continue;
+      $ckc_year = $form_state->getValue('ckc_year');
+      $active = CkcHodnoceniService::active($ckc_year);
+      if ($active) {
+        $skipped = 0;
+        $updated = 0;
+        $imported = 0;
+        $data_for_import = $form_state->getValue('parsed_import', []);
+        foreach ($data_for_import as $row) {
+          if (isset($row['__node'])) {
+            if ($row['__node']->title->value === $row['title']) {
+              $skipped++;
+              continue;
+            } else {
+              $row['__node']->set('title', $row['title']);
+              $row['__node']->save();
+              $updated++;
+              continue;
+            }
           }
+          $node = Node::create([
+            'type' => 'povidka',
+            'title' => $row['title'],
+            'field_rocnik_ref' => (int)$row['year_id'],
+            'field_kategorie_ref' => (int)$row['category_id'],
+            'field_poradi_povidky' => substr($row['code'], 1, 2),
+          ]);
+          $node->save();
+          $imported++;
         }
-        $node = Node::create([
-          'type' => 'povidka',
-          'title' => $row['title'],
-          'field_rocnik_ref' => (int)$row['year_id'],
-          'field_kategorie_ref' => (int)$row['category_id'],
-          'field_poradi_povidky' => substr($row['code'], 1, 2),
-        ]);
-        $node->save();
-        $imported++;
+        // ksm($data_for_import);
+        $this->messenger()->addStatus("{$skipped} prací přeskočeno, {$updated} prací upraveno a {$imported} prací vloženo!");
+      } else {
+        $this->messenger()->addError("Import prací byl přeskočen, protože ročník {$ckc_year} je uzamčen!");
       }
-      // ksm($data_for_import);
-      $this->messenger()->addStatus("{$skipped} prací přeskočeno, {$updated} prací upraveno a {$imported} prací vloženo!");
     }
 
     // ksm($form_state->getValues());
@@ -190,13 +204,19 @@ class CkcWorksImportForm extends FormBase {
   }
 
   private function parseImport(FormStateInterface $form_state) {
+    // detect delimiter
+    $delimiter = "\t";
+    $line = strtok($form_state->getValue('text_import', ''), "\n");
+    if (preg_match('/^\d{3}(\t|;|\|).+$/', $line,$matches) === 1) {
+      $delimiter = $matches[1];
+    }
     $serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder()]);
     $data = $serializer->decode(
-      "code\ttitle\n" .  $form_state->getValue('text_import', ''),
+      "code{$delimiter}title\n" .  $form_state->getValue('text_import', ''),
       'csv',
-      [ CsvEncoder::DELIMITER_KEY => "\t" ],
+      [ CsvEncoder::DELIMITER_KEY => $delimiter ],
     );
-    return $data;
+    return empty($data['title']) ? $data : array($data);
   }
 
   private function normalizeImport($data, FormStateInterface $form_state) {
@@ -242,6 +262,9 @@ class CkcWorksImportForm extends FormBase {
       $selected_category_str = str_pad($selected_category, 3, 'X', STR_PAD_RIGHT);
       if ($match !== 1) {
         $errors[] = 'Nevalidní kód <b>'. $row['code'] .'</b> pro vybranou kategorii <b>'. $selected_category_str  .'</b> v řádku: <i>'. $row['code'] ."\t". $row['title'] .'</i>!';
+      }
+      if (empty($row['title'])) {
+        $errors[] = 'Chybí název práce v řádku: <i>'. $row['code'] .'</i>!';
       }
     }
     return $errors;

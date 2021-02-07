@@ -1,0 +1,14 @@
+uuid: 6f1f92ef-e811-4019-8817-4d92665f678d
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.ckc_administrator
+  module:
+    - user
+id: user_remove_role_action.ckc_administrator
+label: 'Remove the CKČ Administrator role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: ckc_administrator

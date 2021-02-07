@@ -53,7 +53,7 @@ display:
           total_pages: 0
           tags:
             previous: '‹ Předchozí'
-            next: 'Další ›'
+            next: 'Následující ›'
             first: '« First'
             last: 'Last »'
           expose:

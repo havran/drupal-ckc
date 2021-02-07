@@ -1,8 +1,16 @@
+ckc_hodnoceni.settings:
+  path: '/ckc/administrace/settings'
+  defaults:
+    _form: '\Drupal\ckc_hodnoceni\Form\CkcHodnoceniSettings'
+    _title_callback: '\Drupal\ckc_hodnoceni\Form\CkcHodnoceniSettings::main_title'
+  requirements:
+    _permission: 'ckc admin'
+
 ckc_hodnoceni.admin:
   path: '/ckc/administrace'
   defaults:
-    _controller: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::main'
-    _title_callback: '\Drupal\ckc_hodnoceni\Controller\CkcAdminController::main_title'
+    _form: '\Drupal\ckc_hodnoceni\Form\CkcHodnoceniSettings'
+    _title_callback: '\Drupal\ckc_hodnoceni\Form\CkcHodnoceniSettings::main_title'
   requirements:
     _permission: 'ckc admin'
 ckc_hodnoceni.admin.list:
