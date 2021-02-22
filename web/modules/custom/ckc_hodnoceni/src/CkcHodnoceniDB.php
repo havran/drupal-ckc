@@ -71,15 +71,15 @@ class CkcHodnoceniDB {
         ) AS points,
         (
           SELECT
-          SUM(w2.work_mlok)
+            SUM(w2.work_mlok)
           FROM {ckc_hodnoceni_works} AS w2
-                  LEFT JOIN {ckc_hodnoceni} AS h2 ON h2.rid = w2.rid
-                  WHERE
-                    1 = 1
-                    AND h.ckc_year = :ckc_year
-          AND h.ckc_category = :ckc_category
-          AND h.status = 1
-          AND w2.work_id = w.work_id
+          LEFT JOIN {ckc_hodnoceni} AS h2 ON h2.rid = w2.rid
+          WHERE
+            1 = 1
+            AND h2.ckc_year = :ckc_year
+            AND h2.ckc_category = :ckc_category
+            AND h2.status = 1
+            AND w2.work_id = w.work_id
         ) AS mlok
       FROM {ckc_hodnoceni_works} AS w
       LEFT JOIN {ckc_hodnoceni} AS h ON h.rid = w.rid
