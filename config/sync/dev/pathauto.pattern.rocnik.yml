@@ -13,20 +13,20 @@ pattern: 'rocnik/[term:name]'
 selection_criteria:
   30725bea-6a4c-4d5e-8c3c-3b629f17de04:
     id: 'entity_bundle:taxonomy_term'
-    bundles:
-      rocnik: rocnik
     negate: false
+    uuid: 30725bea-6a4c-4d5e-8c3c-3b629f17de04
     context_mapping:
       taxonomy_term: taxonomy_term
-    uuid: 30725bea-6a4c-4d5e-8c3c-3b629f17de04
+    bundles:
+      rocnik: rocnik
   7a5cef36-bec1-42ca-9ace-392583f0eff4:
     id: language
-    langcodes:
-      cs: cs
     negate: false
+    uuid: 7a5cef36-bec1-42ca-9ace-392583f0eff4
     context_mapping:
       language: 'taxonomy_term:langcode:language'
-    uuid: 7a5cef36-bec1-42ca-9ace-392583f0eff4
+    langcodes:
+      cs: cs
 selection_logic: and
 weight: -10
 relationships:

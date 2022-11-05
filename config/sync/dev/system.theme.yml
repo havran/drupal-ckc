@@ -1,5 +1,5 @@
-admin: seven
-default: ckc
 _core:
   default_config_hash: fOjer9hADYYnbCJVZMFZIIM1azTFWyg84ZkFDHfAbUg
 langcode: cs
+admin: seven
+default: ckc

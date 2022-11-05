@@ -1,7 +1,9 @@
 uuid: 0424763e-4cc2-44a4-ab2b-5fcc0a1cfd97
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - ckc_hodnoceni
 id: ckc_administrator
 label: 'CKČ Administrator'
 weight: -6

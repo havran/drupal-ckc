@@ -13,20 +13,20 @@ pattern: 'kategorie/[term:name]'
 selection_criteria:
   feadfa3c-e31f-492e-bac0-be8c8bfce8ab:
     id: 'entity_bundle:taxonomy_term'
-    bundles:
-      kategorie: kategorie
     negate: false
+    uuid: feadfa3c-e31f-492e-bac0-be8c8bfce8ab
     context_mapping:
       taxonomy_term: taxonomy_term
-    uuid: feadfa3c-e31f-492e-bac0-be8c8bfce8ab
+    bundles:
+      kategorie: kategorie
   1088904f-2f3e-4b33-869e-214b732fd6d6:
     id: language
-    langcodes:
-      cs: cs
     negate: false
+    uuid: 1088904f-2f3e-4b33-869e-214b732fd6d6
     context_mapping:
       language: 'taxonomy_term:langcode:language'
-    uuid: 1088904f-2f3e-4b33-869e-214b732fd6d6
+    langcodes:
+      cs: cs
 selection_logic: and
 weight: -10
 relationships:

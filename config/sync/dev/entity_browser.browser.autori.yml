@@ -22,12 +22,12 @@ widget_selector: single
 widget_selector_configuration: {  }
 widgets:
   4c149223-1a5c-4500-afe9-d99f38535f05:
+    id: view
+    uuid: 4c149223-1a5c-4500-afe9-d99f38535f05
+    label: view
+    weight: 1
     settings:
-      view: ckc_browse_autori
-      view_display: entity_browser_1
       submit_text: 'Select entities'
       auto_select: false
-    uuid: 4c149223-1a5c-4500-afe9-d99f38535f05
-    weight: 1
-    label: view
-    id: view
+      view: ckc_browse_autori
+      view_display: entity_browser_1

@@ -14,31 +14,31 @@ bundle: povidka
 mode: default
 content:
   field_autor_ref:
+    type: options_select
     weight: 3
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: options_select
-    region: content
   field_kategorie_ref:
+    type: options_select
     weight: 1
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: options_select
-    region: content
   field_poradi_povidky:
+    type: string_textfield
     weight: 2
+    region: content
     settings:
       size: 2
       placeholder: '00'
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_rocnik_ref:
+    type: options_select
     weight: 0
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: options_select
-    region: content
   status:
     type: boolean_checkbox
     weight: 5
