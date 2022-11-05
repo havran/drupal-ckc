@@ -65,7 +65,7 @@ class CkcHodnoceniSettings extends ConfigFormBase {
       ->set('year_active', $form_state->getValue('year_active'))
       ->save();
     CkcHodnoceniService::set_active_year($form_state->getValue('year_active'));
-    \Drupal::service('user.private_tempstore')->get('ckc_hodnoceni')->set('year_selected', $form_state->getValue('year_active'));
+    \Drupal::service('tempstore.private')->get('ckc_hodnoceni')->set('year_selected', $form_state->getValue('year_active'));
     $this->messenger()->addStatus("Ročník {$year_active_string} je teď aktivní! Ostatní ročníky byly uzamčeny, změna uložených dat byla zakázána.");
     parent::submitForm($form, $form_state);
   }

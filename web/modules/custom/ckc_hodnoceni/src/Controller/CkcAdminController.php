@@ -28,7 +28,7 @@ class CkcAdminController extends ControllerBase {
 
   public function status(string $ckc_rocnik) {
     $years = CkcHodnoceniService::year_map();
-    \Drupal::service('user.private_tempstore')->get('ckc_hodnoceni')->set('year_selected', $years[$ckc_rocnik]['id']);
+    \Drupal::service('tempstore.private')->get('ckc_hodnoceni')->set('year_selected', $years[$ckc_rocnik]['id']);
     return [
       'data' => [
         '#type' => 'view',

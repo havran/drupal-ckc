@@ -28,7 +28,7 @@ function ckc_hodnoceni_toolbar() {
 
   $years = CkcHodnoceniService::year_map('id');
   $year_active = \Drupal::configFactory()->getEditable('ckc_hodnoceni.settings')->get('year_active');
-  $year_selected = \Drupal::service('user.private_tempstore')->get('ckc_hodnoceni')->get('year_selected') ?: $year_active;
+  $year_selected = \Drupal::service('tempstore.private')->get('ckc_hodnoceni')->get('year_selected') ?: $year_active;
   $year_selected_string = $years[$year_selected]['name'];
 
   $items['ckc'] = [
@@ -195,7 +195,7 @@ function ckc_hodnoceni_theme($existing, $type, $theme, $path) {
 function ckc_hodnoceni_preprocess_ckc_year_selector(&$variables) {
   $years = CkcHodnoceniService::year_map('id');
   $year_active = \Drupal::configFactory()->getEditable('ckc_hodnoceni.settings')->get('year_active');
-  $year_selected = \Drupal::service('user.private_tempstore')->get('ckc_hodnoceni')->get('year_selected') ?: $year_active;
+  $year_selected = \Drupal::service('tempstore.private')->get('ckc_hodnoceni')->get('year_selected') ?: $year_active;
   $variables['#cache']['contexts'][] = 'session';
   $variables['#cache']['max-age'] = 0;
   $variables['year_selected'] = $year_selected;
