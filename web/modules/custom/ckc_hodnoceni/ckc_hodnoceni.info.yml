@@ -3,7 +3,7 @@ type: module
 description: 'Hodnocení CKČ prací.'
 package: CKČ
 configure: ckc_hodnoceni.settings
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^8 || ^9 || ^10 || ^11
 core: 8.x
 
 dependencies:
