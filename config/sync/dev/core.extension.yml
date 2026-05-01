@@ -56,6 +56,7 @@ module:
   token: 0
   toolbar: 0
   update: 0
+  upgrade_status: 0
   user: 0
   userswitch: 0
   views_bulk_edit: 0
@@ -71,4 +72,5 @@ theme:
   bartik: 0
   seven: 0
   ckc: 0
+  claro: 0
 profile: standard
